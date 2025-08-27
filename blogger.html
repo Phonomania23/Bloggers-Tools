@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ЛК блогера — Bloggers.tools</title>
 
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/css/base.css" as="style">
+  <link rel="preload" href="/css/layout.css" as="style">
+  <link rel="preload" href="/js/include.js" as="script">
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- DNS-prefetch для внешних ресурсов -->
+  <link rel="dns-prefetch" href="https://api.example.com">
+
+  <!-- Установите цвет темы -->
+  <meta name="theme-color" content="#ffffff">
+
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
 
@@ -170,7 +185,7 @@
     .cols {
       display: grid;
       gap: 20px;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
     }
     
     .cols > div {
@@ -316,30 +331,40 @@
       border-color: var(--surface-border);
       transform: none;
     }
+
+    /* Стили для графиков с анимацией */
+    .chart-hover-info {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 10;
+    }
+
+    .chart-bar {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .chart-bar:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+      .cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
   </style>
 </head>
 <body>
-<style>
-  /* EMERGENCY FIX FOR HEADER */
-  body {
-    padding-top: 84px !important;
-  }
   
-  main.container,
-  .deal-main {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-  }
-  
-  @media (max-width: 640px) {
-    body {
-      padding-top: 76px !important;
-    }
-  }
-</style>
-  
-  <div data-include="/components/header.html"></div>
-  ...
   <div data-include="/components/header.html"></div>
   <div data-include="/components/nav.html"></div>
 
@@ -399,7 +424,7 @@
                   <h4 class="deal-title">FashionStore - Коллекция</h4>
                   <span class="deal-status status-in-progress">В работе</span>
                 </div>
-                <p class="meta">Срок: до 20.09.2024 · Бюджет: $800</p>
+                <p class="meta">Срок: до 20.09.2024 · Бюджet: $800</p>
                 <div class="row">
                   <span class="badge">Instagram</span>
                   <span class="meta">8 дней осталось</span>
@@ -412,23 +437,25 @@
               </div>
             </div>
           </div>
-          <div>
-            <h3 class="subgrid-title">На проверке</h3>
-            <div id="awaiting" class="subgrid" aria-live="polite" aria-busy="true">
-              <div class="deal">
-                <div class="deal-header">
-                  <h4 class="deal-title">GameStudio - Анонс игры</h4>
-                  <span class="deal-status status-awaiting">На проверке</span>
-                </div>
-                <p class="meta">Сдано: 10.09.2024 · Бюджет: $1,500</p>
-                <div class="row">
-                  <span class="badge">YouTube</span>
-                  <span class="meta">Ожидает одобрения</span>
-                </div>
-                <div class="deal-actions">
-                  <button class="btn-ghost">👀 Предпросмотр</button>
-                  <button class="btn-ghost">💬 Чат</button>
-                </div>
+        </div>
+
+        <!-- Блок "На проверке" перенесен вниз -->
+        <div style="margin-top: 25px;">
+          <h3 class="subgrid-title">На проверке</h3>
+          <div id="awaiting" class="subgrid" aria-live="polite" aria-busy="true">
+            <div class="deal">
+              <div class="deal-header">
+                <h4 class="deal-title">GameStudio - Анонс игры</h4>
+                <span class="deal-status status-awaiting">На проверке</span>
+              </div>
+              <p class="meta">Сдано: 10.09.2024 · Бюджет: $1,500</p>
+              <div class="row">
+                <span class="badge">YouTube</span>
+                <span class="meta">Ожидает одобрения</span>
+              </div>
+              <div class="deal-actions">
+                <button class="btn-ghost">👀 Предпросмотр</button>
+                <button class="btn-ghost">💬 Чат</button>
               </div>
             </div>
           </div>
@@ -443,10 +470,12 @@
           <div class="chart-container">
             <div class="chart-title">👥 Аудитория</div>
             <canvas id="audChart" width="640" height="240" aria-label="График роста аудитории" role="img"></canvas>
+            <div class="chart-hover-info" id="audHoverInfo"></div>
           </div>
           <div class="chart-container">
             <div class="chart-title">👀 Просмотры</div>
             <canvas id="viewsChart" width="640" height="240" aria-label="График просмотров" role="img"></canvas>
+            <div class="chart-hover-info" id="viewsHoverInfo"></div>
           </div>
         </div>
       </article>
@@ -518,9 +547,7 @@
   </main>
 
   <div data-include="/components/footer.html"></div>
-<div class="folders-sidebar" id="foldersSidebar">
-    <!-- Содержимое будет сгенерировано JavaScript -->
-</div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Загрузка имени блогера
@@ -571,39 +598,131 @@
         if (inProgress) inProgress.setAttribute('aria-busy', 'false');
         if (awaiting) awaiting.setAttribute('aria-busy', 'false');
         
-        // Имитация графиков
-        simulateCharts();
+        // Инициализация графиков с анимацией
+        initChartsWithHover();
       }, 1000);
       
-      function simulateCharts() {
-        // Заглушка для инициализации графиков
-        // Реальная реализация будет зависеть от подключенной библиотеки Chart.js
+      function initChartsWithHover() {
         const audCanvas = document.getElementById('audChart');
         const viewsCanvas = document.getElementById('viewsChart');
+        const audHoverInfo = document.getElementById('audHoverInfo');
+        const viewsHoverInfo = document.getElementById('viewsHoverInfo');
         
         if (audCanvas && viewsCanvas) {
-          console.log('Элементы canvas для графиков найдены. Готово для инициализации Chart.js');
-          // Здесь будет код инициализации графиков, когда библиотека будет подключена
-          // new Chart(audCanvas.getContext('2d'), { ... });
-          // new Chart(viewsCanvas.getContext('2d'), { ... });
+          // Создаем простые SVG графики с анимацией
+          createSimpleChart(audCanvas, [125, 134, 128, 142, 138, 156, 162], 'Подписчики', audHoverInfo);
+          createSimpleChart(viewsCanvas, [45000, 48000, 52000, 49000, 51000, 58000, 62000], 'Просмотры', viewsHoverInfo);
         }
+      }
+      
+      function createSimpleChart(canvas, data, label, hoverInfo) {
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = 40;
+        const maxValue = Math.max(...data) * 1.1;
+        
+        // Очистка canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Рисуем сетку
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        
+        // Горизонтальные линии
+        for (let i = 0; i <= 5; i++) {
+          const y = padding + (height - padding * 2) * (1 - i / 5);
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(width - padding, y);
+          ctx.stroke();
+        }
+        
+        // Анимируем график
+        let progress = 0;
+        const animate = () => {
+          progress += 0.02;
+          if (progress > 1) progress = 1;
+          
+          ctx.clearRect(0, 0, width, height);
+          
+          // Рисуем сетку
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+          for (let i = 0; i <= 5; i++) {
+            const y = padding + (height - padding * 2) * (1 - i / 5);
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(width - padding, y);
+            ctx.stroke();
+          }
+          
+          // Рисуем график
+          ctx.strokeStyle = '#c7ff1a';
+          ctx.fillStyle = 'rgba(199, 255, 26, 0.2)';
+          ctx.lineWidth = 3;
+          
+          ctx.beginPath();
+          const barWidth = (width - padding * 2) / data.length;
+          
+          for (let i = 0; i < data.length; i++) {
+            const x = padding + i * barWidth + barWidth / 2;
+            const y = height - padding - (data[i] / maxValue) * (height - padding * 2) * progress;
+            
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          
+          ctx.stroke();
+          
+          // Рисуем точки
+          for (let i = 0; i < data.length; i++) {
+            const x = padding + i * barWidth + barWidth / 2;
+            const y = height - padding - (data[i] / maxValue) * (height - padding * 2) * progress;
+            
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = '#c7ff1a';
+            ctx.fill();
+            ctx.strokeStyle = '#0e0f11';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+          
+          // Добавляем обработчики hover
+          canvas.onmousemove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const barWidth = (width - padding * 2) / data.length;
+            
+            for (let i = 0; i < data.length; i++) {
+              const barX = padding + i * barWidth;
+              if (x >= barX && x <= barX + barWidth) {
+                const value = data[i];
+                hoverInfo.textContent = `${label}: ${value.toLocaleString()}`;
+                hoverInfo.style.left = (barX + barWidth / 2) + 'px';
+                hoverInfo.style.top = (height - padding - (value / maxValue) * (height - padding * 2) - 30) + 'px';
+                hoverInfo.style.opacity = '1';
+                return;
+              }
+            }
+            hoverInfo.style.opacity = '0';
+          };
+          
+          canvas.onmouseleave = () => {
+            hoverInfo.style.opacity = '0';
+          };
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        
+        animate();
       }
     });
   </script>
-</main>
-<div data-include="/components/footer.html"></div>
-
-<script>
-// EMERGENCY FIX FOR BLOGGER.HTML
-document.addEventListener('DOMContentLoaded', function() {
-  document.body.style.paddingTop = '84px';
-  const main = document.querySelector('main.container');
-  if (main) {
-    main.style.paddingTop = '0';
-    main.style.marginTop = '0';
-  }
-  if (window.innerWidth <= 640) document.body.style.paddingTop = '76px';
-});
-</script>
 </body>
 </html>
