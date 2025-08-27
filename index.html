@@ -107,6 +107,14 @@
       padding: 8px 12px;
       font-size: 0.9em;
       color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .hero-feature-badge:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
     }
     
     .hero-preview {
@@ -118,6 +126,13 @@
       max-width: 400px;
       margin-left: auto;
       margin-right: auto;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .hero-preview:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
     }
     
     .links { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -199,14 +214,14 @@
       </div>
       
       <div class="hero-features">
-        <span class="hero-feature-badge">ER, аудитория, гео</span>
-        <span class="hero-feature-badge">Анкета блогера</span>
-        <span class="hero-feature-badge">Списки и заметки</span>
+        <a href="#features" class="hero-feature-badge">ER, аудитория, гео</a>
+        <a href="creator.html?id=1" class="hero-feature-badge">Анкета блогера</a>
+        <a href="/agency.html#folders" class="hero-feature-badge">Списки и заметки</a>
       </div>
       
-      <div class="hero-preview">
+      <div class="hero-preview" onclick="location.href='/agency.html';" style="cursor: pointer;">
         <strong>Превью каталога</strong>
-        <p>Здесь будет скрин или интерактивный блок.</p>
+        <p>Нажмите чтобы открыть полный каталог блогеров</p>
       </div>
 
       <div class="links">
@@ -286,7 +301,7 @@
       </div>
     </section>
 
-    <!-- Демо блогеров с системой папок -->
+    <!-- Демо блогеров с системаой папок -->
     <section id="showcase" class="bloggers-showcase fade-in">
       <h2 class="section-title">Популярные блогеры в системе</h2>
       <div class="showcase-grid">
@@ -302,6 +317,7 @@
           <div class="blogger-demo-actions">
             <button class="btn-icon toggle-favorite" data-blogger-id="1" title="В избранное">☆</button>
             <button class="btn-icon add-to-folder-btn" data-blogger-id="1" title="Добавить в папку">📁</button>
+            <a href="creator.html?id=1" class="btn-icon" title="Открыть анкету">📋</a>
           </div>
         </div>
 
@@ -317,6 +333,7 @@
           <div class="blogger-demo-actions">
             <button class="btn-icon toggle-favorite" data-blogger-id="2" title="В избранное">☆</button>
             <button class="btn-icon add-to-folder-btn" data-blogger-id="2" title="Добавить в папку">📁</button>
+            <a href="creator.html?id=2" class="btn-icon" title="Открыть анкету">📋</a>
           </div>
         </div>
 
@@ -332,6 +349,7 @@
           <div class="blogger-demo-actions">
             <button class="btn-icon toggle-favorite" data-blogger-id="3" title="В избранное">☆</button>
             <button class="btn-icon add-to-folder-btn" data-blogger-id="3" title="Добавить в папку">📁</button>
+            <a href="creator.html?id=3" class="btn-icon" title="Открыть анкету">📋</a>
           </div>
         </div>
       </div>
@@ -349,7 +367,7 @@
         <div>— Бренд одежды "UrbanStyle"</div>
       </div>
       <div class="testimonial-card">
-        <p>"Как блогер, я ценю удобство коммуникации с брендами и гарантированные выплаты. Отличная платформа!"</p>
+        <p>"Как блогер, я ценю удобность коммуникации с брендами и гарантированные выплаты. Отличная платформа!"</p>
         <div>— @travel_with_me, 250K подписчиков</div>
       </div>
     </section>
@@ -411,7 +429,7 @@
         });
       }
       
-      // Используем DOMContentLoaded для инициализации :cite[1]:cite[7]
+      // Используем DOMContentLoaded для инициализации
       document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener('scroll', animateOnScroll);
         animateOnScroll();
@@ -431,7 +449,7 @@
         function initDemoBloggers() {
           const demoBloggers = [
             { id: 1, name: "Иван Петров", platform: "YouTube", followers: 125000, category: "техника" },
-            { id: 2, name: "Анна Сидорova", platform: "Instagram", followers: 87000, category: "красота" },
+            { id: 2, name: "Анна Сидорова", platform: "Instagram", followers: 87000, category: "красота" },
             { id: 3, name: "Сергей Козлов", platform: "YouTube", followers: 356000, category: "игры" }
           ];
           setTimeout(() => {
@@ -453,7 +471,7 @@
           if (pos === 'fixed') document.body.classList.add('has-fixed-header');
         }
         
-        // Применяем компенсацию для фиксированного заголовка :cite[6]
+        // Применяем компенсацию для фиксированного заголовка
         applyHeaderCompensation();
       });
     })();
