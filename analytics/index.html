@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Аналитика — Bloggers.tools</title>
+
+  <!-- Подключаем общие стили проекта -->
+  <link rel="stylesheet" href="/css/base.css?v=20250901"/>
+  <link rel="stylesheet" href="/css/layout.css?v=20250901"/>
+  <link rel="stylesheet" href="/css/deal.css?v=20250901"/>
+
+  <style>
+    :root {
+      --text-muted: #6c757d;
+      --primary: #4361ee;
+      --secondary: #6c757d;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --border-color: #dee2e6;
+      --success: #28a745;
+      --danger: #dc3545;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7f9;
+      color: #333;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    h1 {
+      margin-top: 0;
+      color: var(--dark);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .kpis{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .kpi{
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kpi:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .kpi .label{
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .kpi .value{
+      font-weight: 800;
+      font-size: 1.75rem;
+      margin: 0;
+    }
+    .kpi .value.positive { color: var(--success); }
+    .kpi .value.negative { color: var(--danger); }
+    
+    .filters{
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: end;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .filters input {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    .filters input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    .grid2{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 1rem;
+    }
+    .card{
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+      font-size: 1.25rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+    }
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    .table th,.table td{
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    .table th {
+      background-color: var(--light);
+      font-weight: 600;
+      color: var(--dark);
+      position: sticky;
+      top: 0;
+    }
+    .table tr:hover {
+      background-color: rgba(67, 97, 238, 0.05);
+    }
+    .table td.positive { color: var(--success); font-weight: 600; }
+    .table td.negative { color: var(--danger); font-weight: 600; }
+    
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 0.875rem;
+      line-height: 1;
+      height: fit-content;
+      transition: all 0.2s ease;
+      gap: 0.5rem;
+    }
+    .btn:hover {
+      background-color: #3651d4;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .muted {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .chart-container {
+      position: relative;
+      height: 360px;
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .container {
+        padding: 0.5rem;
+      }
+      .card {
+        padding: 1rem;
+      }
+      .table th, .table td {
+        padding: 0.75rem 0.5rem;
+      }
+      .btn {
+        padding: 0.625rem 1.25rem;
+      }
+    }
+  </style>
+
+  <!-- Библиотеки (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/utc.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/timezone.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ru.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <!-- Подключалки компонентов -->
+  <script defer src="/js/include.js?v=6"></script>
+
+  <!-- Наш код -->
+  <script defer src="/js/analytics.js"></script>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <div class="container">
+    <h1>📊 Аналитика и отчётность</h1>
+
+    <form id="filters" class="filters">
+      <label>Сделка
+        <input id="dealId" type="text" placeholder="например, DEAL-1001"/>
+      </label>
+      <label>Период с
+        <input id="from" type="date"/>
+      </label>
+      <label>по
+        <input id="to" type="date"/>
+      </label>
+      <button id="applyFilters" class="btn" type="button">Применить</button>
+      <span class="muted" id="filtersInfo"></span>
+      <span style="flex-grow: 1;"></span>
+      <button id="exportPdf" class="btn btn-secondary" type="button">📄 Экспорт PDF</button>
+      <button id="exportXlsx" class="btn btn-secondary" type="button">📊 Экспорт Excel</button>
+    </form>
+
+    <section class="kpis">
+      <div class="kpi"><div class="label">💰 Расход</div><div id="kpiSpend" class="value">—</div></div>
+      <div class="kpi"><div class="label">💵 Выручка</div><div id="kpiRevenue" class="value">—</div></div>
+      <div class="kpi"><div class="label">📈 ROI</div><div id="kpiROI" class="value">—</div></div>
+      <div class="kpi"><div class="label">🔄 Конверсии</div><div id="kpiConv" class="value">—</div></div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <h3>📈 Динамика показателей</h3>
+        <div id="chartTimeseries" class="chart-container"></div>
+      </div>
+      <div class="card">
+        <h3>🎯 Распределение по форматам</h3>
+        <div id="chartFormats" class="chart-container"></div>
+      </div>
+    </section>
+
+    <section class="grid2" style="margin-top:1rem;">
+      <div class="card">
+        <h3>👥 Сравнение блогеров</h3>
+        <div id="chartBloggers" class="chart-container"></div>
+      </div>
+      <div class="card">
+        <h3>🔮 Прогноз на 14 дней</h3>
+        <div id="chartForecast" class="chart-container"></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:1rem;">
+      <h3>🏆 Топ блогеров по ROI</h3>
+      <div class="table-container">
+        <table id="tableTop" class="table">
+          <thead>
+            <tr>
+              <th>Блогер</th><th>Формат</th><th>Показы</th><th>Клики</th>
+              <th>Конв.</th><th>Расход</th><th>Выручка</th><th>ROI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8" style="text-align: center;">Загрузка данных...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    // Инициализация дат по умолчанию
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(today.getDate() - 29);
+      
+      document.getElementById('from').value = thirtyDaysAgo.toISOString().split('T')[0];
+      document.getElementById('to').value = today.toISOString().split('T')[0];
+    });
+  </script>
+</body>
+</html>

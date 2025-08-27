@@ -1,0 +1,32 @@
+/* Контейнеры и сетки */
+.container{width:min(1120px,92%);margin-inline:auto;padding:16px 0}
+.grid{display:grid;gap:16px}
+.grid-cols-2{grid-template-columns:repeat(2,1fr)}
+.grid-cols-3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:920px){
+  .grid-cols-2,.grid-cols-3{grid-template-columns:1fr}
+}
+
+/* Списки */
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#14161a;color:#e2e6ed}
+
+/* Навигационные ссылки/меню */
+.navbar{display:flex;gap:14px}
+.navbar a{color:#cfd4db}
+.navbar a:hover{color:#fff}
+
+/* Блоки действий на hero */
+.actions{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.links{display:flex;gap:12px;justify-content:center;margin-top:8px}
+.links .link{color:#a0dfff}
+
+/* Карточки-цены/планов */
+.pricing{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+.pricing .plan{background:#fff;border:1px solid var(--surface-border);border-radius:14px;padding:16px;color:#111}
+.pricing .plan .cta{margin-top:12px}
+@media (max-width:920px){.pricing{grid-template-columns:1fr}}
+
+/* Хлебные крошки */
+.breadcrumbs{display:flex;gap:8px;align-items:center;color:#cfd4db}
+.breadcrumbs a{color:#fff}

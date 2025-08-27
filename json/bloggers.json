@@ -1,0 +1,113 @@
+[
+  {
+    "id": "b101",
+    "name": "TechBro",
+    "platform": "YouTube",
+    "category": "техника",
+    "subscribers": 210000,
+    "avatar": "images/avatars/placeholder.png",
+
+    "er": 4.5,
+    "avg_views": 18000,
+    "pricing": { "integrated": 1200, "currency": "USD" },
+
+    "language": "ru",
+    "country": "RU",
+    "audience_geo": "RU",
+    "audience_geo_share": 70,
+    "audience_gender": "male",
+    "audience_gender_share": 65,
+    "audience_age_bucket": "25-34",
+    "audience_age_share": 40,
+
+    "email": "contact@techbro.example",
+    "tags": ["tech", "gadgets", "reviews", "vpn"],
+    "ai_similar_to": ["Wylsacom", "Rozetked"],
+
+    "media_kit_url": "files/mediakits/techbro.pdf",
+    "youtube": "https://youtube.com/@techbro",
+
+    "metrics_history": [
+      { "date": "2025-03", "followers": 195000, "avg_views": 16000, "er": 4.4 },
+      { "date": "2025-04", "followers": 198000, "avg_views": 16500, "er": 4.5 },
+      { "date": "2025-05", "followers": 203000, "avg_views": 17000, "er": 4.5 },
+      { "date": "2025-06", "followers": 206000, "avg_views": 17500, "er": 4.6 },
+      { "date": "2025-07", "followers": 208000, "avg_views": 17800, "er": 4.5 },
+      { "date": "2025-08", "followers": 210000, "avg_views": 18000, "er": 4.5 }
+    ]
+  },
+  {
+    "id": "b102",
+    "name": "BeautyDaily",
+    "platform": "TikTok",
+    "category": "красота",
+    "subscribers": 580000,
+    "avatar": "images/avatars/placeholder.png",
+
+    "er": 7.2,
+    "avg_views": 30000,
+    "pricing": { "integrated": 850, "currency": "USD" },
+
+    "language": "ru",
+    "country": "RU",
+    "audience_geo": "RU",
+    "audience_geo_share": 80,
+    "audience_gender": "female",
+    "audience_gender_share": 75,
+    "audience_age_bucket": "18-24",
+    "audience_age_share": 45,
+
+    "email": null,
+    "tags": ["beauty", "makeup", "skincare"],
+    "ai_similar_to": ["Huda Beauty", "Anastasia Beverly Hills"],
+
+    "media_kit_url": "files/mediakits/beautydaily.pdf",
+    "tiktok": "https://tiktok.com/@beautydaily",
+
+    "metrics_history": [
+      { "date": "2025-03", "followers": 540000, "avg_views": 27000, "er": 7.1 },
+      { "date": "2025-04", "followers": 552000, "avg_views": 28200, "er": 7.2 },
+      { "date": "2025-05", "followers": 563000, "avg_views": 29000, "er": 7.3 },
+      { "date": "2025-06", "followers": 570000, "avg_views": 29500, "er": 7.2 },
+      { "date": "2025-07", "followers": 576000, "avg_views": 29800, "er": 7.2 },
+      { "date": "2025-08", "followers": 580000, "avg_views": 30000, "er": 7.2 }
+    ]
+  },
+  {
+    "id": "b103",
+    "name": "GameRoom",
+    "platform": "YouTube",
+    "category": "игры",
+    "subscribers": 350000,
+    "avatar": "images/avatars/placeholder.png",
+
+    "er": 3.8,
+    "avg_views": 22000,
+    "pricing": { "integrated": 950, "currency": "USD" },
+
+    "language": "ru",
+    "country": "RU",
+    "audience_geo": "RU",
+    "audience_geo_share": 60,
+    "audience_gender": "male",
+    "audience_gender_share": 70,
+    "audience_age_bucket": "18-24",
+    "audience_age_share": 35,
+
+    "email": "biz@gameroom.example",
+    "tags": ["gaming", "streams", "reviews"],
+    "ai_similar_to": ["PewDiePie", "TheRadBrad"],
+
+    "media_kit_url": "files/mediakits/gameroom.pdf",
+    "youtube": "https://youtube.com/@gameroom",
+
+    "metrics_history": [
+      { "date": "2025-03", "followers": 330000, "avg_views": 20000, "er": 3.7 },
+      { "date": "2025-04", "followers": 335000, "avg_views": 20500, "er": 3.7 },
+      { "date": "2025-05", "followers": 340000, "avg_views": 21200, "er": 3.8 },
+      { "date": "2025-06", "followers": 344000, "avg_views": 21600, "er": 3.8 },
+      { "date": "2025-07", "followers": 347000, "avg_views": 21800, "er": 3.8 },
+      { "date": "2025-08", "followers": 350000, "avg_views": 22000, "er": 3.8 }
+    ]
+  }
+]

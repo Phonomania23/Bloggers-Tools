@@ -1,0 +1,93 @@
+/* /css/deal.css */
+
+/* Сайдбар-воронка */
+.deal-wrap{ display:grid; grid-template-columns: 260px 1fr; gap:16px }
+@media (max-width: 920px){ .deal-wrap{ grid-template-columns: 1fr } }
+
+.deal-sidebar{
+  position: sticky;
+  top: calc(var(--header-h,64px) + 12px);
+  align-self:start;
+  padding:12px;
+  border:1px solid var(--surface-border);
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+.steps-vertical{ display:flex; flex-direction:column; gap:8px }
+.steps-vertical a{
+  padding:10px 12px; border-radius:10px; border:1px solid var(--surface-border);
+  color:var(--text-on-surface); background:#fff; text-decoration:none;
+}
+.steps-vertical a[aria-current="step"]{
+  background: var(--primary); border-color:var(--primary); color:var(--primary-ink); font-weight:700;
+}
+.steps-vertical a[disabled]{ pointer-events:none; opacity:.5 }
+
+/* Верхние табы */
+.deal-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px }
+.deal-tabs button{
+  padding:8px 12px; border-radius:999px; border:1px solid var(--border);
+  background: transparent; color:#c9cdd4; cursor:pointer;
+}
+.deal-tabs button.is-active{ background:var(--primary); border-color:var(--primary); color:var(--primary-ink) }
+
+/* Хост шага */
+#stepHost.card{ padding:16px; }
+
+/* Список карточек */
+.cards-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px;
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); }
+
+/* Карточка из cards.js */
+.card-blogger{
+  background:#fff; border:1px solid var(--surface-border); border-radius:14px; padding:12px; color:#0e0f11;
+  display:grid; grid-template-columns:56px 1fr; gap:12px;
+}
+.card-blogger .avatar{ width:56px; height:56px; border-radius:50%; background:#eee; display:block }
+.card-blogger .name{ font-weight:700 }
+.card-blogger .meta{ color:#5b5f66; font-size:.9rem }
+.card-blogger .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px }
+.card-blogger .note{ margin-top:8px }
+
+/* Карточка из filters.js (на случай фолбэка) */
+.blogger-card{
+  background:#fff; border:1px solid var(--surface-border); border-radius:14px; padding:12px; color:#0e0f11;
+}
+.blogger-card .blogger-name{ font-weight:700; color:#0e0f11 }
+.blogger-card .blogger-stats{ color:#5b5f66; font-size:.9rem; margin-top:2px }
+.blogger-card .blogger-price{ color:#0e0f11; margin-top:2px }
+.blogger-card.selected{ outline:2px solid var(--primary); outline-offset:2px }
+
+/* Нижняя панель */
+.deal-footer{ margin-top:12px }
+
+/* ========= Фильтр-бар в стиле Hypetrain ========= */
+.filterbar{
+  display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 10px;
+}
+.filterbar .chip{
+  display:flex; align-items:center; gap:6px;
+  padding:8px 10px; border:1px solid var(--surface-border);
+  border-radius:999px; background:#fff; color:#121417;
+}
+.filterbar .chip label{ font-weight:600; font-size:.92rem; color:#121417 }
+.filterbar .chip input, .filterbar .chip select{
+  border:1px solid #e5e7eb; border-radius:8px; padding:6px 8px; background:#fff; color:#121417;
+}
+
+/* Активные чипы (с крестиком) */
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 10px }
+.chips .tag{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px;
+  background: #f1f3f5; color:#111; border-radius:999px; border:1px solid #e5e7eb;
+}
+.chips .tag button{
+  border:none; background:transparent; cursor:pointer; color:#666; padding:0 2px;
+}
+
+/* Тумблеры */
+.switch{ display:inline-flex; align-items:center; gap:6px }
+.switch > input{ transform: translateY(1px) }
+/* blogger-card как грид-айтем */
+.cards-list blogger-card { display:block; }
+
