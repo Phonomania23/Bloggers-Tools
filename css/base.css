@@ -136,9 +136,76 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
 .site-footer{border-top:1px solid #1c1f24;padding:16px 0;color:var(--text-muted)}
 
 /* =====================  HERO  ===================== */
-.hero{text-align:center;margin:18px auto}
-.hero .logo{width:72px;height:auto;display:block;margin:0 auto 8px}
-.hero .lead{color:#c4c8cf}
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 40px 0;
+  text-align: left;
+}
+
+.hero .logo {
+  width: 72px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.hero .lead {
+  color: #c4c8cf;
+}
+
+.cta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.btn-large {
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.features {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.feature-badge {
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  color: var(--text-on-surface);
+}
+
+.preview-card {
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--text-on-surface);
+}
+
+/* Адаптивность для hero */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .features {
+    justify-content: center;
+  }
+}
 
 /* =====================  STEPPER (для deal)  ===================== */
 .steps{display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;list-style:none}

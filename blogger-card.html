@@ -4,10 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Карточка блогера — Bloggers.tools</title>
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/css/base.css" as="style">
+  <link rel="preload" href="/css/layout.css" as="style">
+  <link rel="preload" href="/js/include.js" as="script">
+
+  <!-- Стили -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/analytics.css">
   <script defer src="js/include.js"></script>
+  
   <style>
     .blogger-card {
       padding: 0;
@@ -301,6 +309,33 @@
       opacity: 0.7;
       font-size: 0.9em;
     }
+    
+    /* Новые стили для ссылок на анкету */
+    .profile-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
+    }
+    
+    .profile-link:hover {
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -333,10 +368,20 @@
           <button class="btn btn-secondary">⭐ В избранное</button>
           <button class="btn">📁 Добавить в папку</button>
           <button class="btn">📋 Предложить коллаб</button>
+          
+          <!-- Ссылка на полную анкету -->
+          <a href="creator.html?id=1" class="btn btn-accent">📋 Полная анкета</a>
         </div>
       </div>
 
       <div class="card-content">
+        <!-- Быстрые действия -->
+        <div class="quick-actions">
+          <a href="creator.html?id=1#notes" class="profile-link">📝 Добавить заметку</a>
+          <a href="creator.html?id=1#similar" class="profile-link">👥 Похожие блогеры</a>
+          <a href="creator.html?id=1#audience" class="profile-link">📊 Аудитория</a>
+        </div>
+
         <!-- Основная статистика -->
         <div class="stats-grid">
           <div class="stat-item">
@@ -361,6 +406,7 @@
         <div class="ai-recommendation">
           <h4>🤖 AI-рекомендация</h4>
           <p>Высокий потенциал для collaboration с tech-брендами. Аудитория активно вовлечена, преобладает мужская аудитория 25-34 лет. Рекомендуемая ставка: $1,200-1,800 за интеграцию.</p>
+          <a href="creator.html?id=1" class="profile-link" style="margin-top: 10px;">📋 Открыть полную анкету</a>
         </div>
 
         <!-- Контейнер для расширенной аналитики -->
@@ -501,11 +547,32 @@
 
       <!-- Панель действий внизу -->
       <div class="action-panel">
+        <a href="creator.html?id=1" class="btn btn-large">📋 Полная анкета</a>
         <button class="btn btn-large">💌 Отправить предложение</button>
         <button class="btn btn-secondary btn-large">📋 Добавить в список</button>
         <button class="btn btn-large">📊 Сравнить с другими</button>
       </div>
     </article>
+
+    <!-- Примеры других блогеров с ссылками на анкеты -->
+    <div style="margin-top: 40px;">
+      <h2 style="color: var(--text-on-surface); margin-bottom: 20px;">Другие блогеры</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">АС</div>
+          <h3 style="margin: 0 0 10px; color: var(--text-on-surface);">Анна Сидорова</h3>
+          <p style="color: var(--text-muted); margin: 0 0 15px;">Instagram · 87K · Красота</p>
+          <a href="creator.html?id=2" class="btn btn-sm">Открыть анкету</a>
+        </div>
+        
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">СК</div>
+          <h3 style="margin: 0 0 10px; color: var(--text-on-surface);">Сергей Козлов</h3>
+          <p style="color: var(--text-muted); margin: 0 0 15px;">YouTube · 356K · Игры</p>
+          <a href="creator.html?id=3" class="btn btn-sm">Открыть анкету</a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <div data-include="/components/footer.html"></div>
