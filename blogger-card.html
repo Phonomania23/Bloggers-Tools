@@ -37,6 +37,7 @@
       display: flex;
       gap: 20px;
       align-items: center;
+      flex-wrap: wrap;
     }
     
     .blogger-avatar {
@@ -49,18 +50,44 @@
     
     .blogger-info {
       flex: 1;
+      min-width: 250px;
     }
     
     .blogger-name {
       margin: 0 0 8px 0;
       font-size: 1.8em;
       color: white;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     
     .blogger-handle {
       margin: 0;
       opacity: 0.9;
       font-size: 1.1em;
+    }
+    
+    .platform-switcher {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    
+    .platform-btn {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .platform-btn.active {
+      background: rgba(255, 255, 255, 0.4);
+      border-color: white;
     }
     
     .action-buttons {
@@ -267,8 +294,19 @@
       color: var(--primary-ink);
       font-size: 0.8em;
       font-weight: 600;
-      margin-left: 10px;
       border: 1px solid var(--primary);
+    }
+    
+    .badge-verified {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+      border-color: #4CAF50;
+    }
+    
+    .badge-premium {
+      background: rgba(255, 193, 7, 0.2);
+      color: #FFC107;
+      border-color: #FFC107;
     }
     
     .rating {
@@ -310,7 +348,6 @@
       font-size: 0.9em;
     }
     
-    /* Новые стили для ссылок на анкету */
     .profile-link {
       display: inline-flex;
       align-items: center;
@@ -336,6 +373,138 @@
       margin: 15px 0;
       flex-wrap: wrap;
     }
+    
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .highlight-item {
+      text-align: center;
+      padding: 15px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--surface-border);
+    }
+    
+    .highlight-value {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .highlight-label {
+      font-size: 0.8em;
+      color: var(--text-on-surface);
+      opacity: 0.8;
+    }
+    
+    .audience-quality {
+      padding: 15px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--surface-border);
+      margin: 20px 0;
+    }
+    
+    .quality-meter {
+      height: 8px;
+      background: var(--surface-border);
+      border-radius: 4px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    
+    .quality-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      border-radius: 4px;
+    }
+    
+    .content-type-tabs {
+      display: flex;
+      gap: 2px;
+      margin: 15px 0;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    
+    .content-type-tab {
+      flex: 1;
+      padding: 10px;
+      background: var(--surface-2);
+      border: none;
+      color: var(--text-on-surface);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+    }
+    
+    .content-type-tab.active {
+      background: var(--primary);
+      color: var(--primary-ink);
+    }
+    
+    .note-section {
+      background: var(--surface-2);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--surface-border);
+      margin: 20px 0;
+    }
+    
+    .note-input {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text-on-surface);
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+    
+    .saved-notes {
+      margin-top: 20px;
+    }
+    
+    .note-item {
+      padding: 12px;
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      margin: 10px 0;
+    }
+    
+    .note-date {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+    
+    .contact-status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8em;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    
+    .status-available {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+    }
+    
+    .status-premium {
+      background: rgba(255, 193, 7, 0.2);
+      color: #FFC107;
+    }
   </style>
 </head>
 <body>
@@ -349,8 +518,19 @@
         <div class="blogger-profile">
           <img src="https://via.placeholder.com/150" alt="Аватар блогера" class="blogger-avatar">
           <div class="blogger-info">
-            <h1 class="blogger-name">Иван Петров <span class="badge">ТОП</span></h1>
-            <p class="blogger-handle">@ivan_tech_review · YouTube</p>
+            <h1 class="blogger-name">
+              Иван Петров 
+              <span class="badge badge-verified">✓ Проверен</span>
+              <span class="badge badge-premium">ТОП</span>
+            </h1>
+            <p class="blogger-handle">@ivan_tech_review · Россия · Русский язык</p>
+            
+            <div class="platform-switcher">
+              <button class="platform-btn active">YouTube</button>
+              <button class="platform-btn">Instagram</button>
+              <button class="platform-btn">Telegram</button>
+            </div>
+            
             <div class="rating">
               <span class="star">⭐</span>
               <span class="star">⭐</span>
@@ -368,8 +548,6 @@
           <button class="btn btn-secondary">⭐ В избранное</button>
           <button class="btn">📁 Добавить в папку</button>
           <button class="btn">📋 Предложить коллаб</button>
-          
-          <!-- Ссылка на полную анкету -->
           <a href="creator.html?id=1" class="btn btn-accent">📋 Полная анкета</a>
         </div>
       </div>
@@ -377,9 +555,10 @@
       <div class="card-content">
         <!-- Быстрые действия -->
         <div class="quick-actions">
-          <a href="creator.html?id=1#notes" class="profile-link">📝 Добавить заметку</a>
+          <button class="profile-link" onclick="showNoteSection()">📝 Добавить заметку</button>
           <a href="creator.html?id=1#similar" class="profile-link">👥 Похожие блогеры</a>
           <a href="creator.html?id=1#audience" class="profile-link">📊 Аудитория</a>
+          <a href="creator.html?id=1#content" class="profile-link">🎬 Контент</a>
         </div>
 
         <!-- Основная статистика -->
@@ -402,15 +581,59 @@
           </div>
         </div>
 
+        <!-- Highlights -->
+        <div class="highlights-grid">
+          <div class="highlight-item">
+            <div class="highlight-value">347</div>
+            <div class="highlight-label">Видео</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">2.1K</div>
+            <div class="highlight-label">Средние лайки</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">184</div>
+            <div class="highlight-label">Средние комментарии</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-value">78%</div>
+            <div class="highlight-label">Охват</div>
+          </div>
+        </div>
+
+        <!-- Качество аудитории -->
+        <div class="audience-quality">
+          <h4>Качество аудитории</h4>
+          <div class="quality-meter">
+            <div class="quality-fill" style="width: 87%"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: var(--text-muted);">
+            <span>Низкое</span>
+            <span>87% - Высокое</span>
+          </div>
+          <p class="muted">Оценка основана на анализе активности и вовлеченности подписчиков</p>
+        </div>
+
         <!-- AI рекомендация -->
         <div class="ai-recommendation">
           <h4>🤖 AI-рекомендация</h4>
           <p>Высокий потенциал для collaboration с tech-брендами. Аудитория активно вовлечена, преобладает мужская аудитория 25-34 лет. Рекомендуемая ставка: $1,200-1,800 за интеграцию.</p>
-          <a href="creator.html?id=1" class="profile-link" style="margin-top: 10px;">📋 Открыть полную анкету</a>
         </div>
 
-        <!-- Контейнер для расширенной аналитики -->
-        <div id="analytics-container"></div>
+        <!-- Секция для заметок -->
+        <div class="note-section" id="noteSection" style="display: none;">
+          <h4>📝 Добавить заметку</h4>
+          <textarea class="note-input" placeholder="Добавьте ваши заметки об этом блогере..."></textarea>
+          <button class="btn" onclick="saveNote()">Сохранить заметку</button>
+          
+          <div class="saved-notes">
+            <h5>Сохраненные заметки</h5>
+            <div class="note-item">
+              <p>Отличный контент, быстро отвечает на сообщения. Сотрудничали в прошлом месяце - результат хороший.</p>
+              <div class="note-date">15.12.2023 14:30</div>
+            </div>
+          </div>
+        </div>
 
         <!-- Табы для навигации -->
         <div class="tabs">
@@ -457,28 +680,42 @@
                 </div>
               </div>
             </div>
+
+            <div class="content-item">
+              <h4>📊 По типам контента</h4>
+              <p>Видео: 4.5% ER</p>
+              <p>Shorts: 3.2% ER</p>
+              <p>Сторисы: 5.1% ER</p>
+            </div>
           </div>
         </div>
 
         <div class="tab-content" id="content-tab">
+          <div class="content-type-tabs">
+            <button class="content-type-tab active">Все</button>
+            <button class="content-type-tab">Видео</button>
+            <button class="content-type-tab">Shorts</button>
+            <button class="content-type-tab">Сторисы</button>
+          </div>
+
           <h3 class="section-title">Последние публикации</h3>
           <div class="content-grid">
             <div class="content-item">
               <h4>Обзор нового iPhone 15</h4>
-              <p>Просмотры: 89K · Лайки: 4.2K · Комментарии: 287</p>
-              <p class="muted">Опубликовано 5 дней назад</p>
+              <p>Просмотры: 89K · Лайки: 4.2K · Комментарии: 287 · ER: 4.8%</p>
+              <p class="muted">Опубликовано 5 дней назад · Видео</p>
             </div>
             
             <div class="content-item">
               <h4>Сравнение флагманов 2024</h4>
-              <p>Просмотры: 112K · Лайки: 5.8K · Комментарии: 412</p>
-              <p class="muted">Опубликовано 2 недели назад</p>
+              <p>Просмотры: 112K · Лайки: 5.8K · Комментарии: 412 · ER: 5.2%</p>
+              <p class="muted">Опубликовано 2 недели назад · Видео</p>
             </div>
             
             <div class="content-item">
               <h4>Распаковка Xiaomi 14</h4>
-              <p>Просмотры: 67K · Лайки: 3.1K · Комментарии: 198</p>
-              <p class="muted">Опубликовано 3 недели назад</p>
+              <p>Просмотры: 67K · Лайки: 3.1K · Комментарии: 198 · ER: 4.6%</p>
+              <p class="muted">Опубликовано 3 недели назад · Видео</p>
             </div>
           </div>
         </div>
@@ -487,9 +724,29 @@
           <h3 class="section-title">Демография аудитории</h3>
           <div class="demographics-grid">
             <div class="demo-chart">Возрастная структура</div>
-            <div class="demo-chart">География аудитории</div>
             <div class="demo-chart">Гендерное распределение</div>
+            <div class="demo-chart">География аудитории</div>
             <div class="demo-chart">Интересы аудитории</div>
+          </div>
+
+          <h3 class="section-title">Топ стран аудитории</h3>
+          <div class="content-grid">
+            <div class="content-item">
+              <h4>🇷🇺 Россия</h4>
+              <p>92% подписчиков</p>
+            </div>
+            <div class="content-item">
+              <h4>🇺🇦 Украина</h4>
+              <p>3% подписчиков</p>
+            </div>
+            <div class="content-item">
+              <h4>🇰🇿 Казахстан</h4>
+              <p>2% подписчиков</p>
+            </div>
+            <div class="content-item">
+              <h4>🌍 Другие</h4>
+              <p>3% подписчиков</p>
+            </div>
           </div>
         </div>
 
@@ -525,10 +782,12 @@
             <div class="contact-item">
               <span>📧</span>
               <span>ivan.petrov@example.com</span>
+              <span class="contact-status status-available">Доступен</span>
             </div>
             <div class="contact-item">
               <span>📱</span>
               <span>+7 (999) 123-45-67</span>
+              <span class="contact-status status-premium">Премиум</span>
             </div>
             <div class="contact-item">
               <span>💼</span>
@@ -540,8 +799,13 @@
             </div>
           </div>
           
-          <h3 class="section-title">Предпочтительный способ связи</h3>
-          <p>Email для первичного контакта, затем переход в Telegram для обсуждения деталей.</p>
+          <h3 class="section-title">Социальные сети</h3>
+          <div class="quick-actions">
+            <a href="#" class="profile-link">📷 Instagram</a>
+            <a href="#" class="profile-link">📹 YouTube</a>
+            <a href="#" class="profile-link">✈️ Telegram</a>
+            <a href="#" class="profile-link">👥 VK</a>
+          </div>
         </div>
       </div>
 
@@ -553,26 +817,6 @@
         <button class="btn btn-large">📊 Сравнить с другими</button>
       </div>
     </article>
-
-    <!-- Примеры других блогеров с ссылками на анкеты -->
-    <div style="margin-top: 40px;">
-      <h2 style="color: var(--text-on-surface); margin-bottom: 20px;">Другие блогеры</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <div class="card" style="padding: 20px; text-align: center;">
-          <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">АС</div>
-          <h3 style="margin: 0 0 10px; color: var(--text-on-surface);">Анна Сидорова</h3>
-          <p style="color: var(--text-muted); margin: 0 0 15px;">Instagram · 87K · Красота</p>
-          <a href="creator.html?id=2" class="btn btn-sm">Открыть анкету</a>
-        </div>
-        
-        <div class="card" style="padding: 20px; text-align: center;">
-          <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">СК</div>
-          <h3 style="margin: 0 0 10px; color: var(--text-on-surface);">Сергей Козлов</h3>
-          <p style="color: var(--text-muted); margin: 0 0 15px;">YouTube · 356K · Игры</p>
-          <a href="creator.html?id=3" class="btn btn-sm">Открыть анкету</a>
-        </div>
-      </div>
-    </div>
   </main>
 
   <div data-include="/components/footer.html"></div>
@@ -602,6 +846,25 @@
         });
       });
       
+      // Переключение платформ
+      const platformBtns = document.querySelectorAll('.platform-btn');
+      platformBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          platformBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          // Здесь будет логика загрузки данных для выбранной платформы
+        });
+      });
+      
+      // Переключение типов контента
+      const contentTypeTabs = document.querySelectorAll('.content-type-tab');
+      contentTypeTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          contentTypeTabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
       // Обработчики действий
       document.querySelector('[data-action="favorite"]')?.addEventListener('click', function() {
         this.classList.toggle('active');
@@ -628,6 +891,32 @@
         const analytics = initBloggerAnalytics(bloggerData);
       }
     });
+    
+    function showNoteSection() {
+      document.getElementById('noteSection').style.display = 'block';
+    }
+    
+    function saveNote() {
+      const noteInput = document.querySelector('.note-input');
+      const noteText = noteInput.value.trim();
+      
+      if (noteText) {
+        const now = new Date();
+        const dateString = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
+        
+        const noteItem = document.createElement('div');
+        noteItem.className = 'note-item';
+        noteItem.innerHTML = `
+          <p>${noteText}</p>
+          <div class="note-date">${dateString}</div>
+        `;
+        
+        document.querySelector('.saved-notes').appendChild(noteItem);
+        noteInput.value = '';
+        
+        alert('Заметка сохранена!');
+      }
+    }
   </script>
 </body>
 </html>
