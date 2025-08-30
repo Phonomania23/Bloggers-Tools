@@ -46,6 +46,18 @@
       margin-bottom: 24px;
       background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
       color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
     }
     
     .blogger-avatar {
@@ -61,6 +73,13 @@
       color: white;
       font-weight: bold;
       font-size: 2em;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .blogger-info {
+      position: relative;
+      z-index: 2;
     }
     
     .blogger-info h1 {
@@ -89,6 +108,7 @@
       font-size: 0.9em;
       font-weight: 600;
       border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
     
     .badge-verified {
@@ -101,10 +121,23 @@
       border-color: rgba(255, 193, 7, 0.5);
     }
     
+    .badge-trending {
+      background: rgba(233, 30, 99, 0.3);
+      border-color: rgba(233, 30, 99, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
     .platform-switcher {
       display: flex;
       gap: 8px;
       margin: 15px 0;
+      flex-wrap: wrap;
     }
     
     .platform-btn {
@@ -116,11 +149,24 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-size: 0.9em;
+      backdrop-filter: blur(10px);
     }
     
     .platform-btn.active {
       background: rgba(255, 255, 255, 0.4);
       border-color: white;
+    }
+    
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .star {
+      color: #FFD700;
+      font-size: 1.2em;
     }
     
     .profile-grid {
@@ -143,11 +189,29 @@
       padding: 20px;
       text-align: center;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
     .metric-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-3);
+    }
+    
+    .metric-card:hover::before {
+      opacity: 1;
     }
     
     .metric-value {
@@ -160,6 +224,23 @@
     .metric-label {
       color: var(--text-muted);
       font-size: 0.9em;
+    }
+    
+    .metric-trend {
+      font-size: 0.8em;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    
+    .trend-up {
+      color: #4CAF50;
+    }
+    
+    .trend-down {
+      color: #F44336;
     }
     
     .highlights-grid {
@@ -175,6 +256,12 @@
       background: var(--surface-2);
       border-radius: var(--radius);
       border: 1px solid var(--surface-border);
+      transition: all 0.3s ease;
+    }
+    
+    .highlight-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
     }
     
     .highlight-value {
@@ -197,6 +284,10 @@
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--surface-border);
+      position: sticky;
+      top: 84px;
+      z-index: 90;
+      backdrop-filter: blur(10px);
     }
     
     .tab {
@@ -209,12 +300,30 @@
       transition: all 0.3s ease;
       font-weight: 600;
       min-width: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
     }
     
     .tab:hover,
     .tab.active {
-      background: var(--primary);
-      color: var(--primary-ink);
+      color: var(--primary);
+      background: rgba(var(--primary-rgb), 0.05);
+    }
+    
+    .tab.active::after {
+      width: 80%;
     }
     
     .tab-content {
@@ -250,6 +359,12 @@
       padding: 20px;
       margin-bottom: 16px;
       position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .note-card:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-1);
     }
     
     .note-header {
@@ -277,6 +392,7 @@
       cursor: pointer;
       font-size: 0.9em;
       border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
     }
     
     .note-actions button:hover {
@@ -301,6 +417,7 @@
       resize: vertical;
       font-family: inherit;
       font-size: 1em;
+      transition: all 0.3s ease;
     }
     
     textarea:focus {
@@ -320,6 +437,11 @@
       border: 1px solid var(--surface-border);
       border-radius: var(--radius);
       padding: 24px;
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar-card:hover {
+      box-shadow: var(--shadow-2);
     }
     
     .sidebar-card h3 {
@@ -344,6 +466,12 @@
       background: var(--surface-2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
+      transition: all 0.3s ease;
+    }
+    
+    .audience-item:hover {
+      background: var(--surface);
+      transform: translateX(3px);
     }
     
     .audience-label {
@@ -470,6 +598,7 @@
       border-radius: var(--radius);
       border: 1px solid var(--surface-border);
       transition: all 0.3s ease;
+      cursor: pointer;
     }
     
     .content-item:hover {
@@ -524,6 +653,12 @@
       background: var(--surface);
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
+      transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover {
+      background: var(--surface-2);
+      transform: translateX(3px);
     }
     
     .contact-status {
@@ -545,6 +680,11 @@
       color: #FFC107;
     }
     
+    .status-busy {
+      background: rgba(244, 67, 54, 0.2);
+      color: #F44336;
+    }
+    
     .action-panel {
       position: sticky;
       bottom: 0;
@@ -557,6 +697,7 @@
       margin-top: 40px;
       flex-wrap: wrap;
       z-index: 100;
+      backdrop-filter: blur(10px);
     }
     
     .social-links {
@@ -591,6 +732,17 @@
       border-radius: var(--radius);
       border: 1px solid var(--accent);
       margin: 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ai-recommendation::before {
+      content: '🤖';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2em;
+      opacity: 0.1;
     }
     
     .ai-recommendation h4 {
@@ -616,6 +768,27 @@
       border: 1px solid var(--surface-border);
       text-align: center;
       transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .price-card.popular {
+      border: 2px solid var(--accent);
+      transform: scale(1.02);
+      box-shadow: var(--shadow-3);
+    }
+    
+    .price-card.popular::before {
+      content: 'ПОПУЛЯРНЫЙ';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: bold;
     }
     
     .price-card:hover {
@@ -678,6 +851,111 @@
       opacity: 0.5;
     }
     
+    .collaboration-history {
+      margin: 24px 0;
+    }
+    
+    .collab-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      border: 1px solid var(--surface-border);
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .collab-item:hover {
+      background: var(--surface);
+      transform: translateX(3px);
+    }
+    
+    .collab-brand {
+      font-weight: 600;
+      color: var(--text-on-surface);
+    }
+    
+    .collab-date {
+      color: var(--text-muted);
+      font-size: 0.9em;
+    }
+    
+    .collab-status {
+      margin-left: auto;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    
+    .status-completed {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+    }
+    
+    .status-upcoming {
+      background: rgba(33, 150, 243, 0.2);
+      color: #2196F3;
+    }
+    
+    .status-cancelled {
+      background: rgba(244, 67, 54, 0.2);
+      color: #F44336;
+    }
+    
+    .content-preview {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 16px 0;
+      height: 200px;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+    
+    .content-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .content-preview::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(transparent 50%, rgba(0,0,0,0.7));
+    }
+    
+    .content-preview .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.9);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      cursor: pointer;
+    }
+    
+    .content-preview .play-btn::before {
+      content: '▶';
+      font-size: 1.5em;
+      color: var(--primary);
+    }
+    
     @media (max-width: 1024px) {
       .profile-grid {
         grid-template-columns: 1fr;
@@ -715,6 +993,10 @@
         width: 100%;
         text-align: center;
       }
+      
+      .platform-switcher {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -732,6 +1014,7 @@
           Анна Сидорова
           <span class="badge badge-verified">✓ Проверен</span>
           <span class="badge badge-premium">ТОП</span>
+          <span class="badge badge-trending">Тренд +12%</span>
         </h1>
         <div class="blogger-badges">
           <span class="badge">Instagram</span>
@@ -742,9 +1025,9 @@
         </div>
         
         <div class="platform-switcher">
-          <button class="platform-btn active">Instagram</button>
-          <button class="platform-btn">YouTube</button>
-          <button class="platform-btn">TikTok</button>
+          <button class="platform-btn active" data-platform="instagram">Instagram</button>
+          <button class="platform-btn" data-platform="youtube">YouTube</button>
+          <button class="platform-btn" data-platform="tiktok">TikTok</button>
         </div>
         
         <div class="rating">
@@ -758,8 +1041,8 @@
         </div>
       </div>
       <div class="action-buttons">
-        <button class="btn btn-light">💬 Написать</button>
-        <button class="btn btn-light">⭐ В избранное</button>
+        <button class="btn btn-light" onclick="startChat()">💬 Написать</button>
+        <button class="btn btn-light" onclick="toggleFavorite()">⭐ В избранное</button>
         <button class="btn btn-accent" onclick="saveToList()">📁 В отложенные</button>
       </div>
     </div>
@@ -772,18 +1055,22 @@
           <div class="metric-card">
             <div class="metric-value">87K</div>
             <div class="metric-label">Подписчики</div>
+            <div class="metric-trend trend-up">↑ +12% за месяц</div>
           </div>
           <div class="metric-card">
             <div class="metric-value">7.2%</div>
             <div class="metric-label">Engagement Rate</div>
+            <div class="metric-trend trend-up">↑ +0.8%</div>
           </div>
           <div class="metric-card">
             <div class="metric-value">34K</div>
             <div class="metric-label">Средние просмотры</div>
+            <div class="metric-trend trend-up">↑ +15%</div>
           </div>
           <div class="metric-card">
             <div class="metric-value">$1,800</div>
             <div class="metric-label">Средняя цена</div>
+            <div class="metric-trend trend-up">↑ +5%</div>
           </div>
         </div>
 
@@ -824,6 +1111,38 @@
         <div class="ai-recommendation">
           <h4>🤖 AI-рекомендация</h4>
           <p>Высокий потенциал для collaboration с beauty-брендами. Аудитория активно вовлечена, преобладает женская аудитория 18-24 лет. Рекомендуемая ставка: $1,500-2,200 за интеграцию. Быстро отвечает на сообщения, хорошая история сотрудничества.</p>
+          <div class="ai-score">
+            <strong>Оценка совместимости: 92%</strong>
+            <div class="quality-meter">
+              <div class="quality-fill" style="width: 92%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- История коллабораций -->
+        <div class="collaboration-history">
+          <h3 class="section-title">История коллабораций</h3>
+          <div class="collab-item">
+            <div class="collab-info">
+              <div class="collab-brand">L'Oréal Paris</div>
+              <div class="collab-date">Октябрь 2023</div>
+            </div>
+            <span class="collab-status status-completed">Завершено</span>
+          </div>
+          <div class="collab-item">
+            <div class="collab-info">
+              <div class="collab-brand">Maybelline New York</div>
+              <div class="collab-date">Ноябрь 2023</div>
+            </div>
+            <span class="collab-status status-completed">Завершено</span>
+          </div>
+          <div class="collab-item">
+            <div class="collab-info">
+              <div class="collab-brand">Sephora</div>
+              <div class="collab-date">Декабрь 2023</div>
+            </div>
+            <span class="collab-status status-upcoming">Предстоящее</span>
+          </div>
         </div>
 
         <!-- Табы -->
@@ -896,6 +1215,16 @@
           </div>
 
           <h3 class="section-title">Последние публикации</h3>
+          
+          <!-- Превью контента -->
+          <div class="content-preview">
+            <div class="play-btn"></div>
+            <div class="demo-chart-placeholder">
+              <div class="icon">📷</div>
+              <p>Превью последнего Reels</p>
+            </div>
+          </div>
+          
           <div class="content-grid">
             <div class="content-item">
               <h4>Обзор новой косметики</h4>
@@ -982,7 +1311,7 @@
               <button class="btn">Выбрать</button>
             </div>
             
-            <div class="price-card">
+            <div class="price-card popular">
               <div class="price-type">Reels интеграция</div>
               <div class="price-value">$1,800</div>
               <div class="price-features">
@@ -991,7 +1320,7 @@
                 <p>• Ссылка в профиле</p>
                 <p>• Срок: 48 часов</p>
               </div>
-              <button class="btn">Выбрать</button>
+              <button class="btn btn-accent">Выбрать</button>
             </div>
             
             <div class="price-card">
@@ -1024,6 +1353,7 @@
             <div class="contact-item">
               <span>💼</span>
               <span>Менеджер: Мария +7 (999) 765-43-21</span>
+              <span class="contact-status status-busy">Занята</span>
             </div>
             <div class="contact-item">
               <span>🕒</span>
@@ -1133,10 +1463,10 @@
         <div class="sidebar-card">
           <h3>⚡ Быстрые действия</h3>
           <div style="display: flex; flex-direction: column; gap: 12px;">
-            <button class="btn">💌 Отправить предложение</button>
-            <button class="btn btn-secondary">📊 Сравнить с другими</button>
-            <button class="btn">📋 Экспорт данных</button>
-            <button class="btn">🔄 Обновить статистику</button>
+            <button class="btn" onclick="sendOffer()">💌 Отправить предложение</button>
+            <button class="btn btn-secondary" onclick="compareBloggers()">📊 Сравнить с другими</button>
+            <button class="btn" onclick="exportData()">📋 Экспорт данных</button>
+            <button class="btn" onclick="refreshStats()">🔄 Обновить статистику</button>
           </div>
         </div>
       </aside>
@@ -1144,10 +1474,10 @@
 
     <!-- Панель действий внизу -->
     <div class="action-panel">
-      <button class="btn btn-large">💌 Отправить предложение</button>
-      <button class="btn btn-large btn-accent">📁 Добавить в список</button>
-      <button class="btn btn-large">📊 Сравнить с другими</button>
-      <button class="btn btn-large">💬 Начать чат</button>
+      <button class="btn btn-large" onclick="sendOffer()">💌 Отправить предложение</button>
+      <button class="btn btn-large btn-accent" onclick="saveToList()">📁 Добавить в список</button>
+      <button class="btn btn-large" onclick="compareBloggers()">📊 Сравнить с другими</button>
+      <button class="btn btn-large" onclick="startChat()">💬 Начать чат</button>
     </div>
   </main>
 
@@ -1175,6 +1505,9 @@
       
       // Инициализируем переключение типов контента
       initContentTypeTabs();
+      
+      // Проверяем, добавлен ли блогер в избранное
+      checkFavoriteStatus(bloggerId);
     });
 
     // Загрузка данных блогера
@@ -1188,7 +1521,8 @@
           category: 'Красота',
           er: '7.2%',
           avgViews: '34K',
-          price: '$1,800'
+          price: '$1,800',
+          isFavorite: false
         },
         '2': { 
           name: 'Иван Петров', 
@@ -1198,7 +1532,8 @@
           category: 'Техника',
           er: '4.8%',
           avgViews: '45K',
-          price: '$1,500'
+          price: '$1,500',
+          isFavorite: false
         },
         '3': { 
           name: 'Сергей Козлов', 
@@ -1208,7 +1543,8 @@
           category: 'Игры',
           er: '3.2%',
           avgViews: '89K',
-          price: '$2,500'
+          price: '$2,500',
+          isFavorite: false
         }
       };
       
@@ -1222,6 +1558,52 @@
       document.querySelectorAll('.metric-value')[1].textContent = blogger.er;
       document.querySelectorAll('.metric-value')[2].textContent = blogger.avgViews;
       document.querySelectorAll('.metric-value')[3].textContent = blogger.price;
+      
+      // Обновляем заголовок страницы
+      document.title = `${blogger.name} — Bloggers.tools`;
+    }
+
+    // Проверка статуса избранного
+    function checkFavoriteStatus(bloggerId) {
+      const favorites = JSON.parse(localStorage.getItem('favorite_bloggers') || '[]');
+      const isFavorite = favorites.includes(bloggerId);
+      
+      const favoriteBtn = document.querySelector('.action-buttons .btn:nth-child(2)');
+      if (favoriteBtn) {
+        if (isFavorite) {
+          favoriteBtn.innerHTML = '❤️ В избранном';
+          favoriteBtn.classList.add('btn-accent');
+        } else {
+          favoriteBtn.innerHTML = '⭐ В избранное';
+          favoriteBtn.classList.remove('btn-accent');
+        }
+      }
+    }
+
+    // Переключение избранного
+    function toggleFavorite() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || '1';
+      
+      const favorites = JSON.parse(localStorage.getItem('favorite_bloggers') || '[]');
+      const favoriteIndex = favorites.indexOf(bloggerId);
+      const favoriteBtn = document.querySelector('.action-buttons .btn:nth-child(2)');
+      
+      if (favoriteIndex === -1) {
+        // Добавляем в избранное
+        favorites.push(bloggerId);
+        favoriteBtn.innerHTML = '❤️ В избранном';
+        favoriteBtn.classList.add('btn-accent');
+        showNotification('Блогер добавлен в избранное');
+      } else {
+        // Удаляем из избранного
+        favorites.splice(favoriteIndex, 1);
+        favoriteBtn.innerHTML = '⭐ В избранное';
+        favoriteBtn.classList.remove('btn-accent');
+        showNotification('Блогер удален из избранного');
+      }
+      
+      localStorage.setItem('favorite_bloggers', JSON.stringify(favorites));
     }
 
     // Загрузка заметок
@@ -1262,7 +1644,7 @@
       const text = noteInput.value.trim();
       
       if (!text) {
-        alert('Введите текст заметки');
+        showNotification('Введите текст заметки', 'error');
         return;
       }
       
@@ -1279,7 +1661,7 @@
       
       // Перезагружаем заметки
       loadNotes(bloggerId);
-      alert('Заметка сохранена!');
+      showNotification('Заметка сохранена!');
     }
 
     // Очистка поля заметки
@@ -1316,6 +1698,7 @@
       
       // Перезагружаем заметки
       loadNotes(bloggerId);
+      showNotification('Заметка удалена');
     }
 
     // Добавление в отложенные
@@ -1327,10 +1710,99 @@
       if (!saved.includes(bloggerId)) {
         saved.push(bloggerId);
         localStorage.setItem('saved_bloggers', JSON.stringify(saved));
-        alert('Блогер добавлен в отложенные');
+        showNotification('Блогер добавлен в отложенные');
       } else {
-        alert('Блогер уже в отложенных');
+        showNotification('Блогер уже в отложенных', 'info');
       }
+    }
+
+    // Отправка предложения
+    function sendOffer() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || '1';
+      
+      // Здесь будет логика открытия модального окна с формой предложения
+      showNotification('Форма предложения открыта');
+    }
+
+    // Сравнение блогеров
+    function compareBloggers() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || '1';
+      
+      // Сохраняем текущего блогера для сравнения
+      const compareList = JSON.parse(localStorage.getItem('compare_bloggers') || '[]');
+      if (!compareList.includes(bloggerId)) {
+        compareList.push(bloggerId);
+        localStorage.setItem('compare_bloggers', JSON.stringify(compareList));
+      }
+      
+      // Переходим на страницу сравнения
+      window.location.href = 'compare.html';
+    }
+
+    // Начать чат
+    function startChat() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || '1';
+      
+      // Здесь будет логика открытия чата
+      showNotification('Чат открыт');
+    }
+
+    // Экспорт данных
+    function exportData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || '1';
+      
+      // Здесь будет логика экспорта данных
+      showNotification('Данные экспортированы');
+    }
+
+    // Обновление статистики
+    function refreshStats() {
+      showNotification('Статистика обновляется...', 'info');
+      
+      // Имитация загрузки
+      setTimeout(() => {
+        showNotification('Статистика обновлена');
+      }, 2000);
+    }
+
+    // Показать уведомление
+    function showNotification(message, type = 'success') {
+      // Создаем элемент уведомления
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        color: white;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: var(--shadow-3);
+        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+      `;
+      
+      if (type === 'success') {
+        notification.style.background = 'var(--success)';
+      } else if (type === 'error') {
+        notification.style.background = 'var(--error)';
+      } else if (type === 'info') {
+        notification.style.background = 'var(--primary)';
+      }
+      
+      document.body.appendChild(notification);
+      
+      // Удаляем уведомление через 3 секунды
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 3000);
     }
 
     // Инициализация табов
@@ -1360,7 +1832,10 @@
         btn.addEventListener('click', function() {
           platformBtns.forEach(b => b.classList.remove('active'));
           this.classList.add('active');
+          
+          const platform = this.getAttribute('data-platform');
           // Здесь будет логика загрузки данных для выбранной платформы
+          showNotification(`Загружаем данные для ${platform}`);
         });
       });
     }
