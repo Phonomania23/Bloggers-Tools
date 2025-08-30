@@ -260,6 +260,36 @@
       accent-color: var(--primary);
       cursor: pointer;
     }
+    
+    /* Стили для дополнительных фильтров */
+    .advanced-filters {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed #e0e0e0;
+    }
+    
+    .toggle-filters {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 0;
+    }
+    
+    .filters-collapse {
+      display: none;
+    }
+    
+    .filters-collapse.show {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -332,6 +362,9 @@
             <option>TikTok</option>
             <option>Instagram</option>
             <option>Telegram</option>
+            <option>VK</option>
+            <option>Twitter</option>
+            <option>Twitch</option>
           </select>
         </div>
 
@@ -346,7 +379,23 @@
         <!-- Рубрика -->
         <div class="chip">
           <label>Рубрика</label>
-          <input id="fCategory" type="text" placeholder="техника, красота…" style="width:120px" />
+          <select id="fCategory">
+            <option value="">Все рубрики</option>
+            <option>техника</option>
+            <option>красота</option>
+            <option>игры</option>
+            <option>мода</option>
+            <option>новости</option>
+            <option>кулинария</option>
+            <option>юмор</option>
+            <option>здоровье</option>
+            <option>путешествия</option>
+            <option>образование</option>
+            <option>спорт</option>
+            <option>авто</option>
+            <option>финансы</option>
+            <option>политика</option>
+          </select>
         </div>
 
         <!-- Гео аудитории -->
@@ -359,6 +408,10 @@
             <option>ES</option>
             <option>FR</option>
             <option>CN</option>
+            <option>DE</option>
+            <option>JP</option>
+            <option>IN</option>
+            <option>BR</option>
           </select>
         </div>
 
@@ -372,6 +425,10 @@
             <option>ES</option>
             <option>FR</option>
             <option>CN</option>
+            <option>DE</option>
+            <option>JP</option>
+            <option>IN</option>
+            <option>BR</option>
           </select>
         </div>
 
@@ -410,6 +467,7 @@
             <option value="">Любой</option>
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
+            <option value="mixed">Смешанный</option>
           </select>
         </div>
 
@@ -445,6 +503,83 @@
           <input id="fQuery" type="search" placeholder="имя/ниша/теги…" style="width:150px" />
         </div>
 
+        <!-- Дополнительные фильтры -->
+        <div style="flex-basis: 100%; margin-top: 15px;">
+          <button type="button" class="toggle-filters" id="toggleAdvancedFilters">
+            <span>▸</span> Дополнительные фильтры
+          </button>
+          
+          <div class="filters-collapse" id="advancedFilters">
+            <!-- Язык контента -->
+            <div class="chip">
+              <label>Язык контента</label>
+              <select id="fContentLanguage">
+                <option value="">Любой</option>
+                <option>Русский</option>
+                <option>Английский</option>
+                <option>Испанский</option>
+                <option>Французский</option>
+                <option>Китайский</option>
+                <option>Немецкий</option>
+                <option>Японский</option>
+              </select>
+            </div>
+
+            <!-- Частота публикаций -->
+            <div class="chip">
+              <label>Постов/нед</label>
+              <input id="fPostsMin" type="number" placeholder="от" min="0" max="100" step="1" style="width:80px" />
+              <span class="muted">—</span>
+              <input id="fPostsMax" type="number" placeholder="до" min="1" max="100" step="1" style="width:80px" />
+            </div>
+
+            <!-- Вовлеченность (Engagement) -->
+            <div class="chip">
+              <label>Вовлеченность</label>
+              <select id="fEngagementLevel">
+                <option value="">Любая</option>
+                <option value="high">Высокая</option>
+                <option value="medium">Средняя</option>
+                <option value="low">Низкая</option>
+              </select>
+            </div>
+
+            <!-- Тип контента -->
+            <div class="chip">
+              <label>Тип контента</label>
+              <select id="fContentType">
+                <option value="">Любой</option>
+                <option>Фото</option>
+                <option>Видео</option>
+                <option>Текст</option>
+                <option>Сторис</option>
+                <option>Reels/Shorts</option>
+                <option>Live</option>
+              </select>
+            </div>
+
+            <!-- Сотрудничество с брендами -->
+            <div class="chip">
+              <label>Опыт с брендами</label>
+              <select id="fBrandExperience">
+                <option value="">Не важно</option>
+                <option value="yes">Есть опыт</option>
+                <option value="no">Нет опыта</option>
+              </select>
+            </div>
+
+            <!-- Верификация -->
+            <div class="chip">
+              <label>Верификация</label>
+              <select id="fVerified">
+                <option value="">Не важно</option>
+                <option value="yes">Верифицирован</option>
+                <option value="no">Не верифицирован</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <button id="clearFilters" class="btn btn-secondary" type="button" style="margin-left:auto">Очистить фильтры</button>
       </form>
 
@@ -457,6 +592,7 @@
         <div class="row">
           <button id="selectAll" class="btn btn-secondary" type="button">Выбрать все</button>
           <button id="clearPicked" class="btn btn-secondary" type="button">Очистить выбор</button>
+          <button id="saveSearch" class="btn" type="button">Сохранить поиск</button>
         </div>
       </div>
 
@@ -472,7 +608,7 @@
           <button class="btn" onclick="location.href='deal/index.html#/1-pick'" aria-label="Начать новую сделку">🎯 Начать новую сделку</button>
           <button class="btn btn-secondary" onclick="location.href='emails.html'" aria-label="Управление шаблонами писем">✉️ Управление шаблонами</button>
           <button class="btn" onclick="location.href='#reports'" aria-label="Создать отчет">📊 Создать отчет</button>
-          <button class="btn btn-secondary" onclick="location.href='#team'" aria-label="Управление командой">👥 Управление командой</button>
+          <button class="btn btn-secondary" onclick="location.href='#team'" aria-label="Управление командой">👥 Управление командой</button>
         </div>
       </div>
 
@@ -511,6 +647,18 @@
         });
       }
       
+      // Переключение дополнительных фильтров
+      const toggleFiltersBtn = document.getElementById('toggleAdvancedFilters');
+      const advancedFilters = document.getElementById('advancedFilters');
+      
+      if (toggleFiltersBtn && advancedFilters) {
+        toggleFiltersBtn.addEventListener('click', function() {
+          advancedFilters.classList.toggle('show');
+          const arrow = toggleFiltersBtn.querySelector('span');
+          arrow.textContent = advancedFilters.classList.contains('show') ? '▾' : '▸';
+        });
+      }
+      
       // Текущее состояние приложения
       const appState = {
         selectedBloggers: []
@@ -518,18 +666,21 @@
       
       // Данные блогеров с дополнительными полями для фильтрации
       const mockBloggers = [
-        { id: 1, name: "Иван Петров", platform: "YouTube", followers: 125000, er: 4.5, category: "техника", price: 2500, email: "ivan@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "25-34", bloggerAge: "28", audienceGender: "male", bloggerGender: "male" },
-        { id: 2, name: "Анна Сидорова", platform: "Instagram", followers: 87000, er: 7.2, category: "красота", price: 1800, email: "anna@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "18-24", bloggerAge: "22", audienceGender: "female", bloggerGender: "female" },
-        { id: 3, name: "Сергей Козлов", platform: "YouTube", followers: 356000, er: 3.8, category: "игры", price: 4200, email: "sergey@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "13-17", bloggerAge: "25", audienceGender: "male", bloggerGender: "male" },
-        { id: 4, name: "Мария Иванова", platform: "TikTok", followers: 210000, er: 8.1, category: "мода", price: 1900, email: "maria@example.com", geo: "EN", audienceGeo: "EN", audienceAge: "18-24", bloggerAge: "21", audienceGender: "female", bloggerGender: "female" },
-        { id: 5, name: "Дмитрий Смирнов", platform: "Telegram", followers: 45000, er: 5.5, category: "новости", price: 1200, email: "dmitry@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "35-44", bloggerAge: "40", audienceGender: "male", bloggerGender: "male" },
-        { id: 6, name: "Ольга Кузнецова", platform: "YouTube", followers: 98000, er: 6.2, category: "кулинария", price: 1600, email: "olga@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "25-34", bloggerAge: "32", audienceGender: "female", bloggerGender: "female" },
-        { id: 7, name: "Алексей Попов", platform: "TikTok", followers: 320000, er: 5.8, category: "юмор", price: 2800, email: "alex@example.com", geo: "EN", audienceGeo: "EN", audienceAge: "18-24", bloggerAge: "19", audienceGender: "male", bloggerGender: "male" },
-        { id: 8, name: "Елена Васнецова", platform: "Instagram", followers: 145000, er: 6.9, category: "здоровье", price: 2200, email: "elena@example.com", geo: "ES", audienceGeo: "ES", audienceAge: "35-44", bloggerAge: "38", audienceGender: "female", bloggerGender: "female" },
-        { id: 9, name: "Карлос Санчес", platform: "YouTube", followers: 89000, er: 9.2, category: "путешествия", price: 1900, email: "carlos@example.com", geo: "ES", audienceGeo: "ES", audienceAge: "25-34", bloggerAge: "29", audienceGender: "male", bloggerGender: "male" },
-        { id: 10, name: "Пьер Дюпон", platform: "Instagram", followers: 112000, er: 8.7, category: "мода", price: 2100, email: "pierre@example.com", geo: "FR", audienceGeo: "FR", audienceAge: "25-34", bloggerAge: "31", audienceGender: "male", bloggerGender: "male" },
-        { id: 11, name: "Ли Вей", platform: "TikTok", followers: 480000, er: 7.8, category: "техника", price: 3500, email: "li@example.com", geo: "CN", audienceGeo: "CN", audienceAge: "18-24", bloggerAge: "23", audienceGender: "male", bloggerGender: "male" },
-        { id: 12, name: "Чжан Мин", platform: "YouTube", followers: 125000, er: 6.5, category: "образование", price: 1800, email: "zhang@example.com", geo: "CN", audienceGeo: "CN", audienceAge: "25-34", bloggerAge: "30", audienceGender: "female", bloggerGender: "female" }
+        { id: 1, name: "Иван Петров", platform: "YouTube", followers: 125000, er: 4.5, category: "техника", price: 2500, email: "ivan@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "25-34", bloggerAge: "28", audienceGender: "male", bloggerGender: "male", contentLanguage: "Русский", postsPerWeek: 3, engagementLevel: "medium", contentType: "Видео", brandExperience: "yes", verified: "yes" },
+        { id: 2, name: "Анна Сидорова", platform: "Instagram", followers: 87000, er: 7.2, category: "красота", price: 1800, email: "anna@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "18-24", bloggerAge: "22", audienceGender: "female", bloggerGender: "female", contentLanguage: "Русский", postsPerWeek: 7, engagementLevel: "high", contentType: "Фото", brandExperience: "yes", verified: "no" },
+        { id: 3, name: "Сергей Козлов", platform: "YouTube", followers: 356000, er: 3.8, category: "игры", price: 4200, email: "sergey@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "13-17", bloggerAge: "25", audienceGender: "male", bloggerGender: "male", contentLanguage: "Русский", postsPerWeek: 2, engagementLevel: "low", contentType: "Видео", brandExperience: "no", verified: "yes" },
+        { id: 4, name: "Мария Иванова", platform: "TikTok", followers: 210000, er: 8.1, category: "мода", price: 1900, email: "maria@example.com", geo: "EN", audienceGeo: "EN", audienceAge: "18-24", bloggerAge: "21", audienceGender: "female", bloggerGender: "female", contentLanguage: "Английский", postsPerWeek: 12, engagementLevel: "high", contentType: "Reels/Shorts", brandExperience: "yes", verified: "yes" },
+        { id: 5, name: "Дмитрий Смирнов", platform: "Telegram", followers: 45000, er: 5.5, category: "новости", price: 1200, email: "dmitry@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "35-44", bloggerAge: "40", audienceGender: "male", bloggerGender: "male", contentLanguage: "Русский", postsPerWeek: 14, engagementLevel: "medium", contentType: "Текст", brandExperience: "yes", verified: "no" },
+        { id: 6, name: "Ольга Кузнецова", platform: "YouTube", followers: 98000, er: 6.2, category: "кулинария", price: 1600, email: "olga@example.com", geo: "RU", audienceGeo: "RU", audienceAge: "25-34", bloggerAge: "32", audienceGender: "female", bloggerGender: "female", contentLanguage: "Русский", postsPerWeek: 4, engagementLevel: "high", contentType: "Видео", brandExperience: "yes", verified: "yes" },
+        { id: 7, name: "Алексей Попов", platform: "TikTok", followers: 320000, er: 5.8, category: "юмор", price: 2800, email: "alex@example.com", geo: "EN", audienceGeo: "EN", audienceAge: "18-24", bloggerAge: "19", audienceGender: "male", bloggerGender: "male", contentLanguage: "Английский", postsPerWeek: 10, engagementLevel: "high", contentType: "Reels/Shorts", brandExperience: "no", verified: "yes" },
+        { id: 8, name: "Елена Васнецова", platform: "Instagram", followers: 145000, er: 6.9, category: "здоровье", price: 2200, email: "elena@example.com", geo: "ES", audienceGeo: "ES", audienceAge: "35-44", bloggerAge: "38", audienceGender: "female", bloggerGender: "female", contentLanguage: "Испанский", postsPerWeek: 5, engagementLevel: "medium", contentType: "Сторис", brandExperience: "yes", verified: "yes" },
+        { id: 9, name: "Карлос Санчес", platform: "YouTube", followers: 89000, er: 9.2, category: "путешествия", price: 1900, email: "carlos@example.com", geo: "ES", audienceGeo: "ES", audienceAge: "25-34", bloggerAge: "29", audienceGender: "male", bloggerGender: "male", contentLanguage: "Испанский", postsPerWeek: 3, engagementLevel: "high", contentType: "Видео", brandExperience: "yes", verified: "no" },
+        { id: 10, name: "Пьер Дюпон", platform: "Instagram", followers: 112000, er: 8.7, category: "мода", price: 2100, email: "pierre@example.com", geo: "FR", audienceGeo: "FR", audienceAge: "25-34", bloggerAge: "31", audienceGender: "male", bloggerGender: "male", contentLanguage: "Французский", postsPerWeek: 6, engagementLevel: "medium", contentType: "Фото", brandExperience: "yes", verified: "yes" },
+        { id: 11, name: "Ли Вей", platform: "TikTok", followers: 480000, er: 7.8, category: "техника", price: 3500, email: "li@example.com", geo: "CN", audienceGeo: "CN", audienceAge: "18-24", bloggerAge: "23", audienceGender: "male", bloggerGender: "male", contentLanguage: "Китайский", postsPerWeek: 8, engagementLevel: "high", contentType: "Reels/Shorts", brandExperience: "yes", verified: "yes" },
+        { id: 12, name: "Чжан Мин", platform: "YouTube", followers: 125000, er: 6.5, category: "образование", price: 1800, email: "zhang@example.com", geo: "CN", audienceGeo: "CN", audienceAge: "25-34", bloggerAge: "30", audienceGender: "female", bloggerGender: "female", contentLanguage: "Китайский", postsPerWeek: 2, engagementLevel: "medium", contentType: "Видео", brandExperience: "no", verified: "no" },
+        { id: 13, name: "Томас Мюллер", platform: "Twitter", followers: 78000, er: 4.2, category: "спорт", price: 1500, email: "thomas@example.com", geo: "DE", audienceGeo: "DE", audienceAge: "25-34", bloggerAge: "29", audienceGender: "male", bloggerGender: "male", contentLanguage: "Немецкий", postsPerWeek: 20, engagementLevel: "low", contentType: "Текст", brandExperience: "yes", verified: "yes" },
+        { id: 14, name: "Юки Танака", platform: "Twitch", followers: 92000, er: 8.9, category: "игры", price: 2300, email: "yuki@example.com", geo: "JP", audienceGeo: "JP", audienceAge: "18-24", bloggerAge: "26", audienceGender: "male", bloggerGender: "male", contentLanguage: "Японский", postsPerWeek: 15, engagementLevel: "high", contentType: "Live", brandExperience: "no", verified: "yes" },
+        { id: 15, name: "Прия Шарма", platform: "Instagram", followers: 187000, er: 6.3, category: "красота", price: 2100, email: "priya@example.com", geo: "IN", audienceGeo: "IN", audienceAge: "18-24", bloggerAge: "24", audienceGender: "female", bloggerGender: "female", contentLanguage: "Английский", postsPerWeek: 8, engagementLevel: "high", contentType: "Фото", brandExperience: "yes", verified: "no" }
       ];
       
       // Инициализация приложения
@@ -546,7 +697,9 @@
           'fPlatform', 'followersMinK', 'followersMaxK', 'fCategory', 
           'fAudienceGeo', 'fBloggerGeo', 'fAudienceAge', 'fBloggerAge',
           'fAudienceGender', 'fBloggerGender', 'fErMin', 'fErMax', 
-          'fPriceMin', 'fPriceMax', 'fQuery'
+          'fPriceMin', 'fPriceMax', 'fQuery', 'fContentLanguage',
+          'fPostsMin', 'fPostsMax', 'fEngagementLevel', 'fContentType',
+          'fBrandExperience', 'fVerified'
         ];
         
         filterInputs.forEach(id => {
@@ -566,6 +719,7 @@
         // Кнопки выбора
         document.getElementById('selectAll')?.addEventListener('click', selectAllFiltered);
         document.getElementById('clearPicked')?.addEventListener('click', clearSelectedBloggers);
+        document.getElementById('saveSearch')?.addEventListener('click', saveSearchPreset);
         
         // Переход к брифу
         const goToBrief = document.getElementById('goToBrief');
@@ -590,7 +744,9 @@
           'fPlatform', 'followersMinK', 'followersMaxK', 'fCategory',
           'fAudienceGeo', 'fBloggerGeo', 'fAudienceAge', 'fBloggerAge',
           'fAudienceGender', 'fBloggerGender', 'fErMin', 'fErMax', 
-          'fPriceMin', 'fPriceMax', 'fQuery'
+          'fPriceMin', 'fPriceMax', 'fQuery', 'fContentLanguage',
+          'fPostsMin', 'fPostsMax', 'fEngagementLevel', 'fContentType',
+          'fBrandExperience', 'fVerified'
         ];
         
         fieldsToClear.forEach(id => {
@@ -621,6 +777,13 @@
         const priceMin = document.getElementById('fPriceMin')?.value;
         const priceMax = document.getElementById('fPriceMax')?.value;
         const query = document.getElementById('fQuery')?.value;
+        const contentLanguage = document.getElementById('fContentLanguage')?.value;
+        const postsMin = document.getElementById('fPostsMin')?.value;
+        const postsMax = document.getElementById('fPostsMax')?.value;
+        const engagementLevel = document.getElementById('fEngagementLevel')?.value;
+        const contentType = document.getElementById('fContentType')?.value;
+        const brandExperience = document.getElementById('fBrandExperience')?.value;
+        const verified = document.getElementById('fVerified')?.value;
         
         if (platform) {
           addFilterChip('Платформа: ' + platform, () => {
@@ -679,7 +842,7 @@
         }
         
         if (audienceGender) {
-          const genderText = audienceGender === 'male' ? 'Мужской' : 'Женский';
+          const genderText = audienceGender === 'male' ? 'Мужской' : audienceGender === 'female' ? 'Женский' : 'Смешанный';
           addFilterChip('Пол аудитории: ' + genderText, () => {
             document.getElementById('fAudienceGender').value = '';
             applyFilters();
@@ -728,6 +891,58 @@
             applyFilters();
           });
         }
+        
+        if (contentLanguage) {
+          addFilterChip('Язык: ' + contentLanguage, () => {
+            document.getElementById('fContentLanguage').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (postsMin) {
+          addFilterChip('Постов от: ' + postsMin, () => {
+            document.getElementById('fPostsMin').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (postsMax) {
+          addFilterChip('Постов до: ' + postsMax, () => {
+            document.getElementById('fPostsMax').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (engagementLevel) {
+          const engagementText = engagementLevel === 'high' ? 'Высокая' : engagementLevel === 'medium' ? 'Средняя' : 'Низкая';
+          addFilterChip('Вовлеченность: ' + engagementText, () => {
+            document.getElementById('fEngagementLevel').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (contentType) {
+          addFilterChip('Тип контента: ' + contentType, () => {
+            document.getElementById('fContentType').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (brandExperience) {
+          const experienceText = brandExperience === 'yes' ? 'Есть опыт' : 'Нет опыта';
+          addFilterChip('Опыт с брендами: ' + experienceText, () => {
+            document.getElementById('fBrandExperience').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (verified) {
+          const verifiedText = verified === 'yes' ? 'Верифицирован' : 'Не верифицирован';
+          addFilterChip('Верификация: ' + verifiedText, () => {
+            document.getElementById('fVerified').value = '';
+            applyFilters();
+          });
+        }
       }
       
       // Добавление чипа фильтра
@@ -765,6 +980,13 @@
         const priceMin = parseInt(document.getElementById('fPriceMin').value) || 0;
         const priceMax = parseInt(document.getElementById('fPriceMax').value) || Infinity;
         const queryFilter = document.getElementById('fQuery').value.toLowerCase();
+        const contentLanguageFilter = document.getElementById('fContentLanguage').value;
+        const postsMin = parseInt(document.getElementById('fPostsMin').value) || 0;
+        const postsMax = parseInt(document.getElementById('fPostsMax').value) || Infinity;
+        const engagementLevelFilter = document.getElementById('fEngagementLevel').value;
+        const contentTypeFilter = document.getElementById('fContentType').value;
+        const brandExperienceFilter = document.getElementById('fBrandExperience').value;
+        const verifiedFilter = document.getElementById('fVerified').value;
         
         // Фильтруем блогеров
         let filteredBloggers = mockBloggers.filter(blogger => {
@@ -837,6 +1059,36 @@
             return false;
           }
           
+          // Фильтр по языку контента
+          if (contentLanguageFilter && blogger.contentLanguage !== contentLanguageFilter) {
+            return false;
+          }
+          
+          // Фильтр по частоте публикаций
+          if (blogger.postsPerWeek < postsMin || blogger.postsPerWeek > postsMax) {
+            return false;
+          }
+          
+          // Фильтр по уровню вовлеченности
+          if (engagementLevelFilter && blogger.engagementLevel !== engagementLevelFilter) {
+            return false;
+          }
+          
+          // Фильтр по типу контента
+          if (contentTypeFilter && blogger.contentType !== contentTypeFilter) {
+            return false;
+          }
+          
+          // Фильтр по опыту с брендами
+          if (brandExperienceFilter && blogger.brandExperience !== brandExperienceFilter) {
+            return false;
+          }
+          
+          // Фильтр по верификации
+          if (verifiedFilter && blogger.verified !== verifiedFilter) {
+            return false;
+          }
+          
           return true;
         });
         
@@ -869,7 +1121,8 @@
               <div class="meta">
                 Подписчики: ${(blogger.followers / 1000).toFixed(0)}K · 
                 ER: ${blogger.er}% · 
-                Цена: ${blogger.price}$
+                Цена: ${blogger.price}$ ·
+                Постов/нед: ${blogger.postsPerWeek}
               </div>
               <div class="actions">
                 <label class="select-radio">
@@ -980,6 +1233,45 @@
           const checkbox = card.querySelector('input[type="checkbox"]');
           if (checkbox) checkbox.checked = false;
         });
+      }
+      
+      // Сохранить настройки поиска
+      function saveSearchPreset() {
+        const searchName = prompt('Введите название для этого поиска:');
+        if (!searchName) return;
+        
+        const searchFilters = {
+          name: searchName,
+          platform: document.getElementById('fPlatform').value,
+          followersMinK: document.getElementById('followersMinK').value,
+          followersMaxK: document.getElementById('followersMaxK').value,
+          category: document.getElementById('fCategory').value,
+          audienceGeo: document.getElementById('fAudienceGeo').value,
+          bloggerGeo: document.getElementById('fBloggerGeo').value,
+          audienceAge: document.getElementById('fAudienceAge').value,
+          bloggerAge: document.getElementById('fBloggerAge').value,
+          audienceGender: document.getElementById('fAudienceGender').value,
+          bloggerGender: document.getElementById('fBloggerGender').value,
+          erMin: document.getElementById('fErMin').value,
+          erMax: document.getElementById('fErMax').value,
+          priceMin: document.getElementById('fPriceMin').value,
+          priceMax: document.getElementById('fPriceMax').value,
+          query: document.getElementById('fQuery').value,
+          contentLanguage: document.getElementById('fContentLanguage').value,
+          postsMin: document.getElementById('fPostsMin').value,
+          postsMax: document.getElementById('fPostsMax').value,
+          engagementLevel: document.getElementById('fEngagementLevel').value,
+          contentType: document.getElementById('fContentType').value,
+          brandExperience: document.getElementById('fBrandExperience').value,
+          verified: document.getElementById('fVerified').value
+        };
+        
+        // Сохраняем в localStorage
+        let savedSearches = JSON.parse(localStorage.getItem('savedSearches') || '[]');
+        savedSearches.push(searchFilters);
+        localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+        
+        alert(`Поиск "${searchName}" сохранен!`);
       }
       
       // Запуск приложения
