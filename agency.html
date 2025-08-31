@@ -770,7 +770,9 @@
         <div class="row">
           <button id="selectAll" class="btn btn-secondary" type="button">Выбрать все</button>
           <button id="clearPicked" class="btn btn-secondary" type="button">Очистить выбор</button>
-          <button id="saveSearch" class="btn" type="button">Сохранить поиск</button>
+          <button id="btnSaveSearch" class="btn" type="button">Сохранить поиск</button>
+          <button id="btnLoadSearch" class="btn btn-secondary" type="button">Загрузить</button>
+          <button id="btnDeleteSearch" class="btn btn-secondary" type="button">Удалить</button>
           <button id="btnExportXlsx" class="btn" type="button"><i class="fas fa-file-excel"></i> Экспорт XLSX</button>
           <button id="btnExportCsv" class="btn btn-secondary" type="button"><i class="fas fa-file-csv"></i> Экспорт CSV</button>
         </div>
@@ -812,6 +814,9 @@
 
   <!-- Подключаем скрипт экспорта -->
   <script src="js/export.js"></script>
+
+  <!-- Подключаем скрипт сохраненных поисков -->
+  <script src="js/saved-searches.js"></script>
 
   <script>
     // Основная логика приложения
@@ -959,7 +964,7 @@
           {
             id: 5,
             name: "Дмитрий Смирнов",
-            username: "extreme_dima",
+            username: "news_dima",
             platform: "Telegram",
             followers: 45000,
             er: 5.5,
@@ -1026,7 +1031,6 @@
         // Кнопки выбора
         document.getElementById('selectAll')?.addEventListener('click', selectAllFiltered);
         document.getElementById('clearPicked')?.addEventListener('click', clearSelectedBloggers);
-        document.getElementById('saveSearch')?.addEventListener('click', saveSearchPreset);
 
         // Переход к брифу
         const goToBrief = document.getElementById('goToBrief');
@@ -1063,6 +1067,8 @@
         updateActiveChips();
         updateSelectionCount();
       }
+      // экспортируем, чтобы saved-searches.js мог триггерить
+      window.applyFilters = applyFilters;
 
       // Очистка всех фильтров
       function clearAllFilters() {
@@ -1208,7 +1214,10 @@
             blogger.username.toLowerCase().includes(queryFilter)
           )) return false;
 
-          // (Прочие доп. фильтры можно сюда докинуть по мере реализации)
+          // дополнительные фильтры при необходимости:
+          // contentLanguageFilter, postsMin/max, lastPostFilter, contentTypeFilter,
+          // audienceGenderFilter, bloggerGenderFilter, audienceAgeFilter, bloggerAgeFilter,
+          // brandExperienceFilter, similarToFilter, growingFilter, top25ERFilter ...
           return true;
         });
 
@@ -1386,7 +1395,8 @@
       function selectAllFiltered() {
         const platformFilter = document.getElementById('fPlatform').value;
         const minFollowers = parseInt(document.getElementById('followersMin').value) || 0;
-        const maxFollowers = parseInt(document.getElementById('followersMax').value) || Infinity;
+        theMax = parseInt(document.getElementById('followersMax').value) || Infinity;
+        const maxFollowers = theMax; // readability
         const followersUnit = document.getElementById('fFollowersUnit').value;
         const categoryFilter = document.getElementById('fCategory').value.toLowerCase();
         const queryFilter = document.getElementById('fQuery').value.toLowerCase();
@@ -1441,36 +1451,17 @@
         });
       }
 
-      // Сохранить настройки поиска
+      // Сохранить настройки поиска (используется SavedSearches внутри)
       function saveSearchPreset() {
         const searchName = prompt('Введите название для этого поиска:');
         if (!searchName) return;
 
-        const searchFilters = {
-          name: searchName,
-          platform: document.getElementById('fPlatform').value,
-          followersMin: document.getElementById('followersMin').value,
-          followersMax: document.getElementById('followersMax').value,
-          followersUnit: document.getElementById('fFollowersUnit').value,
-          category: document.getElementById('fCategory').value,
-          audienceGeo: document.getElementById('fAudienceGeo').value,
-          bloggerGeo: document.getElementById('fBloggerGeo').value,
-          erMin: document.getElementById('fErMin').value,
-          erMax: document.getElementById('fErMax').value,
-          priceMin: document.getElementById('fPriceMin').value,
-          priceMax: document.getElementById('fPriceMax').value,
-          query: document.getElementById('fQuery').value,
-          hasEmail: document.getElementById('fHasEmail').checked,
-          verifiedOnly: document.getElementById('fVerifiedOnly').checked,
-          growing: document.getElementById('fGrowing').checked,
-          top25ER: document.getElementById('fTop25ER').checked
-        };
-
-        let savedSearches = JSON.parse(localStorage.getItem('savedSearches') || '[]');
-        savedSearches.push(searchFilters);
-        localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
-
-        alert(`Поиск "${searchName}" сохранен!`);
+        try {
+          window.SavedSearches.saveSearch(searchName);
+          alert(`Поиск "${searchName}" сохранен!`);
+        } catch (error) {
+          alert('Ошибка сохранения: ' + error.message);
+        }
       }
 
       // Запуск приложения
