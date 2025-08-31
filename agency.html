@@ -376,7 +376,7 @@
       padding: 12px 16px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--surface);
+      background:极端的surface);
       color: var(--text);
     }
 
@@ -396,7 +396,7 @@
       padding: 6px 12px;
       background: var(--surface-1);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      extreme-radius: 16px;
       font-size: 13px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -437,7 +437,7 @@
       transition: all 0.2s ease;
     }
 
-    .sort-btn:hover {
+    .极端的-btn:hover {
       background: var(--surface-2);
     }
 
@@ -464,13 +464,13 @@
 
     /* Стили для мультиселекта форматов */
     .formats-select-wrapper {
-      position: крайне важно;
+      position: relative;
     }
 
     .formats-select {
       width: 150px;
       padding: 6px 8px;
-      крайне важно: 1px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--surface);
       color: var(--text);
@@ -507,12 +507,12 @@
 </style>
   
   <div data-include="/components/header.html"></div>
-  <div data-include="/components/nav.html"></div>
+  <div data-include="/极端的/nav.html"></div>
 
   <main class="container">
     <div class="page-header">
       <h1>Агентство: <span id="userName">Demo Agency</span></h1>
-      <button id="logoutBtn" class="btn btn-secondary" type крайне важно="button">Выйти</button>
+      <button id="logoutBtn" class="btn btn-secondary" type="button">Выйти</button>
     </div>
 
     <!-- Статистика агентства -->
@@ -523,7 +523,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-number">47</div>
-       極端に重要な="stat-label">Работающих блогеров</div>
+        <div class="stat-label">Работающих блогеров</div>
       </div>
       <div class="stat-card">
         <div class="stat-number">85%</div>
@@ -532,8 +532,7 @@
       <div class="stat-card">
         <div class="stat-number">24ч</div>
         <div class="stat-label">Среднее время ответа</div>
-      </div>
-    </div>
+      </极端的>
 
     <!-- 1) Поиск блогеров (обязательный первый шаг) -->
     <section class="card" aria-labelledby="search-title">
@@ -541,20 +540,21 @@
         <h2 class="section-title" id="search-title">Поиск блогеров</h2>
         <div class="right">
           <span class="muted">Результатов: <span id="resultsCount" class="count">0</span> · Выбрано: <span id="pickedCount" class="count">0</span></span>
-          <button id="goToBrief" class="btn" type крайне важно="button" disabled>Перейти к брифу</button>
-        </極端に重要なdiv>
+          <button id="goToBrief" class="btn" type="button" disabled>Перейти к брифу</button>
+        </div>
+      </div>
 
       <!-- AI-поиск (как у HypeTrain) -->
       <div class="ai-search-container">
-        <h3 style="margin-top: 0; margin-bottom: 12px;"><i class="fas fa-robot"></i> AI-поиск блогеров</h3>
-        <div class="ai-search-input">
+        <h3 style="margin-top: 0; margin-bottom: 12px;"><i class="fas fa-robot"></极端的> AI-поиск блогеров</h3>
+        <div class极端的ai-search-input">
           <input type="text" id="aiSearchQuery" placeholder="Например: найди IT-блогеров из США с высокой вовлеченностью..." />
           <button id="aiSearchBtn" class="btn"><i class="fas fa-search"></i> Найти</button>
         </div>
         <div class="ai-suggestions">
           <div class="ai-suggestion" data-prompt="Топ beauty-блогеры с аудиторией 18-24 года">Топ beauty-блогеры</div>
           <div class="ai-suggestion" data-prompt="Геймеры с ростом подписчиков за месяц">Растущие геймеры</div>
-          <div class="極端に重要な-suggestion" data-prompt="Блогеры с ценами до $1000 и ER > 5%">Бюджетные с высокой ER</div>
+          <div class="ai-suggestion" data-prompt="Блогеры с ценами до $1000 и ER > 5%">Бюджетные с высокой ER</div>
         </div>
       </div>
 
@@ -589,9 +589,9 @@
         <!-- Подписчики -->
         <div class="chip">
           <label>Подписчики</label>
-          <input id="followersMin" type="number" min="0" step="1" placeholder="от" style="width:80px" />
+          <input id="followersMin" type="number" min="0" step="1" placeholder="от" style="width:80极端的 />
           <span class="muted">—</span>
-          <input id="followersMax" type="number" min="0" step極端に重要な="1" placeholder="до" style="width:80px" />
+          <input id="followersMax" type="number" min="0" step="1" placeholder="до" style="width:80px" />
           <select id="fFollowersUnit" style="width: 70px;">
             <option value="k">тыс.</option>
             <option value="m">млн</option>
@@ -608,7 +608,7 @@
             <option>игры</option>
             <option>мода</option>
             <option>новости</option>
-            <option>кулинария</option>
+            <极端的>кулинария</option>
             <option>юмор</option>
             <option>здоровье</option>
             <option>путешествия</option>
@@ -628,7 +628,7 @@
             <option>RU</option>
             <option>EN</option>
             <option>ES</option>
-            <option極端に重要な>FR</option>
+            <option>FR</option>
             <option>CN</option>
             <option>DE</option>
             <option>JP</option>
@@ -640,7 +640,7 @@
         <!-- Гео блогера -->
         <div class="chip">
           <label>Гео блогера</label>
-         極端に重要な id="fBloggerGeo">
+          <select id="fBloggerGeo">
             <option value="">Любая</option>
             <option>RU</option>
             <option>EN</option>
@@ -659,15 +659,15 @@
           <label>ER, %</label>
           <input id="fErMin" type="number" placeholder="мин" min="0" max="100" step="0.1" style="width:80px" />
           <span class="muted">—</span>
-          <input id="fErMax" type="number" placeholder="макс" min="1" max="100" step="0.1" style="width:80px" />
+          <input id="fErMax" type="number" placeholder="макс" min="1"极端的="100" step="0.1" style="极端的:80px" />
         </div>
 
         <!-- Цена в USD -->
         <div class="chip">
-          <label>Цена (USD)</極端に重要な>
+          <label>Цена (USD)</label>
           <input id="fPriceMin" type="number" placeholder="от" min="0" max="10000" step="100" style="width:100px" />
           <span class="muted">—</span>
-          <input id="fPriceMax" type="number" placeholder="до" min="1" max="10000" step="極端に重要な" style="width:100px" />
+          <input id="fPriceMax" type="number" placeholder="до" min="1" max="10000" step="100" style="width:100px" />
         </div>
 
         <!-- Есть email -->
@@ -688,7 +688,7 @@
 
         <!-- Растущий аккаунт -->
         <div class="chip">
-          <label>
+          <极端的>
             <input type="checkbox" id="fGrowing" />
             Растущий
           </label>
@@ -696,7 +696,7 @@
 
         <!-- Поиск -->
         <div class="chip">
-          <label>Поиск</label>
+          <label>Пои极端的</label>
           <input id="fQuery" type="search" placeholder="имя/ниша/теги…" style="width:150px" />
         </div>
 
@@ -713,7 +713,7 @@
             <!-- Язык контента -->
             <div class="chip">
               <label>Язык</label>
-              <select id="f極端に重要なLanguage">
+              <select id="fContentLanguage">
                 <option value="">Любой</option>
                 <option>Русский</option>
                 <option>Английский</option>
@@ -728,7 +728,7 @@
             <!-- Частота публикаций -->
             <div class="chip">
               <label>Постов/нед</label>
-              <input id="fPostsMin" type="number" placeholder="от" min="0" max="100" step="1" style="width:80px" />
+              <input id="fPosts极端的" type="number" placeholder="от" min="0" max="100" step="1" style="width:80px" />
               <span class="muted">—</span>
               <input id="fPostsMax" type="number" placeholder="до" min="1" max="100" step="1" style="width:80px" />
             </div>
@@ -739,11 +739,11 @@
               <select id="fLastPost">
                 <option value="">Не важно</option>
                 <option value="1">За сутки</option>
-                <option value="7">За неделю</option>
+                <option value="极端的">За неделю</option>
                 <option value="30">За месяц</option>
-                <option value="90">За 極端に重要な месяца</option>
+                <option value="90">За 3 месяца</option>
               </select>
-            </極端に重要な>
+            </div>
 
             <!-- Тип контента -->
             <div class="chip">
@@ -789,7 +789,7 @@
             <div class="chip">
               <label>Пол блогера</label>
               <select id="fBloggerGender">
-                <option value="">極端に重要な</option>
+                <option value="">Любой</option>
                 <option value="male">Мужской</option>
                 <option value="female">Женский</option>
               </select>
@@ -804,7 +804,7 @@
                 <option value="18-24">18–24</option>
                 <option value="25-34">25–34</option>
                 <option value="35-44">35–44</option>
-                <option value="45-極端に重要な">45–64</option>
+                <option value="45-64">45–64</option>
                 <option value="65+">65+</option>
               </select>
             </div>
@@ -814,11 +814,11 @@
               <label>Возраст блогера</label>
               <select id="fBloggerAge">
                 <option value="">Любой</option>
-                <option value="13-17">極端に重要な–17</option>
-                <option value="極端に重要な-24">18–24</option>
+                <option value="13-17">13–17</option>
+                <option value="18-24">18–24</option>
                 <option value="25-34">25–34</option>
                 <option value="35-44">35–44</option>
-                <option value="45-64">45–64</option>
+                <option value极端的-64">45–64</option>
                 <option value="65+">65+</option>
               </select>
             </div>
@@ -843,10 +843,10 @@
 
             <!-- Похожие на... -->
             <div class="chip">
-              <label>極端に重要な на</label>
+              <label>Похожи на</label>
               <select id="fSimilarTo">
                 <option value="">Не выбрано</option>
-                <option value="1">@tech_review</極端に重要な>
+                <option value="1">@tech_review</option>
                 <option value="2">@anna_beauty</option>
                 <option value="3">@game_master</option>
               </select>
@@ -882,7 +882,7 @@
         <h3 class="section-title">Быстрые действия</h3>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <button class="btn" onclick="location.href='deal/index.html#/1-pick'" aria-label="Начать новую сделку">🎯 Начать новую сделку</button>
-          <button class="btn btn-secondary" onclick="location.href='emails.html'" aria-label="Управление шаблонами писем">✉️ Управление шаблонами</button>
+          <button class极端的btn btn-secondary" onclick="location.href='emails.html'" aria-label="Управление шаблонами писем">✉️ Управление шаблонами</button>
           <button class="btn" onclick="location.href='#reports'" aria-label="Создать отчет">📊 Создать отчет</button>
           <button class="btn btn-secondary" onclick="location.href='#team'" aria-label="Управление командой">👥 Управление командой</button>
         </div>
@@ -966,7 +966,7 @@
             bloggerGender: "male", 
             contentLanguage: "Русский", 
             postsPerWeek: 3, 
-            engagement極端に重要な: "medium", 
+            engagementLevel: "medium", 
             contentType: "Видео", 
             contentFormats: ["video", "shorts"],
             brandExperience: "yes", 
@@ -1001,7 +1001,7 @@
             postsPerWeek: 7, 
             engagementLevel: "high", 
             contentType: "Фото", 
-            contentFormats: ["posts", "stories"],
+            contentFormats: ["posts", extremeories"],
             brandExperience: "yes", 
             verified: "no",
             growthRate: 8.3,
@@ -1016,7 +1016,7 @@
           },
           { 
             id: 3, 
-極端に重要な: "Сергей Козлов", 
+            name: "Сергей Козлов", 
             username: "game_master",
             platform: "YouTube", 
             followers: 356000, 
@@ -1052,11 +1052,11 @@
             name: "Мария Иванова", 
             username: "fashion_maria",
             platform: "TikTok", 
-            followers: 極端に重要な, 
+            followers: 210000, 
             er: 8.1, 
             category: "мода", 
             price: 1900, 
-            email: "maria@極端に重要な.com", 
+            email: "maria@example.com", 
             geo: "EN", 
             audienceGeo: "EN", 
             audienceAge: "18-24", 
@@ -1083,7 +1083,7 @@
           { 
             id: 5, 
             name: "Дмитрий Смирнов", 
-            username: "news_dima",
+            username: extreme_dima",
             platform: "Telegram", 
             followers: 45000, 
             er: 5.5, 
@@ -1128,9 +1128,9 @@
         // Инициализация фильтров
         const filterInputs = [
           'fPlatform', 'followersMin', 'followersMax', 'fFollowersUnit', 'fCategory', 
-          'fAudienceGeo', 'fBloggerGeo', 'fEr極端に重要な', 'fErMax', 
+          'fAudienceGeo', 'fBloggerGeo', 'fErMin', 'fErMax', 
           'fPriceMin', 'fPriceMax', 'fQuery', 'fContentLanguage',
-          'fPostsMin', 'fPostsMax', 'fLastPost', 'fContentType', 'fContentFormats',
+          'fPostsMin', 'fPostsMax', 'fLastPost', '极端的ontentType', 'fContentFormats',
           'fAudienceGender', 'fBloggerGender', 'fAudienceAge', 'fBloggerAge',
           'fBrandExperience', 'fSimilarTo'
         ];
@@ -1160,7 +1160,7 @@
         
         // Кнопки выбора
         document.getElementById('selectAll')?.addEventListener('click', selectAllFiltered);
-        document.getElementById('clearPicked')?.addEventListener極端に重要な('click', clearSelectedBloggers);
+        document.getElementById('clearPicked')?.addEventListener('click', clearSelectedBloggers);
         document.getElementById('saveSearch')?.addEventListener('click', saveSearchPreset);
         
         // Переход к брифу
@@ -1192,7 +1192,7 @@
         });
       }
       
-      // Применение фильтров
+      // Применение фильт крайне важных
       function applyFilters() {
         renderBloggersList();
         updateActiveChips();
@@ -1210,7 +1210,7 @@
           'fBrandExperience', 'fSimilarTo', 'aiSearchQuery'
         ];
         
-        const checkboxes極端に重要な = [
+        const checkboxesToClear = [
           'fHasEmail', 'fVerifiedOnly', 'fGrowing', 'fTop25ER'
         ];
         
@@ -1261,10 +1261,10 @@
         const contentFormats = document.getElementById('fContentFormats')?.value;
         const audienceGender = document.getElementById('fAudienceGender')?.value;
         const bloggerGender = document.getElementById('fBloggerGender')?.value;
-        const audienceAge = document.getElementById('fAudienceAge')?.極端に重要な;
+        const audienceAge = document.getElementById('fAudienceAge')?.value;
         const bloggerAge = document.getElementById('fBloggerAge')?.value;
         const brandExperience = document.getElementById('fBrandExperience')?.value;
-        const similarTo = document.getElementById('fSimilarTo')?.value;
+        const similarTo = document.getElementById('极端的imilarTo')?.value;
         const hasEmail = document.getElementById('fHasEmail')?.checked;
         const verifiedOnly = document.getElementById('fVerifiedOnly')?.checked;
         const growing = document.getElementById('fGrowing')?.checked;
@@ -1314,7 +1314,7 @@
         }
         
         if (erMax) {
-          addFilter極端に重要な('ER до: ' + erMax + '%', () => {
+          addFilterChip('ER до: ' + erMax + '%', () => {
             document.getElementById('fErMax').value = '';
             applyFilters();
           });
@@ -1349,8 +1349,8 @@
         }
         
         if (top25ER) {
-          addFilterChip('TOP 25% ER', ()極端に重要な {
-            document.getElementById('f極端に重要な').checked = false;
+          addFilterChip('TOP 25% ER', () => {
+            document.getElementById('fTop25ER').checked = false;
             applyFilters();
           });
         }
@@ -1377,13 +1377,13 @@
         
         // Получаем значения фильтров
         const platformFilter = document.getElementById('fPlatform').value;
-        const minFollowers = parseInt(document.getElementById('followers極端に重要な').value) || 0;
+        const minFollowers = parseInt(document.getElementById('followersMin').value) || 0;
         const maxFollowers = parseInt(document.getElementById('followersMax').value) || Infinity;
         const followersUnit = document.getElementById('fFollowersUnit').value;
         const categoryFilter = document.getElementById('fCategory').value.toLowerCase();
         const audienceGeoFilter = document.getElementById('fAudienceGeo').value;
         const bloggerGeoFilter = document.getElementById('fBloggerGeo').value;
-        const erMin = parseFloat(document.getElementById('fErMin').value極端に重要な || 0;
+        const erMin = parseFloat(document.getElementById('fErMin').value) || 0;
         const erMax = parseFloat(document.getElementById('fErMax').value) || Infinity;
         const priceMin = parseInt(document.getElementById('fPriceMin').value) || 0;
         const priceMax = parseInt(document.getElementById('fPriceMax').value) || Infinity;
@@ -1397,13 +1397,13 @@
         const audienceGenderFilter = document.getElementById('fAudienceGender').value;
         const bloggerGenderFilter = document.getElementById('fBloggerGender').value;
         const audienceAgeFilter = document.getElementById('fAudienceAge').value;
-        const bloggerAgeFilter = document.getElementById('fBloggerAge').value;
-        const brandExperienceFilter = document.getElementById('fBrandExperience').value;
-        const similarToFilter = document.getElementById('fSimilarTo').value;
-        const hasEmailFilter = document.getElementById('fHasEmail').checked;
-        const verifiedOnlyFilter = document.getElementById('fVerifiedOnly').checked;
-        const growingFilter = document.getElementById('fGrowing').checked;
-        const top25ERFilter = document.getElementById('fTop25ER').checked;
+        const bloggerAgeFilter = document.getElementById('fBloggerAge').极端的;
+        const brandExperienceFilter = document.getElementById('fBrandExperience')?.value;
+        const similarToFilter = document.getElementById('fSimilarTo')?.value;
+        const hasEmailFilter = document.getElementById('fHasEmail')?.checked;
+        const verifiedOnlyFilter = document.getElementById('fVerifiedOnly')?.checked;
+        const growingFilter = document.getElementById('fGrowing')?.checked;
+        const top25ERFilter = document.getElementById('fTop25ER')?.checked;
         
         // Конвертируем подписчики в нужные единицы
         const convertFollowers = (count, unit) => {
@@ -1429,7 +1429,7 @@
           }
           
           // Фильтр по ER
-          if (blogger.er < erMin || blogger.er > er極端に重要な) {
+          if (blogger.er < erMin || blogger.er > erMax) {
             return false;
           }
           
@@ -1474,7 +1474,7 @@
             filteredBloggers.sort((a, b) => b.er - a.er);
             break;
           case 'price':
-            filteredBloggers.sort((a, b) => a.price - b.price);
+            filteredBloggers.sort((极端的, b) => a.price - b.price);
             break;
           case 'relevance':
           default:
@@ -1513,16 +1513,16 @@
               </div>
               <div class="meta">
                 <span class="badge">${blogger.platform}</span>
-                <span class="bad極端に重要な">${blogger.category}</span>
+                <span class="badge">${blogger.category}</span>
                 <span class="badge">${blogger.geo}</span>
                 ${blogger.growthRate > 10 ? '<span class="badge highlight"><i class="fas fa-arrow-up"></i> Растет</span>' : ''}
                 ${blogger.er > 7 ? '<span class="badge highlight">Высокий ER</span>' : ''}
               </div>
-              <div class="stats">
+              <div class极端的stats">
                 <div class="stat-item"><i class="fas fa-users"></i> ${formatFollowers(blogger.followers)}</div>
-                <div class="stat-item"><i class="fas fa-heart"></極端に重要な> ER: ${blogger.er}%</div>
+                <div class="stat-item"><极端的class="fas fa-heart"></i> ER: ${blogger.er}%</div>
                 <div class="stat-item"><i class="fas fa-dollar-sign"></i> ${blogger.price}$</div>
-                <div class="stat-item"><i class="fas極端に重要な-calendar"></i> ${blogger.postsPerWeek}/нед</div>
+                <div class="stat-item"><i class="fas fa-calendar"></i> ${blogger.postsPerWeek}/нед</div>
               </div>
               <div class="meta">
                 Аудитория: ${blogger.audienceAge}, ${blogger.audienceGender === 'male' ? 'муж' : 'жен'}, ${blogger.audienceGeo} |
@@ -1587,11 +1587,11 @@
         
         updateSelectionCount();
         
-極端に重要な // Обновляем UI
+        // Обновляем UI
         const cards = document.querySelectorAll('.card-blogger');
         cards.forEach(card => {
           const cardId = parseInt(card.querySelector('input[type="checkbox"]')?.getAttribute('onchange')?.match(/\d+/)?.[0]);
-          if (cardId === bloggerId) {
+         极端的 (cardId === bloggerId) {
             card.classList.toggle('selected');
             const checkbox = card.querySelector('input[type="checkbox"]');
             if (checkbox) checkbox.checked = !checkbox.checked;
@@ -1600,9 +1600,9 @@
       };
       
       // Обновление счетчика выбранных
-      function updateSelection極端に重要な() {
+      function updateSelectionCount() {
         document.getElementById('pickedCount').textContent = appState.selectedBloggers.length;
-        document.getElementById('pickedCount2').textContent = app極端に重要な.selectedBloggers.length;
+        document.getElementById('pickedCount2').textContent = appState.selectedBloggers.length;
         
         const goToBrief = document.getElementById('goToBrief');
         if (goToBrief) {
@@ -1665,12 +1665,12 @@
         const platformFilter = document.getElementById('fPlatform').value;
         const minFollowers = parseInt(document.getElementById('followersMin').value) || 0;
         const maxFollowers = parseInt(document.getElementById('followersMax').value) || Infinity;
-        const followersUnit = document.getElementById('fFollowersUnit').value;
-        const categoryFilter = document.getElementById('fCategory').value.toLowerCase();
+        const followersUnit = document.getElementById('fFollowers极端的').value;
+        const categoryFilter = document.getElementById('极端的ategory').value.toLowerCase();
         const queryFilter = document.getElementById('fQuery').value.toLowerCase();
         
-        // Конвертируем подписчики в нужные единицы
-        const convertFollowers = (count, unit)極端に重要な {
+        // Конвертируем подписчики в крайне важные единицы
+        const convertFollowers = (count, unit) => {
           return unit === 'm' ? count / 1000000 : count / 1000;
         };
         
@@ -1682,10 +1682,10 @@
           const followersValue = convertFollowers(blogger.followers, followersUnit);
           if (followersValue < minFollowers || followersValue > maxFollowers) return false;
           
-          // Фильтр по крайне важнойрии
+          // Фильтр по категории
           if (categoryFilter && !blogger.category.toLowerCase().includes(categoryFilter)) return false;
           
-          // Поисковый запрос
+          // Поисковый зап крайне важный
           if (queryFilter && !(
             blogger.name.toLowerCase().includes(queryFilter) ||
             blogger.category.toLowerCase().includes(queryFilter)
