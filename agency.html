@@ -432,6 +432,11 @@
       border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sort-btn:hover {
+      background: var(--surface-2);
     }
 
     .sort-btn.active {
@@ -453,6 +458,29 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Стили для мультиселекта форматов */
+    .formats-select-wrapper {
+      position: relative;
+    }
+
+    .formats-select {
+      width: 150px;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 14px;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .formats-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
     }
   </style>
 </head>
@@ -727,16 +755,19 @@
               </select>
             </div>
 
-            <!-- Форматы контента (множественный выбор) -->
+            <!-- Форматы контента -->
             <div class="chip">
               <label>Форматы</label>
-              <select id="fContentFormats" multiple style="width: 150px; height: 36px;">
-                <option value="video">Видео</option>
-                <option value="reels">Reels/Shorts</option>
-                <option value="stories">Stories</option>
-                <option value="live">Live</option>
-                <option value="posts">Посты</option>
-              </select>
+              <div class="formats-select-wrapper">
+                <select id="fContentFormats" class="formats-select">
+                  <option value="">Любые</option>
+                  <option value="video">Видео</option>
+                  <option value="reels">Reels/Shorts</option>
+                  <option value="stories">Stories</option>
+                  <option value="live">Live</option>
+                  <option value="posts">Посты</option>
+                </select>
+              </div>
             </div>
 
             <!-- Пол аудитории -->
@@ -903,47 +934,176 @@
       const appState = {
         selectedBloggers: [],
         currentSort: 'relevance',
-        aiSearchLoading: false
-      };
-      
-      // Данные блогеров с дополнительными полями для фильтрации
-      const mockBloggers = [
-        { 
-          id: 1, 
-          name: "Иван Петров", 
-          username: "tech_review",
-          platform: "YouTube", 
-          followers: 125000, 
-          er: 4.5, 
-          category: "техника", 
-          price: 2500, 
-          email: "ivan@example.com", 
-          geo: "RU", 
-          audienceGeo: "RU", 
-          audienceAge: "25-34", 
-          bloggerAge: "28", 
-          audienceGender: "male", 
-          bloggerGender: "male", 
-          contentLanguage: "Русский", 
-          postsPerWeek: 3, 
-          engagementLevel: "medium", 
-          contentType: "Видео", 
-          contentFormats: ["video", "shorts"],
-          brandExperience: "yes", 
-          verified: "yes",
-          growthRate: 12.5,
-          lastPostDate: "2023-10-20",
-          formats: {
-            video: true,
-            reels: true,
-            stories: false,
-            live: true,
-            posts: true
+        aiSearchLoading: false,
+        // Данные блогеров с дополнительными полями для фильтрации
+        mockBloggers: [
+          { 
+            id: 1, 
+            name: "Иван Петров", 
+            username: "tech_review",
+            platform: "YouTube", 
+            followers: 125000, 
+            er: 4.5, 
+            category: "техника", 
+            price: 2500, 
+            email: "ivan@example.com", 
+            geo: "RU", 
+            audienceGeo: "RU", 
+            audienceAge: "25-34", 
+            bloggerAge: "28", 
+            audienceGender: "male", 
+            bloggerGender: "male", 
+            contentLanguage: "Русский", 
+            postsPerWeek: 3, 
+            engagementLevel: "medium", 
+            contentType: "Видео", 
+            contentFormats: ["video", "shorts"],
+            brandExperience: "yes", 
+            verified: "yes",
+            growthRate: 12.5,
+            lastPostDate: "2023-10-20",
+            formats: {
+              video: true,
+              reels: true,
+              stories: false,
+              live: true,
+              posts: true
+            }
+          },
+          { 
+            id: 2, 
+            name: "Анна Сидорова", 
+            username: "anna_beauty",
+            platform: "Instagram", 
+            followers: 87000, 
+            er: 7.2, 
+            category: "красота", 
+            price: 1800, 
+            email: "anna@example.com", 
+            geo: "RU", 
+            audienceGeo: "RU", 
+            audienceAge: "18-24", 
+            bloggerAge: "22", 
+            audienceGender: "female", 
+            bloggerGender: "female", 
+            contentLanguage: "Русский", 
+            postsPerWeek: 7, 
+            engagementLevel: "high", 
+            contentType: "Фото", 
+            contentFormats: ["posts", "stories"],
+            brandExperience: "yes", 
+            verified: "no",
+            growthRate: 8.3,
+            lastPostDate: "2023-10-22",
+            formats: {
+              video: false,
+              reels: false,
+              stories: true,
+              live: false,
+              posts: true
+            }
+          },
+          { 
+            id: 3, 
+            name: "Сергей Козлов", 
+            username: "game_master",
+            platform: "YouTube", 
+            followers: 356000, 
+            er: 3.8, 
+            category: "игры", 
+            price: 4200, 
+            email: "sergey@example.com", 
+            geo: "RU", 
+            audienceGeo: "RU", 
+            audienceAge: "13-17", 
+            bloggerAge: "25", 
+            audienceGender: "male", 
+            bloggerGender: "male", 
+            contentLanguage: "Русский", 
+            postsPerWeek: 2, 
+            engagementLevel: "low", 
+            contentType: "Видео", 
+            contentFormats: ["video", "live"],
+            brandExperience: "no", 
+            verified: "yes",
+            growthRate: 2.1,
+            lastPostDate: "2023-10-15",
+            formats: {
+              video: true,
+              reels: false,
+              stories: false,
+              live: true,
+              posts: false
+            }
+          },
+          { 
+            id: 4, 
+            name: "Мария Иванова", 
+            username: "fashion_maria",
+            platform: "TikTok", 
+            followers: 210000, 
+            er: 8.1, 
+            category: "мода", 
+            price: 1900, 
+            email: "maria@example.com", 
+            geo: "EN", 
+            audienceGeo: "EN", 
+            audienceAge: "18-24", 
+            bloggerAge: "21", 
+            audienceGender: "female", 
+            bloggerGender: "female", 
+            contentLanguage: "Английский", 
+            postsPerWeek: 12, 
+            engagementLevel: "high", 
+            contentType: "Reels/Shorts", 
+            contentFormats: ["reels", "video"],
+            brandExperience: "yes", 
+            verified: "yes",
+            growthRate: 15.7,
+            lastPostDate: "2023-10-23",
+            formats: {
+              video: true,
+              reels: true,
+              stories: true,
+              live: false,
+              posts: false
+            }
+          },
+          { 
+            id: 5, 
+            name: "Дмитрий Смирнов", 
+            username: "news_dima",
+            platform: "Telegram", 
+            followers: 45000, 
+            er: 5.5, 
+            category: "новости", 
+            price: 1200, 
+            email: "dmitry@example.com", 
+            geo: "RU", 
+            audienceGeo: "RU", 
+            audienceAge: "35-44", 
+            bloggerAge: "40", 
+            audienceGender: "male", 
+            bloggerGender: "male", 
+            contentLanguage: "Русский", 
+            postsPerWeek: 14, 
+            engagementLevel: "medium", 
+            contentType: "Текст", 
+            contentFormats: ["posts"],
+            brandExperience: "yes", 
+            verified: "no",
+            growthRate: 5.2,
+            lastPostDate: "2023-10-23",
+            formats: {
+              video: false,
+              reels: false,
+              stories: false,
+              live: false,
+              posts: true
+            }
           }
-        },
-        // ... остальные блогеры с аналогичной структурой
-        // Для краткости оставим одного, в реальном коде должны быть все
-      ];
+        ]
+      };
       
       // Инициализация приложения
       function initApp() {
@@ -961,13 +1121,22 @@
           'fPriceMin', 'fPriceMax', 'fQuery', 'fContentLanguage',
           'fPostsMin', 'fPostsMax', 'fLastPost', 'fContentType', 'fContentFormats',
           'fAudienceGender', 'fBloggerGender', 'fAudienceAge', 'fBloggerAge',
-          'fBrandExperience', 'fSimilarTo', 'fHasEmail', 'fVerifiedOnly', 'fGrowing', 'fTop25ER'
+          'fBrandExperience', 'fSimilarTo'
         ];
         
         filterInputs.forEach(id => {
           const element = document.getElementById(id);
           if (element) {
             element.addEventListener('input', applyFilters);
+            element.addEventListener('change', applyFilters);
+          }
+        });
+        
+        // Чекбоксы
+        const checkboxes = ['fHasEmail', 'fVerifiedOnly', 'fGrowing', 'fTop25ER'];
+        checkboxes.forEach(id => {
+          const element = document.getElementById(id);
+          if (element) {
             element.addEventListener('change', applyFilters);
           }
         });
@@ -1045,13 +1214,14 @@
           if (element) element.checked = false;
         });
         
-        // Сброс множественного выбора
-        const contentFormats = document.getElementById('fContentFormats');
-        if (contentFormats) {
-          Array.from(contentFormats.options).forEach(option => {
-            option.selected = false;
-          });
-        }
+        // Сброс сортировки
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.dataset.sort === 'relevance') {
+            btn.classList.add('active');
+          }
+        });
+        appState.currentSort = 'relevance';
         
         applyFilters();
       }
@@ -1078,6 +1248,7 @@
         const postsMax = document.getElementById('fPostsMax')?.value;
         const lastPost = document.getElementById('fLastPost')?.value;
         const contentType = document.getElementById('fContentType')?.value;
+        const contentFormats = document.getElementById('fContentFormats')?.value;
         const audienceGender = document.getElementById('fAudienceGender')?.value;
         const bloggerGender = document.getElementById('fBloggerGender')?.value;
         const audienceAge = document.getElementById('fAudienceAge')?.value;
@@ -1118,7 +1289,33 @@
           });
         }
         
-        // ... аналогично для остальных фильтров
+        if (audienceGeo) {
+          addFilterChip('Аудитория: ' + audienceGeo, () => {
+            document.getElementById('fAudienceGeo').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (erMin) {
+          addFilterChip('ER от: ' + erMin + '%', () => {
+            document.getElementById('fErMin').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (erMax) {
+          addFilterChip('ER до: ' + erMax + '%', () => {
+            document.getElementById('fErMax').value = '';
+            applyFilters();
+          });
+        }
+        
+        if (contentFormats) {
+          addFilterChip('Формат: ' + contentFormats, () => {
+            document.getElementById('fContentFormats').value = '';
+            applyFilters();
+          });
+        }
         
         if (hasEmail) {
           addFilterChip('Есть email', () => {
@@ -1186,6 +1383,7 @@
         const postsMax = parseInt(document.getElementById('fPostsMax').value) || Infinity;
         const lastPostFilter = document.getElementById('fLastPost').value;
         const contentTypeFilter = document.getElementById('fContentType').value;
+        const contentFormatsFilter = document.getElementById('fContentFormats').value;
         const audienceGenderFilter = document.getElementById('fAudienceGender').value;
         const bloggerGenderFilter = document.getElementById('fBloggerGender').value;
         const audienceAgeFilter = document.getElementById('fAudienceAge').value;
@@ -1199,15 +1397,62 @@
         
         // Конвертируем подписчики в нужные единицы
         const convertFollowers = (count, unit) => {
-          return unit === 'm' ? count / 1000 : count;
+          return unit === 'm' ? count / 1000000 : count / 1000;
         };
         
         // Фильтруем блогеров
-        let filteredBloggers = mockBloggers.filter(blogger => {
-          // Применяем все фильтры...
-          // (здесь должна быть полная логика фильтрации)
+        let filteredBloggers = appState.mockBloggers.filter(blogger => {
+          // Фильтр по платформе
+          if (platformFilter && blogger.platform !== platformFilter) {
+            return false;
+          }
           
-          return true; // В реальном коде здесь условие фильтрации
+          // Фильтр по подписчикам
+          const followersValue = convertFollowers(blogger.followers, followersUnit);
+          if (followersValue < minFollowers || followersValue > maxFollowers) {
+            return false;
+          }
+          
+          // Фильтр по категории
+          if (categoryFilter && !blogger.category.toLowerCase().includes(categoryFilter)) {
+            return false;
+          }
+          
+          // Фильтр по ER
+          if (blogger.er < erMin || blogger.er > erMax) {
+            return false;
+          }
+          
+          // Фильтр по цене
+          if (blogger.price < priceMin || blogger.price > priceMax) {
+            return false;
+          }
+          
+          // Фильтр по email
+          if (hasEmailFilter && !blogger.email) {
+            return false;
+          }
+          
+          // Фильтр по верификации
+          if (verifiedOnlyFilter && blogger.verified !== "yes") {
+            return false;
+          }
+          
+          // Фильтр по форматам контента
+          if (contentFormatsFilter && !blogger.contentFormats.includes(contentFormatsFilter)) {
+            return false;
+          }
+          
+          // Поисковый запрос
+          if (queryFilter && !(
+            blogger.name.toLowerCase().includes(queryFilter) ||
+            blogger.category.toLowerCase().includes(queryFilter) ||
+            blogger.username.toLowerCase().includes(queryFilter)
+          )) {
+            return false;
+          }
+          
+          return true;
         });
         
         // Сортируем результаты
@@ -1223,7 +1468,8 @@
             break;
           case 'relevance':
           default:
-            // Релевантность по умолчанию (можно улучшить алгоритм)
+            // Сортируем по релевантности (по убыванию ER как показатель качества)
+            filteredBloggers.sort((a, b) => b.er - a.er);
             break;
         }
         
@@ -1318,7 +1564,7 @@
       
       // Переключение выбора блогера (глобальная функция)
       window.toggleBloggerSelection = function(bloggerId) {
-        const blogger = mockBloggers.find(b => b.id === bloggerId);
+        const blogger = appState.mockBloggers.find(b => b.id === bloggerId);
         if (!blogger) return;
         
         const index = appState.selectedBloggers.findIndex(b => b.id === bloggerId);
@@ -1377,12 +1623,21 @@
             document.getElementById('fCategory').value = 'красота';
           }
           
-          if (query.includes('США') || query.includes('США')) {
+          if (query.includes('сша') || query.includes('америк') || query.includes('usa')) {
             document.getElementById('fAudienceGeo').value = 'EN';
+            document.getElementById('fBloggerGeo').value = 'EN';
           }
           
-          if (query.includes('высок') && query.includes('вовлечен')) {
+          if ((query.includes('высок') || query.includes('high')) && (query.includes('вовлечен') || query.includes('engagement'))) {
             document.getElementById('fErMin').value = '5';
+          }
+          
+          if (query.includes('it') || query.includes('айти') || query.includes('техн')) {
+            document.getElementById('fCategory').value = 'техника';
+          }
+          
+          if (query.includes('бюджет') || query.includes('дешев') || query.includes('недорог')) {
+            document.getElementById('fPriceMax').value = '1000';
           }
           
           // Применяем фильтры
@@ -1395,22 +1650,125 @@
         }, 1500);
       }
       
+      // Выбрать все отфильтрованные
+      function selectAllFiltered() {
+        const platformFilter = document.getElementById('fPlatform').value;
+        const minFollowers = parseInt(document.getElementById('followersMin').value) || 0;
+        const maxFollowers = parseInt(document.getElementById('followersMax').value) || Infinity;
+        const followersUnit = document.getElementById('fFollowersUnit').value;
+        const categoryFilter = document.getElementById('fCategory').value.toLowerCase();
+        const queryFilter = document.getElementById('fQuery').value.toLowerCase();
+        
+        // Конвертируем подписчики в нужные единицы
+        const convertFollowers = (count, unit) => {
+          return unit === 'm' ? count / 1000000 : count / 1000;
+        };
+        
+        let filteredBloggers = appState.mockBloggers.filter(blogger => {
+          // Фильтр по платформе
+          if (platformFilter && blogger.platform !== platformFilter) return false;
+          
+          // Фильтр по подписчикам
+          const followersValue = convertFollowers(blogger.followers, followersUnit);
+          if (followersValue < minFollowers || followersValue > maxFollowers) return false;
+          
+          // Фильтр по категории
+          if (categoryFilter && !blogger.category.toLowerCase().includes(categoryFilter)) return false;
+          
+          // Поисковый запрос
+          if (queryFilter && !(
+            blogger.name.toLowerCase().includes(queryFilter) ||
+            blogger.category.toLowerCase().includes(queryFilter)
+          )) return false;
+          
+          return true;
+        });
+        
+        // Добавляем только тех, кого еще нет в выбранных
+        filteredBloggers.forEach(blogger => {
+          if (!appState.selectedBloggers.some(b => b.id === blogger.id)) {
+            appState.selectedBloggers.push(blogger);
+          }
+        });
+        
+        updateSelectionCount();
+        
+        // Обновляем UI
+        const cards = document.querySelectorAll('.card-blogger');
+        cards.forEach(card => {
+          const cardId = parseInt(card.querySelector('input[type="checkbox"]')?.getAttribute('onchange')?.match(/\d+/)?.[0]);
+          if (appState.selectedBloggers.some(b => b.id === cardId)) {
+            card.classList.add('selected');
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            if (checkbox) checkbox.checked = true;
+          }
+        });
+      }
+      
+      // Очистить выбранных блогеров
+      function clearSelectedBloggers() {
+        appState.selectedBloggers = [];
+        updateSelectionCount();
+        
+        // Снимаем выделение со всех карточек
+        const cards = document.querySelectorAll('.card-blogger');
+        cards.forEach(card => {
+          card.classList.remove('selected');
+          const checkbox = card.querySelector('input[type="checkbox"]');
+          if (checkbox) checkbox.checked = false;
+        });
+      }
+      
+      // Сохранить настройки поиска
+      function saveSearchPreset() {
+        const searchName = prompt('Введите название для этого поиска:');
+        if (!searchName) return;
+        
+        const searchFilters = {
+          name: searchName,
+          platform: document.getElementById('fPlatform').value,
+          followersMin: document.getElementById('followersMin').value,
+          followersMax: document.getElementById('followersMax').value,
+          followersUnit: document.getElementById('fFollowersUnit').value,
+          category: document.getElementById('fCategory').value,
+          audienceGeo: document.getElementById('fAudienceGeo').value,
+          bloggerGeo: document.getElementById('fBloggerGeo').value,
+          erMin: document.getElementById('fErMin').value,
+          erMax: document.getElementById('fErMax').value,
+          priceMin: document.getElementById('fPriceMin').value,
+          priceMax: document.getElementById('fPriceMax').value,
+          query: document.getElementById('fQuery').value,
+          hasEmail: document.getElementById('fHasEmail').checked,
+          verifiedOnly: document.getElementById('fVerifiedOnly').checked,
+          growing: document.getElementById('fGrowing').checked,
+          top25ER: document.getElementById('fTop25ER').checked
+        };
+        
+        // Сохраняем в localStorage
+        let savedSearches = JSON.parse(localStorage.getItem('savedSearches') || '[]');
+        savedSearches.push(searchFilters);
+        localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+        
+        alert(`Поиск "${searchName}" сохранен!`);
+      }
+      
       // Экспорт результатов
       function exportToCSV() {
-        const headers = ['Имя', 'Платформа', 'Подписчики', 'ER', 'Цена', 'Категория', 'Гео', 'Email'];
-        const data = appState.selectedBloggers.length > 0 ? appState.selectedBloggers : mockBloggers;
+        const headers = ['Имя', 'Username', 'Платформа', 'Подписчики', 'ER', 'Цена', 'Категория', 'Гео', 'Email'];
+        const data = appState.selectedBloggers.length > 0 ? appState.selectedBloggers : appState.mockBloggers;
         
         const csvContent = [
           headers.join(','),
           ...data.map(blogger => [
-            blogger.name,
+            `"${blogger.name}"`,
+            `"${blogger.username}"`,
             blogger.platform,
             blogger.followers,
             blogger.er,
             blogger.price,
             blogger.category,
             blogger.geo,
-            blogger.email
+            `"${blogger.email}"`
           ].join(','))
         ].join('\n');
         
@@ -1426,9 +1784,6 @@
         link.click();
         document.body.removeChild(link);
       }
-      
-      // Остальные функции (selectAllFiltered, clearSelectedBloggers, saveSearchPreset) остаются без изменений
-      // ... 
       
       // Запуск приложения
       initApp();
