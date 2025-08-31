@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/layout.css" />
   <!-- Подключаем иконки -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Подключаем стили расширенных фильтров -->
+  <link rel="stylesheet" href="css/filters-advanced.css" />
 
   <!-- Защита приватных страниц -->
   <script type="module" src="/js/guard.js"></script>
@@ -699,6 +701,9 @@
           <input id="fQuery" type="search" placeholder="имя/ниша/теги…" style="width:150px" />
         </div>
 
+        <!-- ВСТАВКА КОМПОНЕНТА РАСШИРЕННЫХ ФИЛЬТРОВ -->
+        <div data-include="components/filters-advanced.html"></div>
+
         <!-- Дополнительные фильтры -->
         <div style="flex-basis: 100%; margin-top: 15px;">
           <button type="button" class="toggle-filters" id="toggleAdvancedFilters">
@@ -775,7 +780,7 @@
               <label>Пол аудитории</label>
               <select id="fAudienceGender">
                 <option value="">Любой</option>
-                <option value="male">Мужской</option>
+                <option value="male">Мужский</option>
                 <option value="female">Женский</option>
                 <option value="mixed">Смешанный</option>
               </select>
@@ -786,7 +791,7 @@
               <label>Пол блогера</label>
               <select id="fBloggerGender">
                 <option value="">Любой</option>
-                <option value="male">Мужской</option>
+                <option value="male">Мужский</option>
                 <option value="female">Женский</option>
               </select>
             </div>
@@ -897,6 +902,9 @@
   </main>
 
   <div data-include="/components/footer.html"></div>
+  
+  <!-- Подключаем скрипт расширенных фильтров -->
+  <script src="js/filters-advanced.js"></script>
   
   <script>
     // Основная логика приложения

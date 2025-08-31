@@ -1,0 +1,102 @@
+<section class="filters-advanced" id="filtersAdvanced" aria-labelledby="filtersAdvancedTitle">
+  <div class="fa-head">
+    <h3 id="filtersAdvancedTitle"><i class="fas fa-sliders-h"></i> Расширенные фильтры</h3>
+    <p class="fa-sub">Уточните выдачу по активности, типам контента и качеству аудитории</p>
+  </div>
+
+  <div class="fa-grid">
+    <!-- Активность -->
+    <div class="fa-group">
+      <label for="fLastPostDays">Постил за N дней</label>
+      <input id="fLastPostDays" type="number" min="1" step="1" placeholder="Напр. 14" class="fa-input" />
+    </div>
+
+    <!-- Типы контента -->
+    <div class="fa-group fa-wide">
+      <span class="fa-label">Тип контента</span>
+      <div id="fContentTypes" class="fa-chips">
+        <label class="fa-chip">
+          <input type="checkbox" name="fContentTypes" value="video" />
+          <span>Видео</span>
+        </label>
+        <label class="fa-chip">
+          <input type="checkbox" name="fContentTypes" value="shorts" />
+          <span>Shorts</span>
+        </label>
+        <label class="fa-chip">
+          <input type="checkbox" name="fContentTypes" value="stories" />
+          <span>Stories</span>
+        </label>
+        <label class="fa-chip">
+          <input type="checkbox" name="fContentTypes" value="live" />
+          <span>Live</span>
+        </label>
+        <label class="fa-chip">
+          <input type="checkbox" name="fContentTypes" value="reels" />
+          <span>Reels</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Поиск по bio -->
+    <div class="fa-group fa-wide">
+      <label for="fBioQuery">Поиск по bio</label>
+      <input id="fBioQuery" type="search" inputmode="search" placeholder="Слова из описания профиля…" class="fa-input" />
+    </div>
+
+    <!-- Верификация / контакты -->
+    <div class="fa-group">
+      <label class="fa-checkbox">
+        <input id="fVerified" type="checkbox" />
+        <span class="fa-checkmark"></span>
+        Только верифицированные
+      </label>
+    </div>
+    <div class="fa-group">
+      <label class="fa-checkbox">
+        <input id="fHasPhone" type="checkbox" />
+        <span class="fa-checkmark"></span>
+        Есть телефон
+      </label>
+    </div>
+
+    <!-- Объем, рост, качество, просмотры -->
+    <div class="fa-group">
+      <label for="fPostsMin">Мин. постов/видео</label>
+      <input id="fPostsMin" type="number" min="0" step="1" placeholder="Напр. 50" class="fa-input" />
+    </div>
+    <div class="fa-group">
+      <label for="fGrowth30Min">Мин. рост за 30 дней (%)</label>
+      <input id="fGrowth30Min" type="number" min="-100" step="0.1" placeholder="Напр. 3" class="fa-input" />
+    </div>
+    <div class="fa-group">
+      <label for="fAqsMin">Мин. AQS (0–100)</label>
+      <input id="fAqsMin" type="number" min="0" max="100" step="1" placeholder="Напр. 70" class="fa-input" />
+    </div>
+    <div class="fa-group">
+      <label for="fViewsMin">Мин. средние просмотры</label>
+      <input id="fViewsMin" type="number" min="0" step="100" placeholder="Напр. 10000" class="fa-input" />
+    </div>
+
+    <!-- Сортировка -->
+    <div class="fa-group">
+      <label for="fSortBy">Сортировать по</label>
+      <select id="fSortBy" class="fa-select">
+        <option value="">—</option>
+        <option value="subscribers">Подписчики</option>
+        <option value="er">ER</option>
+        <option value="avg_views">Средние просмотры</option>
+        <option value="price">Цена</option>
+        <option value="aqs">AQS</option>
+        <option value="last_post_at">Дате последнего поста</option>
+      </select>
+    </div>
+    <div class="fa-group">
+      <label for="fSortDir">Порядок</label>
+      <select id="fSortDir" class="fa-select">
+        <option value="desc">По убыванию</option>
+        <option value="asc">По возрастанию</option>
+      </select>
+    </div>
+  </div>
+</section>
