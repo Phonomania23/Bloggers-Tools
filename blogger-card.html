@@ -6,15 +6,14 @@
   <title>Карточка блогера — Bloggers.tools</title>
   
   <!-- Preload critical resources -->
-  <link rel="preload" href="/css/base.css" as="style">
-  <link rel="preload" href="/css/layout.css" as="style">
-  <link rel="preload" href="/js/include.js" as="script">
+  <link rel="preload" href="../css/base.css" as="style">
+  <link rel="preload" href="../css/layout.css" as="style">
+  <link rel="preload" href="../js/include.js" as="script">
 
   <!-- Стили -->
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/analytics.css">
-  <script defer src="js/include.js"></script>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <script defer src="../js/include.js"></script>
   
   <style>
     .blogger-card {
@@ -24,13 +23,30 @@
       background: var(--surface);
       box-shadow: var(--shadow-2);
       overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .blogger-card:hover {
+      box-shadow: var(--shadow-1);
+      transform: translateY(-2px);
     }
     
     .card-header {
       padding: 24px;
-      background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-800) 100%);
       color: white;
       position: relative;
+      overflow: hidden;
+    }
+    
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
     }
     
     .blogger-profile {
@@ -38,6 +54,8 @@
       gap: 20px;
       align-items: center;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
     }
     
     .blogger-avatar {
@@ -46,6 +64,13 @@
       border-radius: 50%;
       border: 3px solid rgba(255, 255, 255, 0.3);
       object-fit: cover;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.8em;
     }
     
     .blogger-info {
@@ -67,12 +92,14 @@
       margin: 0;
       opacity: 0.9;
       font-size: 1.1em;
+      color: rgba(255, 255, 255, 0.9);
     }
     
     .platform-switcher {
       display: flex;
       gap: 8px;
       margin: 10px 0;
+      flex-wrap: wrap;
     }
     
     .platform-btn {
@@ -82,7 +109,8 @@
       border-radius: var(--radius-sm);
       color: white;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
     }
     
     .platform-btn.active {
@@ -114,6 +142,12 @@
       background: var(--surface-2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
+      transition: var(--transition);
+    }
+    
+    .stat-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
     }
     
     .stat-value {
@@ -124,13 +158,12 @@
     }
     
     .stat-label {
-      color: var(--text-on-surface);
+      color: var(--text);
       font-size: 0.9em;
-      opacity: 0.8;
     }
     
     .section-title {
-      color: var(--text-on-surface);
+      color: var(--text);
       margin: 30px 0 20px 0;
       font-size: 1.4em;
       font-weight: 700;
@@ -153,24 +186,47 @@
       padding: 15px;
       background: var(--surface-2);
       border: none;
-      color: var(--text-on-surface);
+      color: var(--text);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
       font-weight: 600;
       min-width: 120px;
+      position: relative;
+    }
+    
+    .tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      transition: var(--transition);
+      transform: translateX(-50%);
     }
     
     .tab.active {
-      background: var(--primary);
-      color: var(--primary-ink);
+      background: var(--surface-3);
+      color: var(--primary);
+    }
+    
+    .tab.active::after {
+      width: 80%;
     }
     
     .tab-content {
       display: none;
+      animation: fadeIn 0.3s ease;
     }
     
     .tab-content.active {
       display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .demographics-grid {
@@ -187,7 +243,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-on-surface);
+      color: var(--text-muted);
       font-weight: 600;
     }
     
@@ -202,11 +258,17 @@
       background: var(--surface-2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
+      transition: var(--transition);
+    }
+    
+    .content-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
     }
     
     .content-item h4 {
       margin: 0 0 10px 0;
-      color: var(--text-on-surface);
+      color: var(--text);
     }
     
     .content-stats {
@@ -227,8 +289,7 @@
     
     .content-stat-label {
       font-size: 0.8em;
-      color: var(--text-on-surface);
-      opacity: 0.7;
+      color: var(--text-muted);
     }
     
     .contact-info {
@@ -244,7 +305,17 @@
       align-items: center;
       gap: 10px;
       margin: 10px 0;
-      color: var(--text-on-surface);
+      color: var(--text);
+      padding: 10px;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--surface-border);
+      transition: var(--transition);
+    }
+    
+    .contact-item:hover {
+      background: var(--surface-3);
+      transform: translateX(3px);
     }
     
     .pricing-grid {
@@ -259,6 +330,12 @@
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
       text-align: center;
+      transition: var(--transition);
+    }
+    
+    .price-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
     }
     
     .price-value {
@@ -269,7 +346,7 @@
     }
     
     .price-type {
-      color: var(--text-on-surface);
+      color: var(--text);
       font-weight: 600;
     }
     
@@ -284,29 +361,44 @@
       justify-content: center;
       margin-top: 30px;
       flex-wrap: wrap;
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
     
     .badge {
       display: inline-block;
       padding: 4px 12px;
       border-radius: 999px;
-      background: rgba(199, 255, 26, 0.2);
-      color: var(--primary-ink);
+      background: rgba(199, 255, 26, 0.15);
+      color: var(--primary);
       font-size: 0.8em;
       font-weight: 600;
       border: 1px solid var(--primary);
     }
     
     .badge-verified {
-      background: rgba(76, 175, 80, 0.2);
-      color: #4CAF50;
-      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--success);
+      border-color: var(--success);
     }
     
     .badge-premium {
-      background: rgba(255, 193, 7, 0.2);
-      color: #FFC107;
-      border-color: #FFC107;
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+    
+    .badge-trending {
+      background: rgba(233, 30, 99, 0.15);
+      color: #E91E63;
+      border-color: #E91E63;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     
     .rating {
@@ -318,7 +410,7 @@
     }
     
     .star {
-      color: #ffc107;
+      color: var(--warning);
       font-size: 1.2em;
     }
     
@@ -328,6 +420,16 @@
       border-radius: var(--radius-sm);
       border: 1px solid var(--accent);
       margin: 20px 0;
+      position: relative;
+    }
+    
+    .ai-recommendation::before {
+      content: '🤖';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5em;
+      opacity: 0.2;
     }
     
     .ai-recommendation h4 {
@@ -344,7 +446,7 @@
     }
 
     .muted {
-      opacity: 0.7;
+      color: var(--text-muted);
       font-size: 0.9em;
     }
     
@@ -358,13 +460,14 @@
       padding: 8px 16px;
       border: 1px solid var(--accent);
       border-radius: var(--radius-sm);
-      transition: all 0.3s ease;
+      transition: var(--transition);
     }
     
     .profile-link:hover {
       background: var(--accent);
       color: white;
       text-decoration: none;
+      transform: translateY(-1px);
     }
     
     .quick-actions {
@@ -387,6 +490,12 @@
       background: var(--surface-2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--surface-border);
+      transition: var(--transition);
+    }
+    
+    .highlight-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-1);
     }
     
     .highlight-value {
@@ -398,8 +507,7 @@
     
     .highlight-label {
       font-size: 0.8em;
-      color: var(--text-on-surface);
-      opacity: 0.8;
+      color: var(--text-muted);
     }
     
     .audience-quality {
@@ -420,8 +528,9 @@
     
     .quality-fill {
       height: 100%;
-      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      background: linear-gradient(90deg, var(--success), #8BC34A);
       border-radius: 4px;
+      transition: width 1s ease;
     }
     
     .content-type-tabs {
@@ -438,9 +547,9 @@
       padding: 10px;
       background: var(--surface-2);
       border: none;
-      color: var(--text-on-surface);
+      color: var(--text);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
       font-size: 0.9em;
     }
     
@@ -464,9 +573,17 @@
       border: 1px solid var(--surface-border);
       border-radius: var(--radius-sm);
       background: var(--surface);
-      color: var(--text-on-surface);
+      color: var(--text);
       resize: vertical;
       margin-bottom: 10px;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    
+    .note-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: var(--focus);
     }
     
     .saved-notes {
@@ -479,6 +596,12 @@
       border-left: 3px solid var(--accent);
       border-radius: var(--radius-sm);
       margin: 10px 0;
+      transition: var(--transition);
+    }
+    
+    .note-item:hover {
+      transform: translateX(3px);
+      box-shadow: var(--shadow-1);
     }
     
     .note-date {
@@ -497,31 +620,75 @@
     }
     
     .status-available {
-      background: rgba(76, 175, 80, 0.2);
-      color: #4CAF50;
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--success);
     }
     
     .status-premium {
-      background: rgba(255, 193, 7, 0.2);
-      color: #FFC107;
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--warning);
+    }
+    
+    .status-busy {
+      background: rgba(244, 67, 54, 0.15);
+      color: var(--error);
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .blogger-profile {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .action-buttons, .quick-actions {
+        flex-direction: column;
+      }
+      
+      .action-buttons .btn, .quick-actions .profile-link {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .stats-grid, .highlights-grid, .demographics-grid, .content-grid, .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tabs, .content-type-tabs {
+        flex-direction: column;
+      }
+      
+      .tab, .content-type-tab {
+        min-width: auto;
+      }
+      
+      .action-panel {
+        flex-direction: column;
+      }
+      
+      .action-panel .btn {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
-  <div data-include="/components/header.html"></div>
-  <div data-include="/components/nav.html"></div>
+  <div data-include="../components/header.html"></div>
+  <div data-include="../components/nav.html"></div>
   
   <main class="container">
     <article class="blogger-card" id="card">
       <!-- Заголовок с основной информацией -->
       <div class="card-header">
         <div class="blogger-profile">
-          <img src="https://via.placeholder.com/150" alt="Аватар блогера" class="blogger-avatar">
+          <div class="blogger-avatar">ИП</div>
           <div class="blogger-info">
             <h1 class="blogger-name">
               Иван Петров 
               <span class="badge badge-verified">✓ Проверен</span>
               <span class="badge badge-premium">ТОП</span>
+              <span class="badge badge-trending">Тренд +15%</span>
             </h1>
             <p class="blogger-handle">@ivan_tech_review · Россия · Русский язык</p>
             
@@ -544,10 +711,10 @@
         </div>
         
         <div class="action-buttons">
-          <button class="btn">💬 Написать сообщение</button>
-          <button class="btn btn-secondary">⭐ В избранное</button>
-          <button class="btn">📁 Добавить в папку</button>
-          <button class="btn">📋 Предложить коллаб</button>
+          <button class="btn" onclick="startChat()">💬 Написать сообщение</button>
+          <button class="btn btn-secondary" onclick="toggleFavorite()">⭐ В избранное</button>
+          <button class="btn" onclick="saveToList()">📁 Добавить в папку</button>
+          <button class="btn" onclick="sendOffer()">📋 Предложить коллаб</button>
           <a href="creator.html?id=1" class="btn btn-accent">📋 Полная анкета</a>
         </div>
       </div>
@@ -563,19 +730,19 @@
 
         <!-- Основная статистика -->
         <div class="stats-grid">
-          <div class="stat-item">
+          <div class="stat-item fade-in">
             <div class="stat-value">125K</div>
             <div class="stat-label">Подписчиков</div>
           </div>
-          <div class="stat-item">
+          <div class="stat-item fade-in">
             <div class="stat-value">4.8%</div>
             <div class="stat-label">Engagement Rate</div>
           </div>
-          <div class="stat-item">
+          <div class="stat-item fade-in">
             <div class="stat-value">45K</div>
             <div class="stat-label">Средние просмотры</div>
           </div>
-          <div class="stat-item">
+          <div class="stat-item fade-in">
             <div class="stat-value">92%</div>
             <div class="stat-label">RU аудитория</div>
           </div>
@@ -583,19 +750,19 @@
 
         <!-- Highlights -->
         <div class="highlights-grid">
-          <div class="highlight-item">
+          <div class="highlight-item fade-in">
             <div class="highlight-value">347</div>
             <div class="highlight-label">Видео</div>
           </div>
-          <div class="highlight-item">
+          <div class="highlight-item fade-in">
             <div class="highlight-value">2.1K</div>
             <div class="highlight-label">Средние лайки</div>
           </div>
-          <div class="highlight-item">
+          <div class="highlight-item fade-in">
             <div class="highlight-value">184</div>
             <div class="highlight-label">Средние комментарии</div>
           </div>
-          <div class="highlight-item">
+          <div class="highlight-item fade-in">
             <div class="highlight-value">78%</div>
             <div class="highlight-label">Охват</div>
           </div>
@@ -618,6 +785,10 @@
         <div class="ai-recommendation">
           <h4>🤖 AI-рекомендация</h4>
           <p>Высокий потенциал для collaboration с tech-брендами. Аудитория активно вовлечена, преобладает мужская аудитория 25-34 лет. Рекомендуемая ставка: $1,200-1,800 за интеграцию.</p>
+          <div class="quality-meter">
+            <div class="quality-fill" style="width: 92%"></div>
+          </div>
+          <p class="muted">Оценка совместимости: 92%</p>
         </div>
 
         <!-- Секция для заметок -->
@@ -651,7 +822,7 @@
           
           <h3 class="section-title">Ключевые метрики</h3>
           <div class="content-grid">
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>📈 ER по месяцам</h4>
               <p>Средний engagement rate: 4.8%</p>
               <div class="content-stats">
@@ -666,7 +837,7 @@
               </div>
             </div>
             
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>🎯 Охват</h4>
               <p>Средний охват: 78,000 человек</p>
               <div class="content-stats">
@@ -681,7 +852,7 @@
               </div>
             </div>
 
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>📊 По типам контента</h4>
               <p>Видео: 4.5% ER</p>
               <p>Shorts: 3.2% ER</p>
@@ -700,19 +871,19 @@
 
           <h3 class="section-title">Последние публикации</h3>
           <div class="content-grid">
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>Обзор нового iPhone 15</h4>
               <p>Просмотры: 89K · Лайки: 4.2K · Комментарии: 287 · ER: 4.8%</p>
               <p class="muted">Опубликовано 5 дней назад · Видео</p>
             </div>
             
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>Сравнение флагманов 2024</h4>
               <p>Просмотры: 112K · Лайки: 5.8K · Комментарии: 412 · ER: 5.2%</p>
               <p class="muted">Опубликовано 2 недели назад · Видео</p>
             </div>
             
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>Распаковка Xiaomi 14</h4>
               <p>Просмотры: 67K · Лайки: 3.1K · Комментарии: 198 · ER: 4.6%</p>
               <p class="muted">Опубликовано 3 недели назад · Видео</p>
@@ -731,19 +902,19 @@
 
           <h3 class="section-title">Топ стран аудитории</h3>
           <div class="content-grid">
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>🇷🇺 Россия</h4>
               <p>92% подписчиков</p>
             </div>
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>🇺🇦 Украина</h4>
               <p>3% подписчиков</p>
             </div>
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>🇰🇿 Казахстан</h4>
               <p>2% подписчиков</p>
             </div>
-            <div class="content-item">
+            <div class="content-item fade-in">
               <h4>🌍 Другие</h4>
               <p>3% подписчиков</p>
             </div>
@@ -753,21 +924,21 @@
         <div class="tab-content" id="pricing-tab">
           <h3 class="section-title">Условия сотрудничества</h3>
           <div class="pricing-grid">
-            <div class="price-card">
+            <div class="price-card fade-in">
               <div class="price-type">Integration</div>
               <div class="price-value">$1,500</div>
               <p>60-90 секунд в видео</p>
               <p>3 сторис упоминания</p>
             </div>
             
-            <div class="price-card">
+            <div class="price-card fade-in">
               <div class="price-type">Product Review</div>
               <div class="price-value">$2,200</div>
               <p>Полный обзор 5-7 минут</p>
               <p>Ссылка в описании</p>
             </div>
             
-            <div class="price-card">
+            <div class="price-card fade-in">
               <div class="price-type">Brand Ambassador</div>
               <div class="price-value">$8,000</div>
               <p>3 месяца сотрудничества</p>
@@ -779,21 +950,22 @@
         <div class="tab-content" id="contacts-tab">
           <h3 class="section-title">Контактная информация</h3>
           <div class="contact-info">
-            <div class="contact-item">
+            <div class="contact-item fade-in">
               <span>📧</span>
               <span>ivan.petrov@example.com</span>
               <span class="contact-status status-available">Доступен</span>
             </div>
-            <div class="contact-item">
+            <div class="contact-item fade-in">
               <span>📱</span>
               <span>+7 (999) 123-45-67</span>
               <span class="contact-status status-premium">Премиум</span>
             </div>
-            <div class="contact-item">
+            <div class="contact-item fade-in">
               <span>💼</span>
               <span>Менеджер: Анна +7 (999) 765-43-21</span>
+              <span class="contact-status status-busy">Занята</span>
             </div>
-            <div class="contact-item">
+            <div class="contact-item fade-in">
               <span>🕒</span>
               <span>Время ответа: 12-24 часа</span>
             </div>
@@ -812,22 +984,22 @@
       <!-- Панель действий внизу -->
       <div class="action-panel">
         <a href="creator.html?id=1" class="btn btn-large">📋 Полная анкета</a>
-        <button class="btn btn-large">💌 Отправить предложение</button>
-        <button class="btn btn-secondary btn-large">📋 Добавить в список</button>
-        <button class="btn btn-large">📊 Сравнить с другими</button>
+        <button class="btn btn-large" onclick="sendOffer()">💌 Отправить предложение</button>
+        <button class="btn btn-secondary btn-large" onclick="saveToList()">📋 Добавить в список</button>
+        <button class="btn btn-large" onclick="compareBloggers()">📊 Сравнить с другими</button>
       </div>
     </article>
   </main>
 
-  <div data-include="/components/footer.html"></div>
-
-  <!-- Подключение скриптов в правильном порядке -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/blogger-analytics.js"></script>
-  <script src="js/blogger-card.js"></script>
+  <div data-include="../components/footer.html"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Загрузка данных блогера
+      const urlParams = new URLSearchParams(window.location.search);
+      const bloggerId = urlParams.get('id') || 'ivan-petrov';
+      loadBloggerData(bloggerId);
+      
       // Переключение табов
       const tabs = document.querySelectorAll('.tab');
       const tabContents = document.querySelectorAll('.tab-content');
@@ -853,6 +1025,7 @@
           platformBtns.forEach(b => b.classList.remove('active'));
           this.classList.add('active');
           // Здесь будет логика загрузки данных для выбранной платформы
+          showNotification(`Загружаем данные для ${this.textContent}`);
         });
       });
       
@@ -864,33 +1037,30 @@
           this.classList.add('active');
         });
       });
-      
-      // Обработчики действий
-      document.querySelector('[data-action="favorite"]')?.addEventListener('click', function() {
-        this.classList.toggle('active');
-        alert(this.classList.contains('active') ? 'Добавлено в избранное' : 'Убрано из избранного');
-      });
-      
-      // Инициализация аналитики
-      const bloggerData = {
-        id: 'ivan-petrov',
-        name: 'Иван Петров',
-        platform: 'YouTube',
-        subscribers: 125000,
-        avgViews: 45000,
-        niche: 'Технологии',
-        youtube: 'https://youtube.com/@ivan_tech_review'
+    });
+    
+    function loadBloggerData(bloggerId) {
+      const bloggers = {
+        'ivan-petrov': { 
+          name: 'Иван Петров', 
+          handle: '@ivan_tech_review',
+          platform: 'YouTube',
+          subscribers: 125000,
+          er: 4.8,
+          avgViews: 45000,
+          price: 1500
+        }
       };
       
-      // Сохраняем данные для автоматической инициализации
-      window.bloggerData = bloggerData;
+      const blogger = bloggers[bloggerId] || bloggers['ivan-petrov'];
       
-      // Инициализируем аналитику
-      const analyticsContainer = document.getElementById('analytics-container');
-      if (analyticsContainer && typeof initBloggerAnalytics === 'function') {
-        const analytics = initBloggerAnalytics(bloggerData);
-      }
-    });
+      // Обновляем данные на странице
+      document.querySelector('.blogger-name').firstChild.textContent = blogger.name;
+      document.querySelector('.blogger-handle').textContent = `${blogger.handle} · Россия · Русский язык`;
+      document.querySelector('[data-tab="stats"] .stat-value').textContent = blogger.subscribers.toLocaleString();
+      document.querySelector('[data-tab="stats"] .stat-value:nth-child(2)').textContent = `${blogger.er}%`;
+      document.querySelector('[data-tab="stats"] .stat-value:nth-child(3)').textContent = blogger.avgViews.toLocaleString();
+    }
     
     function showNoteSection() {
       document.getElementById('noteSection').style.display = 'block';
@@ -905,7 +1075,7 @@
         const dateString = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
         
         const noteItem = document.createElement('div');
-        noteItem.className = 'note-item';
+        noteItem.className = 'note-item fade-in';
         noteItem.innerHTML = `
           <p>${noteText}</p>
           <div class="note-date">${dateString}</div>
@@ -914,8 +1084,74 @@
         document.querySelector('.saved-notes').appendChild(noteItem);
         noteInput.value = '';
         
-        alert('Заметка сохранена!');
+        showNotification('Заметка сохранена!');
+      } else {
+        showNotification('Введите текст заметки', 'error');
       }
+    }
+    
+    function toggleFavorite() {
+      const favoriteBtn = document.querySelector('[onclick="toggleFavorite()"]');
+      const isFavorite = favoriteBtn.classList.contains('active');
+      
+      if (isFavorite) {
+        favoriteBtn.classList.remove('active');
+        favoriteBtn.innerHTML = '⭐ В избранное';
+        showNotification('Убрано из избранного');
+      } else {
+        favoriteBtn.classList.add('active');
+        favoriteBtn.innerHTML = '❤️ В избранном';
+        showNotification('Добавлено в избранное');
+      }
+    }
+    
+    function saveToList() {
+      showNotification('Блогер добавлен в список');
+    }
+    
+    function sendOffer() {
+      showNotification('Форма предложения открыта');
+    }
+    
+    function startChat() {
+      showNotification('Чат открыт');
+    }
+    
+    function compareBloggers() {
+      showNotification('Добавлено к сравнению');
+    }
+    
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        color: white;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: var(--shadow-3);
+        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+      `;
+      
+      if (type === 'success') {
+        notification.style.background = 'var(--success)';
+      } else if (type === 'error') {
+        notification.style.background = 'var(--error)';
+      } else if (type === 'info') {
+        notification.style.background = 'var(--info)';
+      }
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 3000);
     }
   </script>
 </body>
