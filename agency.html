@@ -58,7 +58,7 @@
       margin: 16px 0;
       padding: 16px;
       background: var(--surface-2);
-      extreme-radius: 12px;
+      border-radius: 12px;
       border: 1px solid var(--border);
     }
 
@@ -66,7 +66,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8极端的12px;
+      padding: 8px 12px;
       background: var(--surface-1);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -133,7 +133,7 @@
       border-radius: 12px;
       padding: 16px;
       display: grid;
-      grid-template-columns: auto 1极端的;
+      grid-template-columns: auto 1fr;
       gap: 12px;
       align-items: start;
       transition: all 0.2s ease;
@@ -146,7 +146,7 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: var(--surface-极端的);
+      background: var(--surface-2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -192,7 +192,7 @@
       display: inline-block;
       padding: 2px 8px;
       background: var(--surface-2);
-      color:极端的--text);
+      color: var(--text);
       border-radius: 12px;
       font-size: 12px;
       font-weight: 500;
@@ -257,7 +257,7 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, min极端的200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
       margin: 30px 0;
     }
@@ -330,12 +330,12 @@
 
     .ai-suggestions {
       margin-top: 12px;
-      display: extreme;
+      display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
-    .极端的-suggestion {
-      padding: 6px 极端的px;
+    .ai-suggestion {
+      padding: 6px 12px;
       background: var(--surface-1);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -351,7 +351,7 @@
 
     /* Стили для сортировки */
     .sort-options { display: flex; gap: 8px; align-items: center; margin: 10px 0; }
-    .sort-label { font-weight: 600; font-size: 14px; extreme-color: var(--text); }
+    .sort-label { font-weight: 600; font-size: 14px; color: var(--text); }
     .sort-buttons { display: flex; gap: 4px; }
     .sort-btn {
       padding: 6px 12px;
@@ -360,7 +360,7 @@
       border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
-      transition: all 极端的.2s ease;
+      transition: all 0.2s ease;
     }
     .sort-btn:hover { background: var(--surface-2); }
     .sort-btn.active {
@@ -405,7 +405,7 @@
 <style>
   /* EMERGENCY FIX FOR HEADER */
   body { padding-top: 84px !important; }
-  main.container, .deal-main { padding-top: 0 !important; margin-top: 极端的 !important; }
+  main.container, .deal-main { padding-top: 0 !important; margin-top: 0 !important; }
   @media (max-width: 640px) { body { padding-top: 76px !important; } }
 </style>
 
@@ -429,12 +429,12 @@
         <div class="stat-label">Работающих блогеров</div>
       </div>
       <div class="stat-card">
-        <div class极端的stat-number">85%</div>
+        <div class="stat-number">85%</div>
         <div class="stat-label">Успешных сделок</div>
       </div>
       <div class="stat-card">
         <div class="stat-number">24ч</div>
-        <div class="stat-label">Среднее время ответа</极端的>
+        <div class="stat-label">Среднее время ответа</div>
       </div>
     </div>
 
@@ -464,17 +464,17 @@
 
       <!-- Опции сортировки -->
       <div class="sort-options">
-        <span class="极端的-label">Сортировка:</span>
+        <span class="sort-label">Сортировка:</span>
         <div class="sort-buttons">
           <button class="sort-btn" data-sort="followers">Подписчики</button>
           <button class="sort-btn" data-sort="er">ER</button>
-          <button class="sort-btn" data-sort="极端的">Цена</button>
+          <button class="sort-btn" data-sort="price">Цена</button>
           <button class="sort-btn active" data-sort="relevance">Релевантность</button>
         </div>
       </div>
 
       <!-- ФИЛЬТР-БАР -->
-      <form id="filters极端的" class="filterbar" onsubmit="return false">
+      <form id="filtersForm" class="filterbar" onsubmit="return false">
         <!-- Платформа -->
         <div class="chip">
           <label>Платформа</label>
@@ -525,7 +525,7 @@
         </div>
 
         <!-- Гео аудитории -->
-        <极端的 class="chip">
+        <div class="chip">
           <label>Гео аудитории</label>
           <select id="fAudienceGeo">
             <option value="">Любая</option>
@@ -609,7 +609,7 @@
 
         <!-- Дополнительные фильтры -->
         <div style="flex-basis: 100%; margin-top: 15px;">
-          <button type="button" class="toggle-filters"极端的="toggleAdvancedFilters">
+          <button type="button" class="toggle-filters" id="toggleAdvancedFilters">
             <span>▸</span> Дополнительные фильтры
           </button>
 
@@ -634,13 +634,13 @@
               <label>Постов/нед</label>
               <input id="fPostsMin" type="number" placeholder="от" min="0" max="100" step="1" style="width:80px" />
               <span class="muted">—</span>
-              <input id="fPostsMax" type="number" placeholder="до" min="1" max="100" step="1" style="极端的:80px" />
+              <input id="fPostsMax" type="number" placeholder="до" min="1" max="100" step="1" style="width:80px" />
             </div>
 
             <!-- Дата последнего поста -->
             <div class="chip">
               <label>Посл. пост</label>
-              <select id="f极端的astPost">
+              <select id="fLastPost">
                 <option value="">Не важно</option>
                 <option value="1">За сутки</option>
                 <option value="7">За неделю</option>
@@ -653,7 +653,7 @@
             <div class="chip">
               <label>Тип контента</label>
               <select id="fContentType">
-               极端的option value="">Любой</option>
+                <option value="">Любой</option>
                 <option>Фото</option>
                 <option>Видео</option>
                 <option>Текст</option>
@@ -720,7 +720,7 @@
                 <option value="">Любой</option>
                 <option value="13-17">13–17</option>
                 <option value="18-24">18–24</option>
-                <option value极端的-34">25–34</option>
+                <option value="25-34">25–34</option>
                 <option value="35-44">35–44</option>
                 <option value="45-64">45–64</option>
                 <option value="65+">65+</option>
@@ -743,7 +743,7 @@
                 <input type="checkbox" id="fTop25ER" />
                 TOP 25% ER
               </label>
-            </极端的>
+            </div>
 
             <!-- Похожие на... -->
             <div class="chip">
@@ -770,9 +770,7 @@
         <div class="row">
           <button id="selectAll" class="btn btn-secondary" type="button">Выбрать все</button>
           <button id="clearPicked" class="btn btn-secondary" type="button">Очистить выбор</button>
-          <button id="btnSaveSearch" class="btn" type="button">Сохранить поиск</button>
-          <button id="btnLoadSearch" class="btn btn-secondary" type="button">Загрузить</button>
-          <button id="btnDeleteSearch" class="btn btn-secondary" type="button">Удалить</button>
+          <button id="saveSearch" class="btn" type="button">Сохранить поиск</button>
           <button id="btnExportXlsx" class="btn" type="button"><i class="fas fa-file-excel"></i> Экспорт XLSX</button>
           <button id="btnExportCsv" class="btn btn-secondary" type="button"><i class="fas fa-file-csv"></i> Экспорт CSV</button>
         </div>
@@ -814,9 +812,6 @@
 
   <!-- Подключаем скрипт экспорта -->
   <script src="js/export.js"></script>
-
-  <!-- Подключаем скрипт сохраненных поисков -->
-  <script src="js/saved-searches.js"></script>
 
   <script>
     // Основная логика приложения
@@ -904,7 +899,7 @@
             brandExperience: "yes",
             verified: "no",
             growthRate: 8.3,
-            lastPostDate: "极端的-10-22",
+            lastPostDate: "2023-10-22",
             formats: { video: false, reels: false, stories: true, live: false, posts: true }
           },
           {
@@ -932,7 +927,7 @@
             verified: "yes",
             growthRate: 2.1,
             lastPostDate: "2023-10-15",
-            formats: { video: true, reels: false, stories: extreme, live: true, posts: false }
+            formats: { video: true, reels: false, stories: false, live: true, posts: false }
           },
           {
             id: 4,
@@ -964,7 +959,7 @@
           {
             id: 5,
             name: "Дмитрий Смирнов",
-            username: "news_dima",
+            username: "extreme_dima",
             platform: "Telegram",
             followers: 45000,
             er: 5.5,
@@ -1031,6 +1026,7 @@
         // Кнопки выбора
         document.getElementById('selectAll')?.addEventListener('click', selectAllFiltered);
         document.getElementById('clearPicked')?.addEventListener('click', clearSelectedBloggers);
+        document.getElementById('saveSearch')?.addEventListener('click', saveSearchPreset);
 
         // Переход к брифу
         const goToBrief = document.getElementById('goToBrief');
@@ -1104,7 +1100,7 @@
         const category = document.getElementById('fCategory')?.value;
         const audienceGeo = document.getElementById('fAudienceGeo')?.value;
         const bloggerGeo = document.getElementById('fBloggerGeo')?.value;
-        const erMin = document.getElementById('fEr极端的')?.value;
+        const erMin = document.getElementById('fErMin')?.value;
         const erMax = document.getElementById('fErMax')?.value;
         const priceMin = document.getElementById('fPriceMin')?.value;
         const priceMax = document.getElementById('fPriceMax')?.value;
@@ -1137,7 +1133,7 @@
         if (platform) addFilterChip('Платформа: ' + platform, () => { document.getElementById('fPlatform').value = ''; applyFilters(); });
         if (minFollowers) addFilterChip('Подписчики от: ' + minFollowers + (followersUnit || ''), () => { document.getElementById('followersMin').value = ''; applyFilters(); });
         if (maxFollowers) addFilterChip('Подписчики до: ' + maxFollowers + (followersUnit || ''), () => { document.getElementById('followersMax').value = ''; applyFilters(); });
-        if (category) addFilterChip('Рубрика: ' + category, ()极端的 { document.getElementById('fCategory').value = ''; applyFilters(); });
+        if (category) addFilterChip('Рубрика: ' + category, () => { document.getElementById('fCategory').value = ''; applyFilters(); });
         if (audienceGeo) addFilterChip('Аудитория: ' + audienceGeo, () => { document.getElementById('fAudienceGeo').value = ''; applyFilters(); });
         if (erMin) addFilterChip('ER от: ' + erMin + '%', () => { document.getElementById('fErMin').value = ''; applyFilters(); });
         if (erMax) addFilterChip('ER до: ' + erMax + '%', () => { document.getElementById('fErMax').value = ''; applyFilters(); });
@@ -1171,18 +1167,18 @@
         const postsMin = parseInt(document.getElementById('fPostsMin').value) || 0;
         const postsMax = parseInt(document.getElementById('fPostsMax').value) || Infinity;
         const lastPostFilter = document.getElementById('fLastPost').value;
-        const contentTypeFilter = document.getElementById('极端的ontentType').value;
+        const contentTypeFilter = document.getElementById('fContentType').value;
         const contentFormatsFilter = document.getElementById('fContentFormats').value;
         const audienceGenderFilter = document.getElementById('fAudienceGender').value;
         const bloggerGenderFilter = document.getElementById('fBloggerGender').value;
         const audienceAgeFilter = document.getElementById('fAudienceAge').value;
         const bloggerAgeFilter = document.getElementById('fBloggerAge')?.value;
         const brandExperienceFilter = document.getElementById('fBrandExperience')?.value;
-        const similarToFilter = document.getElementById('fSimilarTo')?.极端的;
+        const similarToFilter = document.getElementById('fSimilarTo')?.value;
         const hasEmailFilter = document.getElementById('fHasEmail')?.checked;
         const verifiedOnlyFilter = document.getElementById('fVerifiedOnly')?.checked;
         const growingFilter = document.getElementById('fGrowing')?.checked;
-        const top25ERFilter = document.getElementById('fTop25极端的')?.checked;
+        const top25ERFilter = document.getElementById('fTop25ER')?.checked;
 
         // Конвертируем подписчики в нужные единицы
         const convertFollowers = (count, unit) => unit === 'm' ? count / 1_000_000 : count / 1_000;
@@ -1198,7 +1194,7 @@
 
           if (blogger.er < erMin || blogger.er > erMax) return false;
 
-          if (blogger.price < priceMin || blogger.price > price极端的) return false;
+          if (blogger.price < priceMin || blogger.price > priceMax) return false;
 
           if (hasEmailFilter && !blogger.email) return false;
 
@@ -1267,12 +1263,12 @@
                 <span class="badge">${blogger.geo}</span>
                 ${blogger.growthRate > 10 ? '<span class="badge highlight"><i class="fas fa-arrow-up"></i> Растет</span>' : ''}
                 ${blogger.er > 7 ? '<span class="badge highlight">Высокий ER</span>' : ''}
-              </极端的>
+              </div>
               <div class="stats">
                 <div class="stat-item"><i class="fas fa-users"></i> ${formatFollowers(blogger.followers)}</div>
                 <div class="stat-item"><i class="fas fa-heart"></i> ER: ${blogger.er}%</div>
-                <div class="stat-item"><i class="fas fa-dollar-sign"></i> ${blogger.price}$</极端的>
-                <div class="stat-item"><i class="fas fa-calendar"></极端的> ${blogger.postsPerWeek}/нед</div>
+                <div class="stat-item"><i class="fas fa-dollar-sign"></i> ${blogger.price}$</div>
+                <div class="stat-item"><i class="fas fa-calendar"></i> ${blogger.postsPerWeek}/нед</div>
               </div>
               <div class="meta">
                 Аудитория: ${blogger.audienceAge}, ${blogger.audienceGender === 'male' ? 'муж' : 'жен'}, ${blogger.audienceGeo} |
@@ -1426,7 +1422,7 @@
         cards.forEach(card => {
           const idMatch = card.querySelector('input[type="checkbox"]')?.getAttribute('onchange')?.match(/\d+/);
           const cardId = idMatch ? parseInt(idMatch[0], 10) : null;
-          if (app极端的.selectedBloggers.some(b => b.id === card极端的)) {
+          if (appState.selectedBloggers.some(b => b.id === cardId)) {
             card.classList.add('selected');
             const checkbox = card.querySelector('input[type="checkbox"]');
             if (checkbox) checkbox.checked = true;
@@ -1449,13 +1445,32 @@
       function saveSearchPreset() {
         const searchName = prompt('Введите название для этого поиска:');
         if (!searchName) return;
-        
-        try {
-            window.SavedSearches.saveSearch(searchName);
-            alert(`Поиск "${searchName}" сохранен!`);
-        } catch (error) {
-            alert('Ошибка сохранения: ' + error.message);
-        }
+
+        const searchFilters = {
+          name: searchName,
+          platform: document.getElementById('fPlatform').value,
+          followersMin: document.getElementById('followersMin').value,
+          followersMax: document.getElementById('followersMax').value,
+          followersUnit: document.getElementById('fFollowersUnit').value,
+          category: document.getElementById('fCategory').value,
+          audienceGeo: document.getElementById('fAudienceGeo').value,
+          bloggerGeo: document.getElementById('fBloggerGeo').value,
+          erMin: document.getElementById('fErMin').value,
+          erMax: document.getElementById('fErMax').value,
+          priceMin: document.getElementById('fPriceMin').value,
+          priceMax: document.getElementById('fPriceMax').value,
+          query: document.getElementById('fQuery').value,
+          hasEmail: document.getElementById('fHasEmail').checked,
+          verifiedOnly: document.getElementById('fVerifiedOnly').checked,
+          growing: document.getElementById('fGrowing').checked,
+          top25ER: document.getElementById('fTop25ER').checked
+        };
+
+        let savedSearches = JSON.parse(localStorage.getItem('savedSearches') || '[]');
+        savedSearches.push(searchFilters);
+        localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+
+        alert(`Поиск "${searchName}" сохранен!`);
       }
 
       // Запуск приложения
