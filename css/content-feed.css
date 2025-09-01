@@ -1,0 +1,190 @@
+/* File: css/content-feed.css */
+
+.content-feed .cf-h3 {
+  margin: 0 0 12px 0;
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.content-feed .cf-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.content-feed .cf-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.content-feed .cf-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.content-feed .cf-select,
+.content-feed .cf-input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 10px;
+  font-size: 14px;
+  min-width: 160px;
+}
+
+.content-feed .cf-search .cf-input {
+  min-width: 260px;
+}
+
+.content-feed .cf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .content-feed .cf-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+.content-feed .cf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  outline: none;
+}
+.content-feed .cf-card:hover,
+.content-feed .cf-card:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+  border-color: var(--primary);
+}
+
+.content-feed .cf-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.content-feed .cf-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.content-feed .cf-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--text);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.content-feed .cf-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.content-feed .cf-body {
+  padding: 10px;
+}
+
+.content-feed .cf-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  max-height: 2.6em;     /* две строки */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.content-feed .cf-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.content-feed .cf-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.content-feed .cf-empty {
+  margin: 14px 0;
+  padding: 14px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.content-feed .cf-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.content-feed .btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+}
+.content-feed .btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Цветовые нюансы по типам (необязательно, но приятно) */
+.content-feed .cf-card.type-video .cf-badge { background: color-mix(in srgb, #1e88e5 18%, transparent); }
+.content-feed .cf-card.type-shorts .cf-badge,
+.content-feed .cf-card.type-short .cf-badge { background: color-mix(in srgb, #ef5350 18%, transparent); }
+.content-feed .cf-card.type-reels .cf-badge { background: color-mix(in srgb, #ab47bc 18%, transparent); }
+.content-feed .cf-card.type-stories .cf-badge,
+.content-feed .cf-card.type-story .cf-badge { background: color-mix(in srgb, #26a69a 18%, transparent); }
+.content-feed .cf-card.type-live .cf-badge { background: color-mix(in srgb, #43a047 18%, transparent); }
+.content-feed .cf-card.type-photo .cf-badge,
+.content-feed .cf-card.type-image .cf-badge { background: color-mix(in srgb, #8d6e63 18%, transparent); }
+.content-feed .cf-card.type-post .cf-badge { background: color-mix(in srgb, #5c6bc0 18%, transparent); }

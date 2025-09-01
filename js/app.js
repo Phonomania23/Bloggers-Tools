@@ -124,7 +124,7 @@ async function loadBloggersByIds(ids) {
   } catch (e) { console.error(e); return []; }
 }
 
-// ====== Инициализация ======
+// ====== Инициализация (страницы сделки) ======
 (async function init() {
   // Базовое состояние + регидрация
   const st = Object.assign({}, defaultState(), readState());
@@ -383,4 +383,141 @@ async function loadBloggersByIds(ids) {
   // ====== Info: оффлайн баннер (опционально) ======
   window.addEventListener("offline", () => showToast("Вы оффлайн. Часть функций недоступна.", "error"));
   window.addEventListener("online",  () => showToast("Вы снова онлайн.", "success"));
+})();
+
+// ====== Mini SPA router for blogger profile (mount content feed after render) ======
+(function initMiniRouter() {
+  // Универсальный парсер hash → { path, segments[], query{} }
+  function parseHash() {
+    const raw = location.hash || "";
+    const noHash = raw.replace(/^#\/?/, ""); // убираем #/
+    const [pathPart, queryPart] = noHash.split("?");
+    const segments = (pathPart || "").split("/").filter(Boolean);
+    const params = {};
+    if (queryPart) {
+      new URLSearchParams(queryPart).forEach((v, k) => (params[k] = v));
+    }
+    return { path: pathPart || "", segments, query: params };
+  }
+
+  async function getBloggerByIdFlexible(id) {
+    // Предпочтительно через DataAPI (если подключён)
+    if (window.DataAPI && typeof window.DataAPI.getBloggerById === "function") {
+      return await window.DataAPI.getBloggerById(id);
+    }
+    // Фолбэк — прямой fetch
+    try {
+      const res = await fetch("json/bloggers.json", { cache: "no-store" });
+      const arr = await res.json();
+      const item = (arr || []).find(b => String(b.id) === String(id));
+      if (item && !Array.isArray(item.content)) item.content = [];
+      return item || null;
+    } catch (e) {
+      console.error("Router: failed to load bloggers.json", e);
+      return null;
+    }
+  }
+
+  async function getBloggerByUsernameFlexible(username) {
+    if (window.DataAPI && typeof window.DataAPI.getBloggerByUsername === "function") {
+      return await window.DataAPI.getBloggerByUsername(username);
+    }
+    try {
+      const res = await fetch("json/bloggers.json", { cache: "no-store" });
+      const arr = await res.json();
+      const item = (arr || []).find(b => String(b.username || "").toLowerCase() === String(username || "").toLowerCase());
+      if (item && !Array.isArray(item.content)) item.content = [];
+      return item || null;
+    } catch (e) {
+      console.error("Router: failed to load bloggers.json", e);
+      return null;
+    }
+  }
+
+  function mountFeedIfPossible(blogger) {
+    const el = document.getElementById("contentFeed");
+    if (!el || !blogger) return;
+
+    // 1) Предпочтительно через ContentFeed.mount
+    if (window.ContentFeed && typeof window.ContentFeed.mount === "function") {
+      try {
+        window.ContentFeed.mount("#contentFeed", blogger);
+        return;
+      } catch (e) {
+        console.warn("ContentFeed.mount failed, try fallback render", e);
+      }
+    }
+    // 2) Альтернативные имена экспорта
+    if (typeof window.mountContentFeed === "function") {
+      try { window.mountContentFeed("#contentFeed", blogger); return; } catch {}
+    }
+    if (window.ContentFeed && typeof window.ContentFeed.render === "function") {
+      try { window.ContentFeed.render("#contentFeed", blogger); return; } catch {}
+    }
+    // 3) Простой фолбэк-рендер (без зависимостей)
+    const items = Array.isArray(blogger.content) ? blogger.content : [];
+    el.innerHTML = items.length
+      ? items.map(item => `
+          <div class="cf-item">
+            <a class="cf-thumb" href="${item.url || '#'}" target="_blank" rel="noopener">
+              <img src="${item.preview_url || ''}" alt="${(item.title || item.type || 'content').replace(/"/g,'&quot;')}" loading="lazy"/>
+              <span class="cf-type">${item.type || ''}</span>
+            </a>
+            <div class="cf-meta">
+              <div class="cf-title">${item.title || ''}</div>
+              <div class="cf-info">
+                <span>${new Date(item.published_at || Date.now()).toLocaleDateString('ru-RU')}</span>
+                <span>👀 ${(item.views||0).toLocaleString('ru-RU')}</span>
+                ${item.likes != null ? `<span>❤️ ${(item.likes||0).toLocaleString('ru-RU')}</span>` : ""}
+              </div>
+            </div>
+          </div>
+        `).join("")
+      : `<div class="muted">Контент пока не найден.</div>`;
+  }
+
+  async function handleRoute() {
+    const { segments, query } = parseHash();
+    // Поддерживаем варианты: #/blogger/<id>  ИЛИ  #/blogger?id=<id>  ИЛИ  #/blogger?username=<name>
+    if (segments[0] !== "blogger") return;
+
+    let blogger = null;
+    if (segments[1]) {
+      blogger = await getBloggerByIdFlexible(segments[1]);
+    } else if (query.id) {
+      blogger = await getBloggerByIdFlexible(query.id);
+    } else if (query.username) {
+      blogger = await getBloggerByUsernameFlexible(query.username);
+    }
+
+    if (!blogger) {
+      console.warn("Router: blogger not found");
+      return;
+    }
+
+    // 1) Рендер профиля (если есть функция приложения)
+    if (typeof window.renderBloggerProfile === "function") {
+      try {
+        await window.renderBloggerProfile(blogger);
+      } catch (e) {
+        console.warn("renderBloggerProfile() threw", e);
+      }
+    }
+
+    // 2) Сразу после — монтируем ленту контента
+    mountFeedIfPossible(blogger);
+
+    // 3) Событие для подписчиков (если нужно)
+    try {
+      window.dispatchEvent(new CustomEvent("blogger:rendered", { detail: { blogger } }));
+    } catch {}
+  }
+
+  // Подписка
+  window.addEventListener("hashchange", handleRoute);
+  document.addEventListener("DOMContentLoaded", handleRoute);
+  // Авто-инициализация, если уже на нужном маршруте
+  if (location.hash && location.hash.includes("blogger")) {
+    handleRoute();
+  }
 })();

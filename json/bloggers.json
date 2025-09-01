@@ -1,6 +1,7 @@
 [
   {
     "id": "b101",
+    "username": "techbro",
     "name": "TechBro",
     "platform": "YouTube",
     "category": "техника",
@@ -34,10 +35,50 @@
       { "date": "2025-06", "followers": 206000, "avg_views": 17500, "er": 4.6 },
       { "date": "2025-07", "followers": 208000, "avg_views": 17800, "er": 4.5 },
       { "date": "2025-08", "followers": 210000, "avg_views": 18000, "er": 4.5 }
+    ],
+
+    "content": [
+      {
+        "id": "yt_tb_001",
+        "type": "video",
+        "title": "Новый обзор iPhone 16 — стоит ли апгрейд?",
+        "caption": "Сравнил с 15 Pro Max 👇",
+        "published_at": "2025-08-10T12:34:56Z",
+        "views": 125000,
+        "likes": 8200,
+        "duration_sec": 524,
+        "preview_url": "/media/thumbs/yt_tb_001.jpg",
+        "url": "https://youtube.com/watch?v=tb001"
+      },
+      {
+        "id": "yt_tb_002",
+        "type": "shorts",
+        "title": "3 скрытые фишки iOS 19",
+        "caption": "Быстрый гайд за 60 секунд",
+        "published_at": "2025-08-05T09:22:10Z",
+        "views": 89000,
+        "likes": 6100,
+        "duration_sec": 58,
+        "preview_url": "/media/thumbs/yt_tb_002.jpg",
+        "url": "https://youtube.com/shorts/tb002"
+      },
+      {
+        "id": "yt_tb_003",
+        "type": "video",
+        "title": "Топ-5 VPN в 2025: скорость и приватность",
+        "caption": "Тест на реальной нагрузке",
+        "published_at": "2025-07-28T16:10:00Z",
+        "views": 102300,
+        "likes": 7300,
+        "duration_sec": 776,
+        "preview_url": "/media/thumbs/yt_tb_003.jpg",
+        "url": "https://youtube.com/watch?v=tb003"
+      }
     ]
   },
   {
     "id": "b102",
+    "username": "beautydaily",
     "name": "BeautyDaily",
     "platform": "TikTok",
     "category": "красота",
@@ -71,10 +112,50 @@
       { "date": "2025-06", "followers": 570000, "avg_views": 29500, "er": 7.2 },
       { "date": "2025-07", "followers": 576000, "avg_views": 29800, "er": 7.2 },
       { "date": "2025-08", "followers": 580000, "avg_views": 30000, "er": 7.2 }
+    ],
+
+    "content": [
+      {
+        "id": "tt_bd_001",
+        "type": "reels",
+        "title": "Сборка на свидание за 5 минут",
+        "caption": "Бюджетные лайфхаки 💄",
+        "published_at": "2025-08-11T15:10:00Z",
+        "views": 210000,
+        "likes": 18400,
+        "duration_sec": 34,
+        "preview_url": "/media/thumbs/tt_bd_001.jpg",
+        "url": "https://www.tiktok.com/@beautydaily/video/tt_bd_001"
+      },
+      {
+        "id": "tt_bd_002",
+        "type": "reels",
+        "title": "Анти-акне рутина",
+        "caption": "3 шага утром, 2 вечером",
+        "published_at": "2025-08-07T10:05:00Z",
+        "views": 178000,
+        "likes": 15600,
+        "duration_sec": 27,
+        "preview_url": "/media/thumbs/tt_bd_002.jpg",
+        "url": "https://www.tiktok.com/@beautydaily/video/tt_bd_002"
+      },
+      {
+        "id": "tt_bd_003",
+        "type": "video",
+        "title": "Топ-7 бюджетных кистей",
+        "caption": "Сравнила с люксом",
+        "published_at": "2025-07-30T18:30:00Z",
+        "views": 95000,
+        "likes": 8700,
+        "duration_sec": 61,
+        "preview_url": "/media/thumbs/tt_bd_003.jpg",
+        "url": "https://www.tiktok.com/@beautydaily/video/tt_bd_003"
+      }
     ]
   },
   {
     "id": "b103",
+    "username": "gameroom",
     "name": "GameRoom",
     "platform": "YouTube",
     "category": "игры",
@@ -108,6 +189,45 @@
       { "date": "2025-06", "followers": 344000, "avg_views": 21600, "er": 3.8 },
       { "date": "2025-07", "followers": 347000, "avg_views": 21800, "er": 3.8 },
       { "date": "2025-08", "followers": 350000, "avg_views": 22000, "er": 3.8 }
+    ],
+
+    "content": [
+      {
+        "id": "yt_gr_001",
+        "type": "video",
+        "title": "Обзор Starfield — спустя 200 часов",
+        "caption": "Плюсы и бета-моды",
+        "published_at": "2025-08-12T20:15:00Z",
+        "views": 132000,
+        "likes": 9100,
+        "duration_sec": 1184,
+        "preview_url": "/media/thumbs/yt_gr_001.jpg",
+        "url": "https://youtube.com/watch?v=gr001"
+      },
+      {
+        "id": "yt_gr_002",
+        "type": "live",
+        "title": "Стрим: Baldur’s Gate 3 — тактика босса",
+        "caption": "Запись трансляции",
+        "published_at": "2025-08-03T17:00:00Z",
+        "views": 86000,
+        "likes": 5400,
+        "duration_sec": 7200,
+        "preview_url": "/media/thumbs/yt_gr_002.jpg",
+        "url": "https://youtube.com/live/gr002"
+      },
+      {
+        "id": "yt_gr_003",
+        "type": "video",
+        "title": "RTX 5070 Ti — тест в 12 играх",
+        "caption": "4K, DLSS 3.5, FrameGen",
+        "published_at": "2025-07-26T13:45:00Z",
+        "views": 99000,
+        "likes": 6700,
+        "duration_sec": 934,
+        "preview_url": "/media/thumbs/yt_gr_003.jpg",
+        "url": "https://youtube.com/watch?v=gr003"
+      }
     ]
   }
 ]
