@@ -429,7 +429,7 @@
       </div>
     </div>
 
-    <!-- 1) Поиск блогеров -->
+    <!-- Поиск блогеров -->
     <section class="card" aria-labelledby="search-title">
       <div class="row" style="justify-content:space-between">
         <h2 class="section-title" id="search-title">Поиск блогеров</h2>
@@ -445,7 +445,6 @@
         <div class="sort-buttons">
           <button class="sort-btn" data-sort="followers">Подписчики</button>
           <button class="sort-btn" data-sort="avg_views">Просмотры</button>
-          <button class="sort-btn" data-sort="price">Цена</button>
           <button class="sort-btn active" data-sort="relevance">Релевантность</button>
         </div>
       </div>
@@ -472,32 +471,6 @@
             <option value="k">тыс.</option>
             <option value="m">млн</option>
           </select>
-        </div>
-
-        <div class="chip">
-          <label>Категория</label>
-          <select id="fCategory">
-            <option value="">Все категории</option>
-            <option>Красота</option>
-            <option>Мода</option>
-            <option>Здоровье</option>
-            <option>Еда</option>
-            <option>Путешествия</option>
-            <option>Техника</option>
-            <option>Авто</option>
-            <option>Игры</option>
-            <option>Спорт</option>
-            <option>Образование</option>
-            <option>Юмор</option>
-            <option>Новости</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Цена, $</label>
-          <input id="fPriceMin" type="number" placeholder="от" min="0" max="10000" step="100" style="width:80px" />
-          <span class="muted">—</span>
-          <input id="fPriceMax" type="number" placeholder="до" min="1" max="10000" step="100" style="width:80px" />
         </div>
 
         <!-- Статистика аккаунта -->
@@ -728,7 +701,7 @@
         mockBloggers: [
           { 
             id: 1, name: "Иван Петров", username: "tech_review", platform: "YouTube", 
-            followers: 125000, avg_views: 45000, price: 2500, category: "Техника",
+            followers: 125000, avg_views: 45000, price: 2500,
             blogger_gender: "male", blogger_age: "28", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "male", audience_age: "25-34", audience_country: "Россия", audience_language: "Русский",
             growth: "growing", last_post: "2023-10-20", has_email: true, has_phone: false, verified: true,
@@ -736,7 +709,7 @@
           },
           { 
             id: 2, name: "Анна Сидорова", username: "anna_beauty", platform: "Instagram", 
-            followers: 87000, avg_views: 25000, price: 1800, category: "Красота",
+            followers: 87000, avg_views: 25000, price: 1800,
             blogger_gender: "female", blogger_age: "22", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "female", audience_age: "18-24", audience_country: "Россия", audience_language: "Русский",
             growth: "stable", last_post: "2023-10-22", has_email: true, has_phone: true, verified: false,
@@ -744,7 +717,7 @@
           },
           { 
             id: 3, name: "Сергей Козлов", username: "game_master", platform: "YouTube", 
-            followers: 356000, avg_views: 89000, price: 4200, category: "Игры",
+            followers: 356000, avg_views: 89000, price: 4200,
             blogger_gender: "male", blogger_age: "25", blogger_country: "США", blogger_language: "Английский",
             audience_gender: "male", audience_age: "13-17", audience_country: "США", audience_language: "Английский",
             growth: "growing", last_post: "2023-10-15", has_email: false, has_phone: false, verified: true,
@@ -752,7 +725,7 @@
           },
           { 
             id: 4, name: "Мария Иванова", username: "fashion_maria", platform: "Instagram", 
-            followers: 210000, avg_views: 65000, price: 1900, category: "Мода",
+            followers: 210000, avg_views: 65000, price: 1900,
             blogger_gender: "female", blogger_age: "21", blogger_country: "Великобритания", blogger_language: "Английский",
             audience_gender: "female", audience_age: "18-24", audience_country: "Великобритания", audience_language: "Английский",
             growth: "growing", last_post: "2023-10-23", has_email: true, has_phone: true, verified: true,
@@ -760,7 +733,7 @@
           },
           { 
             id: 5, name: "Дмитрий Смирнов", username: "news_dima", platform: "YouTube", 
-            followers: 45000, avg_views: 12000, price: 1200, category: "Новости",
+            followers: 45000, avg_views: 12000, price: 1200,
             blogger_gender: "male", blogger_age: "40", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "mixed", audience_age: "35-44", audience_country: "Россия", audience_language: "Русский",
             growth: "stable", last_post: "2023-10-23", has_email: true, has_phone: false, verified: false,
@@ -780,8 +753,8 @@
       function setupEventListeners() {
         // Фильтры
         const filterIds = [
-          'fPlatform', 'followersMin', 'followersMax', 'fFollowersUnit', 'fCategory',
-          'fPriceMin', 'fPriceMax', 'fAvgViewsMin', 'fGrowth', 'fLastPost',
+          'fPlatform', 'followersMin', 'followersMax', 'fFollowersUnit',
+          'fAvgViewsMin', 'fGrowth', 'fLastPost',
           'fBloggerGender', 'fBloggerAge', 'fBloggerLanguage', 'fBloggerCountry',
           'fAudienceGender', 'fAudienceAge', 'fAudienceCountry', 'fAudienceLanguage',
           'fKeywords', 'fBio', 'fSimilarTo'
@@ -858,18 +831,12 @@
         };
         
         const platform = document.getElementById('fPlatform').value;
-        const category = document.getElementById('fCategory').value;
         const growth = document.getElementById('fGrowth').value;
         const bloggerGender = document.getElementById('fBloggerGender').value;
         const verified = document.getElementById('fVerifiedOnly').checked;
         
         if (platform) addChip(`Платформа: ${platform}`, () => {
           document.getElementById('fPlatform').value = '';
-          applyFilters();
-        });
-        
-        if (category) addChip(`Категория: ${category}`, () => {
-          document.getElementById('fCategory').value = '';
           applyFilters();
         });
         
@@ -902,9 +869,6 @@
           followersMin: parseInt(document.getElementById('followersMin').value) || 0,
           followersMax: parseInt(document.getElementById('followersMax').value) || Infinity,
           followersUnit: document.getElementById('fFollowersUnit').value,
-          category: document.getElementById('fCategory').value,
-          priceMin: parseInt(document.getElementById('fPriceMin').value) || 0,
-          priceMax: parseInt(document.getElementById('fPriceMax').value) || Infinity,
           avgViewsMin: parseInt(document.getElementById('fAvgViewsMin').value) || 0,
           growth: document.getElementById('fGrowth').value,
           lastPost: document.getElementById('fLastPost').value,
@@ -933,12 +897,6 @@
           const followersValue = filters.followersUnit === 'm' ? blogger.followers / 1000000 : blogger.followers / 1000;
           if (followersValue < filters.followersMin || followersValue > filters.followersMax) return false;
           
-          // Категория
-          if (filters.category && blogger.category !== filters.category) return false;
-          
-          // Цена
-          if (blogger.price < filters.priceMin || blogger.price > filters.priceMax) return false;
-          
           // Просмотры
           if (blogger.avg_views < filters.avgViewsMin) return false;
           
@@ -965,7 +923,6 @@
           // Поиск по ключевым словам и bio
           if (filters.keywords && !(
             blogger.name.toLowerCase().includes(filters.keywords) ||
-            blogger.category.toLowerCase().includes(filters.keywords) ||
             blogger.bio.toLowerCase().includes(filters.keywords)
           )) return false;
           
@@ -981,9 +938,6 @@
             break;
           case 'avg_views':
             filteredBloggers.sort((a, b) => b.avg_views - a.avg_views);
-            break;
-          case 'price':
-            filteredBloggers.sort((a, b) => a.price - b.price);
             break;
           case 'relevance':
           default:
@@ -1022,14 +976,12 @@
               </div>
               <div class="meta">
                 <span class="badge">${blogger.platform}</span>
-                <span class="badge">${blogger.category}</span>
                 <span class="badge">${blogger.blogger_country}</span>
                 ${blogger.growth === 'growing' ? '<span class="badge highlight"><i class="fas fa-arrow-up"></i> Растет</span>' : ''}
               </div>
               <div class="stats">
                 <div class="stat-item"><i class="fas fa-users"></i> ${formatFollowers(blogger.followers)}</div>
                 <div class="stat-item"><i class="fas fa-eye"></i> ${formatNumber(blogger.avg_views)}</div>
-                <div class="stat-item"><i class="fas fa-dollar-sign"></i> ${blogger.price}$</div>
               </div>
               <div class="meta">
                 Блогер: ${blogger.blogger_gender === 'male' ? 'М' : 'Ж'}, ${blogger.blogger_age} | 
@@ -1160,7 +1112,7 @@
       
       // Экспорт в CSV
       function exportToCSV() {
-        const headers = ['Имя', 'Username', 'Платформа', 'Подписчики', 'Просмотры', 'Цена', 'Категория', 'Страна'];
+        const headers = ['Имя', 'Username', 'Платформа', 'Подписчики', 'Просмотры', 'Страна'];
         const data = appState.selectedBloggers.length > 0 ? appState.selectedBloggers : appState.mockBloggers;
         
         const csvContent = [
@@ -1171,8 +1123,6 @@
             blogger.platform,
             blogger.followers,
             blogger.avg_views,
-            blogger.price,
-            blogger.category,
             blogger.blogger_country
           ].join(','))
         ].join('\n');
