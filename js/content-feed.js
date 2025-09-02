@@ -18,11 +18,12 @@
     image: 'Фото'
   };
 
+  // Иконки без зависимостей от внешних шрифтов (дружелюбно к бренду и тёмной теме)
   const ICONS = {
-    views: '<i class="fas fa-eye" aria-hidden="true"></i>',
-    likes: '<i class="fas fa-heart" aria-hidden="true"></i>',
-    date: '<i class="fas fa-calendar-day" aria-hidden="true"></i>',
-    play: '<i class="fas fa-play" aria-hidden="true"></i>'
+    views: '<span aria-hidden="true">👁️</span>',
+    likes: '<span aria-hidden="true">❤️</span>',
+    date:  '<span aria-hidden="true">📅</span>',
+    play:  '<span aria-hidden="true">▶</span>'
   };
 
   function escapeHTML(str = '') {
@@ -35,8 +36,8 @@
   function compactNumber(n) {
     if (n == null || isNaN(n)) return '—';
     const abs = Math.abs(n);
-    if (abs >= 1_000_000) return (n / 1_000_000).toFixed(Math.abs(n) >= 10_000_000 ? 0 : 1) + 'M';
-    if (abs >= 1_000) return (n / 1_000).toFixed(Math.abs(n) >= 10_000 ? 0 : 1) + 'K';
+    if (abs >= 1_000_000) return (n / 1_000_000).toFixed(abs >= 10_000_000 ? 0 : 1) + 'M';
+    if (abs >= 1_000)     return (n / 1_000).toFixed(abs >= 10_000     ? 0 : 1) + 'K';
     return String(n);
   }
 
@@ -52,7 +53,6 @@
   }
 
   function getMetrics(item) {
-    // поддержка разных ключей: views / viewCount / playCount; likes / likeCount
     const views = item.views ?? item.viewCount ?? item.playCount ?? null;
     const likes = item.likes ?? item.likeCount ?? null;
     return { views, likes };
@@ -60,6 +60,22 @@
 
   function uniq(arr) {
     return [...new Set(arr)];
+  }
+
+  function secondsToClock(sec) {
+    const s = Math.floor(sec % 60);
+    const m = Math.floor((sec / 60) % 60);
+    const h = Math.floor(sec / 3600);
+    if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function debounce(fn, ms = 300) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(null, args), ms);
+    };
   }
 
   function sorters(sortKey) {
@@ -81,6 +97,17 @@
     }
   }
 
+  // SVG-заглушка превью (на случай отсутствия preview_url)
+  function placeholderThumb(title = '') {
+    const t = encodeURIComponent((title || 'Нет превью').slice(0, 24));
+    const svg =
+      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 90'>` +
+      `<rect width='160' height='90' fill='%2323262b'/>` +
+      `<text x='50%' y='52%' fill='%238c9199' font-family='system-ui,Arial' font-size='10' text-anchor='middle'>${t}</text>` +
+      `</svg>`;
+    return `data:image/svg+xml;utf8,${svg}`;
+  }
+
   function buildToolbarHTML(types) {
     const typeOptions = ['all', ...types].map(t => {
       const label = t === 'all' ? 'Все типы' : (TYPE_LABELS[t] || t);
@@ -91,14 +118,14 @@
       <div class="cf-toolbar" role="region" aria-label="Фильтры контента">
         <div class="cf-field">
           <label for="cfType" class="cf-label">Тип</label>
-          <select id="cfType" class="cf-select">
+          <select id="cfType" class="cf-select" aria-label="Отфильтровать по типу">
             ${typeOptions}
           </select>
         </div>
 
         <div class="cf-field">
           <label for="cfSort" class="cf-label">Сортировка</label>
-          <select id="cfSort" class="cf-select">
+          <select id="cfSort" class="cf-select" aria-label="Сортировка">
             <option value="date_desc">По дате (новые ↑)</option>
             <option value="date_asc">По дате (старые ↓)</option>
             <option value="views_desc">По просмотрам (больше ↑)</option>
@@ -110,7 +137,7 @@
 
         <div class="cf-field cf-search">
           <label for="cfSearch" class="cf-label">Поиск</label>
-          <input id="cfSearch" type="search" class="cf-input" placeholder="По заголовку/подписи…" />
+          <input id="cfSearch" type="search" class="cf-input" placeholder="По заголовку/подписи…" aria-label="Поиск по заголовку или подписи" />
         </div>
       </div>
     `;
@@ -121,25 +148,26 @@
     const typeLabel = TYPE_LABELS[t] || item.type || 'Контент';
     const { views, likes } = getMetrics(item);
 
-    const thumb = escapeHTML(item.preview_url || item.thumbnail || '');
-    const href = escapeHTML(item.url || '#');
     const title = escapeHTML(item.title || '');
     const caption = escapeHTML(item.caption || '');
-    const date = formatDate(item.published_at);
-    const durSec = item.duration_sec || item.duration || null;
+    const shownTitle = title || caption || 'Без названия';
 
+    const thumb = escapeHTML(item.preview_url || item.thumbnail || '') || placeholderThumb(shownTitle);
+    const href = escapeHTML(item.url || '#');
+    const date = formatDate(item.published_at);
+    const durSec = item.duration_sec ?? item.duration ?? null;
     const duration = durSec ? secondsToClock(durSec) : '';
 
     return `
       <article class="cf-card type-${t}" tabindex="0" aria-label="${typeLabel}">
         <a class="cf-thumb" href="${href}" target="_blank" rel="noopener" aria-label="Открыть публикацию">
-          <img data-src="${thumb}" alt="${title || typeLabel}" class="cf-img" />
+          <img data-src="${thumb}" alt="${shownTitle}" class="cf-img" />
           <span class="cf-badge">${escapeHTML(typeLabel)}</span>
           ${duration ? `<span class="cf-duration">${ICONS.play} ${duration}</span>` : ''}
         </a>
         <div class="cf-body">
-          <div class="cf-title" title="${title || caption}">${title || caption || 'Без названия'}</div>
-          <div class="cf-meta">
+          <div class="cf-title" title="${shownTitle}">${shownTitle}</div>
+          <div class="cf-meta" aria-label="Метаданные публикации">
             <span class="cf-meta-item">${ICONS.date} ${date}</span>
             <span class="cf-meta-item">${ICONS.views} ${compactNumber(views)}</span>
             <span class="cf-meta-item">${ICONS.likes} ${compactNumber(likes)}</span>
@@ -147,22 +175,6 @@
         </div>
       </article>
     `;
-  }
-
-  function secondsToClock(sec) {
-    const s = Math.floor(sec % 60);
-    const m = Math.floor((sec / 60) % 60);
-    const h = Math.floor(sec / 3600);
-    if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    return `${m}:${String(s).padStart(2,'0')}`;
-  }
-
-  function debounce(fn, ms = 300) {
-    let t;
-    return (...args) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn.apply(null, args), ms);
-    };
   }
 
   function lazyImages(root) {
@@ -175,7 +187,7 @@
       entries.forEach(e => {
         if (e.isIntersecting) {
           const img = e.target;
-          img.src = img.dataset.src;
+          img.src = img.dataset.src || placeholderThumb(img.getAttribute('alt') || '');
           img.removeAttribute('data-src');
           obs.unobserve(img);
         }
@@ -211,13 +223,6 @@
       currentQuery: ''
     };
 
-    function setItems(items) {
-      state.rawItems = Array.isArray(items) ? items : [];
-      state.page = 1;
-      applyFilters();
-      render();
-    }
-
     function applyFilters() {
       const q = state.currentQuery.trim().toLowerCase();
       const filtered = state.rawItems.filter(it => {
@@ -230,6 +235,13 @@
 
       filtered.sort(sorters(state.currentSort));
       state.items = filtered;
+    }
+
+    function setItems(items) {
+      state.rawItems = Array.isArray(items) ? items : [];
+      state.page = 1;
+      applyFilters();
+      render();
     }
 
     function renderToolbar() {
@@ -288,8 +300,7 @@
       }
 
       empty.hidden = true;
-      const html = slice.map(buildCardHTML).join('');
-      grid.innerHTML = html;
+      grid.innerHTML = slice.map(buildCardHTML).join('');
 
       lazyImages(grid);
 
@@ -302,38 +313,55 @@
       renderGrid();
     }
 
-    // Паблик API контейнера
+    // Публичное API
     const api = {
       setItems,
       getState: () => ({ ...state }),
-      setType: (t) => { state.currentType = t; state.page = 1; applyFilters(); renderGrid(); },
-      setSort: (s) => { state.currentSort = s; state.page = 1; applyFilters(); renderGrid(); },
+      setType: (t)  => { state.currentType = t; state.page = 1; applyFilters(); renderGrid(); },
+      setSort: (s)  => { state.currentSort = s; state.page = 1; applyFilters(); renderGrid(); },
       setQuery: (q) => { state.currentQuery = q || ''; state.page = 1; applyFilters(); renderGrid(); },
-      loadMore: () => { state.page += 1; renderGrid(); }
+      loadMore: ()  => { state.page += 1; renderGrid(); }
     };
 
-    // Кнопка "Показать ещё"
     root.querySelector('#cfLoadMore').addEventListener('click', api.loadMore);
 
     // Источник данных:
-    // 1) options.blogger — объект блогера с полем content: []
-    // 2) options.bloggerId + options.dataUrl (по умолчанию 'json/bloggers.json')
+    // 1) options.items — прямой массив контента
+    // 2) options.blogger — объект блогера с полем content: []
+    // 3) options.bloggerId / options.username + options.dataUrl (по умолчанию '/json/bloggers.json')
     (async function initData() {
       try {
+        if (Array.isArray(options.items)) {
+          setItems(options.items);
+          return;
+        }
+
         if (options.blogger && Array.isArray(options.blogger.content)) {
           setItems(options.blogger.content);
           return;
         }
-        const dataUrl = options.dataUrl || 'json/bloggers.json';
-        const id = options.bloggerId;
-        if (!id) {
+
+        const dataUrl = options.dataUrl || '/json/bloggers.json';
+        const bloggerId = options.bloggerId;
+        const username  = options.username && String(options.username).toLowerCase();
+
+        if (!bloggerId && !username) {
           setItems([]);
           return;
         }
-        const resp = await fetch(dataUrl, { credentials: 'same-origin' });
+
+        const resp = await fetch(dataUrl, { credentials: 'same-origin', cache: 'no-store' });
         const json = await resp.json();
         const bloggers = Array.isArray(json) ? json : (json.bloggers || []);
-        const blogger = bloggers.find(b => String(b.id) === String(id));
+
+        let blogger = null;
+        if (bloggerId != null) {
+          blogger = bloggers.find(b => String(b.id) === String(bloggerId));
+        }
+        if (!blogger && username) {
+          blogger = bloggers.find(b => (b.username && String(b.username).toLowerCase() === username));
+        }
+
         setItems(blogger && Array.isArray(blogger.content) ? blogger.content : []);
       } catch (e) {
         console.error('ContentFeed: не удалось загрузить контент', e);
@@ -341,11 +369,10 @@
       }
     })();
 
-    // вернём API наружу
+    // Экспортируем API наружу через контейнер (по желанию)
     root._contentFeed = api;
     return api;
   }
 
-  // Экспортируем в глобал
   window.ContentFeed = { mount };
 })();

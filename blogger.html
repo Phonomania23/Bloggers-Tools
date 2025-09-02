@@ -20,15 +20,15 @@
   <!-- Установите цвет темы -->
   <meta name="theme-color" content="#1a1d21">
 
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
   <!-- Content Feed styles -->
-  <link rel="stylesheet" href="../css/content-feed.css" />
+  <link rel="stylesheet" href="/css/content-feed.css" />
 
-  <script defer src="../js/include.js"></script>
-  <script defer src="../js/blogger.js"></script>
+  <script defer src="/js/include.js"></script>
+  <script defer src="/js/blogger.js"></script>
   <!-- Content Feed logic -->
-  <script defer src="../js/content-feed.js"></script>
+  <script defer src="/js/content-feed.js"></script>
 
   <style>
     .page-header {
@@ -359,8 +359,16 @@
   </style>
 </head>
 <body>
-  <div data-include="../components/header.html"></div>
-  <div data-include="../components/nav.html"></div>
+<style>
+  /* EMERGENCY FIX FOR HEADER (липкий хедер не перекрывает контент) */
+  body { padding-top: 84px !important; }
+  @media (max-width: 640px) { body { padding-top: 76px !important; } }
+
+  main.container { padding-top: 0 !important; margin-top: 0 !important; }
+</style>
+
+  <div data-include="/components/header.html"></div>
+  <div data-include="/components/nav.html"></div>
 
   <main class="container">
     <div class="page-header">
@@ -560,7 +568,7 @@
     </article>
   </main>
 
-  <div data-include="../components/footer.html"></div>
+  <div data-include="/components/footer.html"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -574,7 +582,7 @@
           localStorage.removeItem('bloggerName');
           localStorage.removeItem('userRole');
           localStorage.removeItem('bloggerData');
-          window.location.href = '../index.html';
+          window.location.href = '/index.html';
         }
       });
 
@@ -751,7 +759,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const idFromQuery = urlParams.get('id');
 
-        let opts = { dataUrl: '../json/bloggers.json' };
+        let opts = { dataUrl: '/json/bloggers.json' };
 
         // Из localStorage
         const savedData = localStorage.getItem('bloggerData');

@@ -12,7 +12,7 @@
   flex-wrap: wrap;
   gap: 10px;
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface-border);
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 14px;
@@ -33,13 +33,25 @@
 
 .content-feed .cf-select,
 .content-feed .cf-input {
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   background: var(--surface);
   color: var(--text);
   padding: 8px 10px;
   font-size: 14px;
   min-width: 160px;
+  transition: var(--transition);
+}
+.content-feed .cf-select:hover,
+.content-feed .cf-input:hover {
+  border-color: var(--accent);
+}
+.content-feed .cf-select:focus,
+.content-feed .cf-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--focus);
+  background: var(--surface-3);
 }
 
 .content-feed .cf-search .cf-input {
@@ -60,7 +72,7 @@
 
 .content-feed .cf-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface-border);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-2);
@@ -95,7 +107,7 @@
   left: 8px;
   background: color-mix(in srgb, var(--primary) 14%, transparent);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid var(--surface-border);
   backdrop-filter: blur(4px);
   padding: 2px 8px;
   border-radius: 999px;
@@ -152,7 +164,7 @@
   margin: 14px 0;
   padding: 14px;
   background: var(--surface-2);
-  border: 1px dashed var(--border);
+  border: 1px dashed var(--surface-border);
   border-radius: 10px;
   color: var(--text-muted);
   text-align: center;
@@ -164,17 +176,11 @@
   margin-top: 12px;
 }
 
+/* Важно: не переопределяем брендовую кнопку.
+   Оставляем только размеры — фон/цвет берём из base.css (.btn). */
 .content-feed .btn {
   padding: 8px 14px;
   border-radius: 8px;
-  background: var(--primary);
-  color: #fff;
-  border: 1px solid var(--primary);
-  cursor: pointer;
-  font-weight: 600;
-}
-.content-feed .btn:hover {
-  filter: brightness(0.95);
 }
 
 /* Цветовые нюансы по типам (необязательно, но приятно) */
@@ -184,7 +190,4 @@
 .content-feed .cf-card.type-reels .cf-badge { background: color-mix(in srgb, #ab47bc 18%, transparent); }
 .content-feed .cf-card.type-stories .cf-badge,
 .content-feed .cf-card.type-story .cf-badge { background: color-mix(in srgb, #26a69a 18%, transparent); }
-.content-feed .cf-card.type-live .cf-badge { background: color-mix(in srgb, #43a047 18%, transparent); }
-.content-feed .cf-card.type-photo .cf-badge,
-.content-feed .cf-card.type-image .cf-badge { background: color-mix(in srgb, #8d6e63 18%, transparent); }
-.content-feed .cf-card.type-post .cf-badge { background: color-mix(in srgb, #5c6bc0 18%, transparent); }
+.content-feed .cf-card.type-live .cf-badge { backgr
