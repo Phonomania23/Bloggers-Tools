@@ -1,3 +1,5 @@
+/* File: css/filters-advanced.css */
+
 /* Advanced Filters Component */
 .filters-advanced {
   --fa-gap: 16px;
@@ -7,7 +9,7 @@
   --fa-primary: var(--primary);
   --fa-radius: var(--radius);
 
-  position: relative; /* нужно для overlay в .loading::after */
+  position: relative; /* для overlay в .loading::after */
   margin: 20px 0;
   padding: 24px;
   border: 1px solid var(--fa-border);
@@ -65,14 +67,14 @@
   display: block;
 }
 
-/* Inputs */
+/* =====================  Inputs  ===================== */
 .fa-input,
 .fa-select {
   height: 42px;
   padding: 0 16px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--fa-border);
-  background: var(--surface);
+  background: var(--surface-2);
   color: var(--text);
   font-size: 14px;
   outline: none;
@@ -101,7 +103,7 @@
   margin: 0;
 }
 
-/* Checkbox Styles */
+/* =====================  Checkbox  ===================== */
 .fa-checkbox {
   display: flex;
   align-items: center;
@@ -120,7 +122,7 @@
   cursor: pointer;
 }
 
-/* Chips Styles */
+/* =====================  Chips  ===================== */
 .fa-chips {
   display: flex;
   flex-wrap: wrap;
@@ -128,7 +130,7 @@
   padding: 12px;
   border: 1px solid var(--fa-border);
   border-radius: 8px;
-  background: var(--surface);
+  background: var(--surface-2);
 }
 
 .fa-chip {
@@ -146,7 +148,7 @@
 }
 .fa-chip:hover {
   border-color: var(--fa-primary);
-  background: color-mix(in srgb, var(--fa-primary) 10%, transparent);
+  background: rgba(var(--primary-rgb), .10);
 }
 
 .fa-chip input[type="checkbox"] {
@@ -160,7 +162,7 @@
   font-weight: 600;
 }
 
-/* Focus states for accessibility */
+/* =====================  Focus (a11y)  ===================== */
 .fa-input:focus-visible,
 .fa-select:focus-visible,
 .fa-chip:focus-visible,
@@ -169,7 +171,7 @@
   box-shadow: var(--focus);
 }
 
-/* Loading state */
+/* =====================  Loading  ===================== */
 .filters-advanced.loading {
   opacity: 0.7;
   pointer-events: none;
@@ -178,18 +180,18 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(15,16,18,0.35); /* на тёмном фоне выглядит корректно */
+  background: rgba(15,16,18,0.35); /* полупрозрачный оверлей для тёмного фона */
   border-radius: inherit;
 }
 
-/* Error state */
+/* =====================  Error  ===================== */
 .fa-input.error,
 .fa-select.error {
   border-color: var(--error);
   box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.18);
 }
 
-/* Responsive Design */
+/* =====================  Responsive  ===================== */
 @media (max-width: 1200px) {
   .filters-advanced .fa-group { grid-column: span 4; }
   .filters-advanced .fa-wide  { grid-column: span 8; }
@@ -212,18 +214,7 @@
   .filters-advanced .fa-sub { font-size: 13px; }
 }
 
-/* Theme tweaks */
-@media (prefers-color-scheme: dark) {
-  .filters-advanced {
-    --fa-bg: var(--surface-2);
-    --fa-border: var(--surface-border);
-  }
-  .fa-input,
-  .fa-select { background: var(--surface-2); }
-  .fa-chips { background: var(--surface-2); }
-}
-
-/* Animation */
+/* =====================  Animation  ===================== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
