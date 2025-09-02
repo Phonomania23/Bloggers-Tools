@@ -62,6 +62,32 @@
       border: 1px solid var(--border);
     }
     
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-1);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    
+    .filter-group-title {
+      width: 100%;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .filter-group-title i {
+      color: var(--primary);
+    }
+    
     .chip {
       display: flex;
       align-items: center;
@@ -378,6 +404,57 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    
+    /* Стили для выпадающего списка контактов */
+    .contacts-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .contacts-dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: var(--surface);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+    
+    .contacts-dropdown-content a {
+      color: var(--text);
+      padding: 8px 12px;
+      text-decoration: none;
+      display: block;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .contacts-dropdown-content a:hover {
+      background-color: var(--surface-1);
+    }
+    
+    .contacts-dropdown:hover .contacts-dropdown-content {
+      display: block;
+    }
+    
+    /* Стили для кнопки перехода в карточку блогера */
+    .blogger-card-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+    }
+    
+    .blogger-card-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -449,187 +526,204 @@
         </div>
       </div>
 
-      <!-- ФИЛЬТР-БАР (по принципу OnSocial) -->
+      <!-- ФИЛЬТР-БАР (перегруппированный по логике) -->
       <form id="filtersForm" class="filterbar" onsubmit="return false">
-        <!-- Базовые фильтры -->
-        <div class="chip">
-          <label>Платформа</label>
-          <select id="fPlatform">
-            <option value="">Все платформы</option>
-            <option>Instagram</option>
-            <option>YouTube</option>
-            <option>TikTok</option>
-          </select>
+        <!-- Группа 1: Платформа и статистика -->
+        <div class="filter-group">
+          <h3 class="filter-group-title"><i class="fas fa-globe"></i> Платформа и статистика</h3>
+          
+          <div class="chip">
+            <label>Платформа</label>
+            <select id="fPlatform">
+              <option value="">Все платформы</option>
+              <option>Instagram</option>
+              <option>YouTube</option>
+              <option>TikTok</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Подписчики</label>
+            <input id="followersMin" type="number" min="0" step="1" placeholder="от" style="width:80px" />
+            <span class="muted">—</span>
+            <input id="followersMax" type="number" min="0" step="1" placeholder="до" style="width:80px" />
+            <select id="fFollowersUnit" style="width: 60px;">
+              <option value="k">тыс.</option>
+              <option value="m">млн</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Ср. просмотры</label>
+            <input id="fAvgViewsMin" type="number" placeholder="от" min="0" step="1000" style="width:90px" />
+          </div>
+
+          <div class="chip">
+            <label>Рост подписчиков</label>
+            <select id="fGrowth">
+              <option value="">Любой</option>
+              <option value="growing">Растущий</option>
+              <option value="stable">Стабильный</option>
+              <option value="declining">Падающий</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Последний пост</label>
+            <select id="fLastPost">
+              <option value="">Не важно</option>
+              <option value="1">За сутки</option>
+              <option value="7">За неделю</option>
+              <option value="30">За месяц</option>
+            </select>
+          </div>
         </div>
 
-        <div class="chip">
-          <label>Подписчики</label>
-          <input id="followersMin" type="number" min="0" step="1" placeholder="от" style="width:80px" />
-          <span class="muted">—</span>
-          <input id="followersMax" type="number" min="0" step="1" placeholder="до" style="width:80px" />
-          <select id="fFollowersUnit" style="width: 60px;">
-            <option value="k">тыс.</option>
-            <option value="m">млн</option>
-          </select>
+        <!-- Группа 2: Блогер -->
+        <div class="filter-group">
+          <h3 class="filter-group-title"><i class="fas fa-user"></i> Блогер</h3>
+          
+          <div class="chip">
+            <label>Пол блогера</label>
+            <select id="fBloggerGender">
+              <option value="">Любой</option>
+              <option value="male">Мужской</option>
+              <option value="female">Женский</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Возраст блогера</label>
+            <select id="fBloggerAge">
+              <option value="">Любой</option>
+              <option value="13-17">13-17</option>
+              <option value="18-24">18-24</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45+">45+</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Язык блогера</label>
+            <select id="fBloggerLanguage">
+              <option value="">Любой</option>
+              <option>Русский</option>
+              <option>Английский</option>
+              <option>Испанский</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Страна блогера</label>
+            <select id="fBloggerCountry">
+              <option value="">Любая</option>
+              <option>Россия</option>
+              <option>США</option>
+              <option>Великобритания</option>
+              <option>Германия</option>
+              <option>Франция</option>
+              <option>Испания</option>
+              <option>Турция</option>
+              <option>ОАЭ</option>
+            </select>
+          </div>
         </div>
 
-        <!-- Статистика аккаунта -->
-        <div class="chip">
-          <label>Ср. просмотры</label>
-          <input id="fAvgViewsMin" type="number" placeholder="от" min="0" step="1000" style="width:90px" />
+        <!-- Группа 3: Аудитория -->
+        <div class="filter-group">
+          <h3 class="filter-group-title"><i class="fas fa-users"></i> Аудитория</h3>
+          
+          <div class="chip">
+            <label>Пол аудитории</label>
+            <select id="fAudienceGender">
+              <option value="">Любой</option>
+              <option value="male">Мужской</option>
+              <option value="female">Женский</option>
+              <option value="mixed">Смешанный</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Возраст аудитории</label>
+            <select id="fAudienceAge">
+              <option value="">Любой</option>
+              <option value="13-17">13-17</option>
+              <option value="18-24">18-24</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45+">45+</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Страна аудитории</label>
+            <select id="fAudienceCountry">
+              <option value="">Любая</option>
+              <option>Россия</option>
+              <option>США</option>
+              <option>Великобритания</option>
+              <option>Германия</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>Язык аудитории</label>
+            <select id="fAudienceLanguage">
+              <option value="">Любой</option>
+              <option>Русский</option>
+              <option>Английский</option>
+            </select>
+          </div>
         </div>
 
-        <div class="chip">
-          <label>Рост подписчиков</label>
-          <select id="fGrowth">
-            <option value="">Любой</option>
-            <option value="growing">Растущий</option>
-            <option value="stable">Стабильный</option>
-            <option value="declining">Падающий</option>
-          </select>
+        <!-- Группа 4: Контент и контакты -->
+        <div class="filter-group">
+          <h3 class="filter-group-title"><i class="fas fa-hashtag"></i> Контент и контакты</h3>
+          
+          <div class="chip">
+            <label>Поиск по ключевым словам</label>
+            <input id="fKeywords" type="search" placeholder="темы, ключевые слова..." style="width:180px" />
+          </div>
+
+          <div class="chip">
+            <label>Поиск по bio</label>
+            <input id="fBio" type="search" placeholder="слова из описания..." style="width:150px" />
+          </div>
+
+          <div class="chip">
+            <label>Есть контакт</label>
+            <select id="fContactType">
+              <option value="">Любой контакт</option>
+              <option value="email">Email</option>
+              <option value="phone">Телефон</option>
+              <option value="telegram">Telegram</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="instagram_dm">Instagram DM</option>
+            </select>
+          </div>
+
+          <div class="chip">
+            <label>
+              <input type="checkbox" id="fVerifiedOnly" />
+              Только верифицированные
+            </label>
+          </div>
         </div>
 
-        <div class="chip">
-          <label>Последний пост</label>
-          <select id="fLastPost">
-            <option value="">Не важно</option>
-            <option value="1">За сутки</option>
-            <option value="7">За неделю</option>
-            <option value="30">За месяц</option>
-          </select>
-        </div>
-
-        <!-- Демография блогера -->
-        <div class="chip">
-          <label>Пол блогера</label>
-          <select id="fBloggerGender">
-            <option value="">Любой</option>
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Возраст блогера</label>
-          <select id="fBloggerAge">
-            <option value="">Любой</option>
-            <option value="13-17">13-17</option>
-            <option value="18-24">18-24</option>
-            <option value="25-34">25-34</option>
-            <option value="35-44">35-44</option>
-            <option value="45+">45+</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Язык блогера</label>
-          <select id="fBloggerLanguage">
-            <option value="">Любой</option>
-            <option>Русский</option>
-            <option>Английский</option>
-            <option>Испанский</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Страна блогера</label>
-          <select id="fBloggerCountry">
-            <option value="">Любая</option>
-            <option>Россия</option>
-            <option>США</option>
-            <option>Великобритания</option>
-            <option>Германия</option>
-            <option>Франция</option>
-            <option>Испания</option>
-            <option>Турция</option>
-            <option>ОАЭ</option>
-          </select>
-        </div>
-
-        <!-- Демография аудитории -->
-        <div class="chip">
-          <label>Пол аудитории</label>
-          <select id="fAudienceGender">
-            <option value="">Любой</option>
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
-            <option value="mixed">Смешанный</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Возраст аудитории</label>
-          <select id="fAudienceAge">
-            <option value="">Любой</option>
-            <option value="13-17">13-17</option>
-            <option value="18-24">18-24</option>
-            <option value="25-34">25-34</option>
-            <option value="35-44">35-44</option>
-            <option value="45+">45+</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Страна аудитории</label>
-          <select id="fAudienceCountry">
-            <option value="">Любая</option>
-            <option>Россия</option>
-            <option>США</option>
-            <option>Великобритания</option>
-            <option>Германия</option>
-          </select>
-        </div>
-
-        <div class="chip">
-          <label>Язык аудитории</label>
-          <select id="fAudienceLanguage">
-            <option value="">Любой</option>
-            <option>Русский</option>
-            <option>Английский</option>
-          </select>
-        </div>
-
-        <!-- Контент и контакты -->
-        <div class="chip">
-          <label>Поиск по ключевым словам</label>
-          <input id="fKeywords" type="search" placeholder="темы, ключевые слова..." style="width:180px" />
-        </div>
-
-        <div class="chip">
-          <label>Поиск по bio</label>
-          <input id="fBio" type="search" placeholder="слова из описания..." style="width:150px" />
-        </div>
-
-        <div class="chip">
-          <label>
-            <input type="checkbox" id="fHasEmail" />
-            Есть email
-          </label>
-        </div>
-
-        <div class="chip">
-          <label>
-            <input type="checkbox" id="fHasPhone" />
-            Есть телефон
-          </label>
-        </div>
-
-        <div class="chip">
-          <label>
-            <input type="checkbox" id="fVerifiedOnly" />
-            Только верифицированные
-          </label>
-        </div>
-
-        <!-- Similar To (как у OnSocial) -->
-        <div class="chip">
-          <label>Похожие на</label>
-          <select id="fSimilarTo">
-            <option value="">Не выбрано</option>
-            <option value="influencer1">@popular_blogger</option>
-            <option value="influencer2">@top_creator</option>
-            <option value="influencer3">@famous_influencer</option>
-          </select>
+        <!-- Группа 5: Похожие блогеры -->
+        <div class="filter-group">
+          <h3 class="filter-group-title"><i class="fas fa-compress-alt"></i> Похожие блогеры</h3>
+          
+          <div class="chip">
+            <label>Похожие на</label>
+            <select id="fSimilarTo">
+              <option value="">Не выбрано</option>
+              <option value="influencer1">@popular_blogger</option>
+              <option value="influencer2">@top_creator</option>
+              <option value="influencer3">@famous_influencer</option>
+            </select>
+          </div>
         </div>
 
         <button id="clearFilters" class="btn btn-secondary" type="button" style="margin-left:auto">Очистить всё</button>
@@ -704,40 +798,40 @@
             followers: 125000, avg_views: 45000, price: 2500,
             blogger_gender: "male", blogger_age: "28", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "male", audience_age: "25-34", audience_country: "Россия", audience_language: "Русский",
-            growth: "growing", last_post: "2023-10-20", has_email: true, has_phone: false, verified: true,
-            bio: "Обзоры техники и гаджетов | Tech reviewer | unboxing"
+            growth: "growing", last_post: "2023-10-20", has_email: true, has_phone: false, has_telegram: true, has_whatsapp: false,
+            verified: true, bio: "Обзоры техники и гаджетов | Tech reviewer | unboxing"
           },
           { 
             id: 2, name: "Анна Сидорова", username: "anna_beauty", platform: "Instagram", 
             followers: 87000, avg_views: 25000, price: 1800,
             blogger_gender: "female", blogger_age: "22", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "female", audience_age: "18-24", audience_country: "Россия", audience_language: "Русский",
-            growth: "stable", last_post: "2023-10-22", has_email: true, has_phone: true, verified: false,
-            bio: "💄 Косметика и уход | Beauty blogger | makeup tutorials"
+            growth: "stable", last_post: "2023-10-22", has_email: true, has_phone: true, has_telegram: false, has_whatsapp: true,
+            verified: false, bio: "💄 Косметика и уход | Beauty blogger | makeup tutorials"
           },
           { 
             id: 3, name: "Сергей Козлов", username: "game_master", platform: "YouTube", 
             followers: 356000, avg_views: 89000, price: 4200,
             blogger_gender: "male", blogger_age: "25", blogger_country: "США", blogger_language: "Английский",
             audience_gender: "male", audience_age: "13-17", audience_country: "США", audience_language: "Английский",
-            growth: "growing", last_post: "2023-10-15", has_email: false, has_phone: false, verified: true,
-            bio: "Gaming channel | Live streams | Game reviews"
+            growth: "growing", last_post: "2023-10-15", has_email: false, has_phone: false, has_telegram: true, has_whatsapp: false,
+            verified: true, bio: "Gaming channel | Live streams | Game reviews"
           },
           { 
             id: 4, name: "Мария Иванова", username: "fashion_maria", platform: "Instagram", 
             followers: 210000, avg_views: 65000, price: 1900,
             blogger_gender: "female", blogger_age: "21", blogger_country: "Великобритания", blogger_language: "Английский",
             audience_gender: "female", audience_age: "18-24", audience_country: "Великобритания", audience_language: "Английский",
-            growth: "growing", last_post: "2023-10-23", has_email: true, has_phone: true, verified: true,
-            bio: "Fashion & lifestyle | Outfit ideas | London based"
+            growth: "growing", last_post: "2023-10-23", has_email: true, has_phone: true, has_telegram: true, has_whatsapp: true,
+            verified: true, bio: "Fashion & lifestyle | Outfit ideas | London based"
           },
           { 
             id: 5, name: "Дмитрий Смирнов", username: "news_dima", platform: "YouTube", 
             followers: 45000, avg_views: 12000, price: 1200,
             blogger_gender: "male", blogger_age: "40", blogger_country: "Россия", blogger_language: "Русский",
             audience_gender: "mixed", audience_age: "35-44", audience_country: "Россия", audience_language: "Русский",
-            growth: "stable", last_post: "2023-10-23", has_email: true, has_phone: false, verified: false,
-            bio: "Новости и аналитика | Политика и экономика"
+            growth: "stable", last_post: "2023-10-23", has_email: true, has_phone: false, has_telegram: false, has_whatsapp: false,
+            verified: false, bio: "Новости и аналитика | Политика и экономика"
           }
         ]
       };
@@ -757,7 +851,7 @@
           'fAvgViewsMin', 'fGrowth', 'fLastPost',
           'fBloggerGender', 'fBloggerAge', 'fBloggerLanguage', 'fBloggerCountry',
           'fAudienceGender', 'fAudienceAge', 'fAudienceCountry', 'fAudienceLanguage',
-          'fKeywords', 'fBio', 'fSimilarTo'
+          'fKeywords', 'fBio', 'fContactType', 'fSimilarTo'
         ];
         
         filterIds.forEach(id => {
@@ -769,7 +863,7 @@
         });
         
         // Чекбоксы
-        ['fHasEmail', 'fHasPhone', 'fVerifiedOnly'].forEach(id => {
+        ['fVerifiedOnly'].forEach(id => {
           const element = document.getElementById(id);
           if (element) {
             element.addEventListener('change', applyFilters);
@@ -833,6 +927,7 @@
         const platform = document.getElementById('fPlatform').value;
         const growth = document.getElementById('fGrowth').value;
         const bloggerGender = document.getElementById('fBloggerGender').value;
+        const contactType = document.getElementById('fContactType').value;
         const verified = document.getElementById('fVerifiedOnly').checked;
         
         if (platform) addChip(`Платформа: ${platform}`, () => {
@@ -847,6 +942,11 @@
         
         if (bloggerGender) addChip(`Пол: ${bloggerGender}`, () => {
           document.getElementById('fBloggerGender').value = '';
+          applyFilters();
+        });
+        
+        if (contactType) addChip(`Контакт: ${contactType}`, () => {
+          document.getElementById('fContactType').value = '';
           applyFilters();
         });
         
@@ -882,8 +982,7 @@
           audienceLanguage: document.getElementById('fAudienceLanguage').value,
           keywords: document.getElementById('fKeywords').value.toLowerCase(),
           bio: document.getElementById('fBio').value.toLowerCase(),
-          hasEmail: document.getElementById('fHasEmail').checked,
-          hasPhone: document.getElementById('fHasPhone').checked,
+          contactType: document.getElementById('fContactType').value,
           verifiedOnly: document.getElementById('fVerifiedOnly').checked,
           similarTo: document.getElementById('fSimilarTo').value
         };
@@ -915,9 +1014,16 @@
           if (filters.audienceCountry && blogger.audience_country !== filters.audienceCountry) return false;
           if (filters.audienceLanguage && blogger.audience_language !== filters.audienceLanguage) return false;
           
-          // Контакты и верификация
-          if (filters.hasEmail && !blogger.has_email) return false;
-          if (filters.hasPhone && !blogger.has_phone) return false;
+          // Контакты
+          if (filters.contactType) {
+            if (filters.contactType === 'email' && !blogger.has_email) return false;
+            if (filters.contactType === 'phone' && !blogger.has_phone) return false;
+            if (filters.contactType === 'telegram' && !blogger.has_telegram) return false;
+            if (filters.contactType === 'whatsapp' && !blogger.has_whatsapp) return false;
+            if (filters.contactType === 'instagram_dm' && blogger.platform !== 'Instagram') return false;
+          }
+          
+          // Верификация
           if (filters.verifiedOnly && !blogger.verified) return false;
           
           // Поиск по ключевым словам и bio
@@ -973,6 +1079,9 @@
                 ${blogger.name}
                 ${blogger.verified ? '<span class="verification-badge"><i class="fas fa-check-circle"></i></span>' : ''}
                 <span class="muted">@${blogger.username}</span>
+                <a href="blogger-card.html?id=${blogger.id}" class="blogger-card-link">
+                  <i class="fas fa-external-link-alt"></i> Карточка
+                </a>
               </div>
               <div class="meta">
                 <span class="badge">${blogger.platform}</span>
@@ -996,9 +1105,18 @@
                          onchange="toggleBloggerSelection(${blogger.id})" />
                   В выборку
                 </label>
-                <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">
-                  <i class="fas fa-envelope"></i> Контакты
-                </button>
+                <div class="contacts-dropdown">
+                  <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;">
+                    <i class="fas fa-envelope"></i> Контакты
+                  </button>
+                  <div class="contacts-dropdown-content">
+                    ${blogger.has_email ? '<a href="#"><i class="fas fa-envelope"></i> Email</a>' : ''}
+                    ${blogger.has_phone ? '<a href="#"><i class="fas fa-phone"></i> Телефон</a>' : ''}
+                    ${blogger.has_telegram ? '<a href="#"><i class="fab fa-telegram"></i> Telegram</a>' : ''}
+                    ${blogger.has_whatsapp ? '<a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a>' : ''}
+                    ${blogger.platform === 'Instagram' ? '<a href="#"><i class="fab fa-instagram"></i> Instagram DM</a>' : ''}
+                  </div>
+                </div>
               </div>
             </div>
           `;
